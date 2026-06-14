@@ -1,0 +1,4 @@
+2026-06-14 16:52:30 WARNING  | Process 5524 | Thread: 21492 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/health/
+2026-06-14 16:52:30 INFO     | Process 5524 | Thread: 21492 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-06-14 23:00:21 WARNING  | Process 2576 | Thread: 9516 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/admin/login/
+2026-06-14 23:00:21 INFO     | Process 2576 | Thread: 9516 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True

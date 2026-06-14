@@ -1,0 +1,7 @@
+2026-06-14 16:52:30 WARNING  | Process 5524 | Thread: 21492 | administration.views | views.HealthCheck:ln 29 |--  ================================== START - Application Health =================================
+2026-06-14 16:52:30 INFO     | Process 5524 | Thread: 21492 | administration.views | views.HealthCheck:ln 31 |--  backendsvc Health Check API - System Local Time : >>>> 14-06-2026, 04:52:30.214261 PM
+2026-06-14 16:52:30 INFO     | Process 5524 | Thread: 21492 | administration.views | views.HealthCheck:ln 49 |--  Database connection check successful.
+2026-06-14 16:52:30 WARNING  | Process 5524 | Thread: 21492 | administration.views | views.HealthCheck:ln 54 |--  =================================== END - Application Health =================================
+2026-06-14 23:00:21 WARNING  | Process 2576 | Thread: 9516 | administration.views | views.userPassLogin:ln 71 |--  ================================== START - Admin User Login With Password =================================
+2026-06-14 23:00:21 INFO     | Process 2576 | Thread: 9516 | administration.views | views.userPassLogin:ln 78 |--  Received Login payload - Username: gis_surveyor
+2026-06-14 23:00:21 WARNING  | Process 2576 | Thread: 9516 | administration.views | views.userPassLogin:ln 188 |--  ================================== END - Admin User Login with Password =================================
