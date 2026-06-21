@@ -7,7 +7,7 @@ class UserToken(models.Model):
     token = models.CharField(max_length=500)
     updated_on = models.DateTimeField(null=True, blank=False)
     expiry_time = models.DateTimeField(null=True, blank=False)
-    c_m_no = models.CharField(max_length=15, null=True, blank=False)
+    c_m_no = models.CharField(max_length=150, null=True, blank=False)
     allow_flag = models.IntegerField(default=1, null=True, blank=False)
 
     class Meta:
@@ -25,7 +25,7 @@ class FcmToken(models.Model):
     updated_on = models.DateTimeField(null=True, blank=False)
     updated_by = models.BigIntegerField(null=True, blank=False)
     expiry_time = models.DateTimeField(null=True, blank=False)
-    c_m_no = models.CharField(max_length=15, null=True, blank=False)
+    c_m_no = models.CharField(max_length=150, null=True, blank=False)
     allow_flag = models.IntegerField(default=1, null=True, blank=False)
     is_active = models.BooleanField(default=True)
 

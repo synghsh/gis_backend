@@ -5,3 +5,35 @@
 2026-06-14 23:00:21 WARNING  | Process 2576 | Thread: 9516 | administration.views | views.userPassLogin:ln 71 |--  ================================== START - Admin User Login With Password =================================
 2026-06-14 23:00:21 INFO     | Process 2576 | Thread: 9516 | administration.views | views.userPassLogin:ln 78 |--  Received Login payload - Username: gis_surveyor
 2026-06-14 23:00:21 WARNING  | Process 2576 | Thread: 9516 | administration.views | views.userPassLogin:ln 188 |--  ================================== END - Admin User Login with Password =================================
+2026-06-21 22:41:44 WARNING  | Process 10812 | Thread: 26168 | administration.views | views.HealthCheck:ln 31 |--  ================================== START - Application Health =================================
+2026-06-21 22:41:44 INFO     | Process 10812 | Thread: 26168 | administration.views | views.HealthCheck:ln 33 |--  backendsvc Health Check API - System Local Time : >>>> 21-06-2026, 10:41:44.647823 PM
+2026-06-21 22:41:44 INFO     | Process 10812 | Thread: 26168 | administration.views | views.HealthCheck:ln 51 |--  Database connection check successful.
+2026-06-21 22:41:44 WARNING  | Process 10812 | Thread: 26168 | administration.views | views.HealthCheck:ln 56 |--  =================================== END - Application Health =================================
+2026-06-21 22:41:51 WARNING  | Process 10812 | Thread: 26660 | administration.views | views.userPassLogin:ln 71 |--  ================================== START - Admin User Login With Password =================================
+2026-06-21 22:41:51 INFO     | Process 10812 | Thread: 26660 | administration.views | views.userPassLogin:ln 78 |--  Received Login payload - Username: sayan@msqube.com
+2026-06-21 22:41:52 ERROR    | Process 10812 | Thread: 26660 | django.request | log.log_message:ln 249 |--  Internal Server Error: /gis/administration/admin/login/
+Traceback (most recent call last):
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\commonUtility\decorators.py", line 31, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\commonUtility\decorators.py", line 17, in wrap
+    return func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\administration\views.py", line 131, in userPassLogin
+    raise Exception("Token generation failed")
+Exception: Token generation failed
+2026-06-21 22:43:54 WARNING  | Process 2532 | Thread: 21384 | administration.views | views.userPassLogin:ln 71 |--  ================================== START - Admin User Login With Password =================================
+2026-06-21 22:43:54 INFO     | Process 2532 | Thread: 21384 | administration.views | views.userPassLogin:ln 78 |--  Received Login payload - Username: sayan@msqube.com
+2026-06-21 22:43:54 WARNING  | Process 2532 | Thread: 21384 | administration.views | views.userPassLogin:ln 188 |--  ================================== END - Admin User Login with Password =================================
+2026-06-21 22:44:04 WARNING  | Process 2532 | Thread: 31372 | administration.views | views.userPassLogin:ln 71 |--  ================================== START - Admin User Login With Password =================================
+2026-06-21 22:44:04 INFO     | Process 2532 | Thread: 31372 | administration.views | views.userPassLogin:ln 78 |--  Received Login payload - Username: sayan@msqube.com
+2026-06-21 22:44:04 WARNING  | Process 2532 | Thread: 31372 | administration.views | views.userPassLogin:ln 188 |--  ================================== END - Admin User Login with Password =================================
