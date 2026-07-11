@@ -5,5 +5,5 @@ from .api import urls
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('gis/administration/', include(urls)),
-    path('gis/master/', include('master_management.urls')),
+    path('gis/administration/master/', include('master_management.urls')),
 ]
