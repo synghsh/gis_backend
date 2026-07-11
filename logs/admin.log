@@ -37,3 +37,56 @@ Exception: Token generation failed
 2026-06-21 22:44:04 WARNING  | Process 2532 | Thread: 31372 | administration.views | views.userPassLogin:ln 71 |--  ================================== START - Admin User Login With Password =================================
 2026-06-21 22:44:04 INFO     | Process 2532 | Thread: 31372 | administration.views | views.userPassLogin:ln 78 |--  Received Login payload - Username: sayan@msqube.com
 2026-06-21 22:44:04 WARNING  | Process 2532 | Thread: 31372 | administration.views | views.userPassLogin:ln 188 |--  ================================== END - Admin User Login with Password =================================
+2026-07-11 12:04:53 WARNING  | Process 12388 | Thread: 5632 | administration.views | views.userPassLogin:ln 71 |--  ================================== START - Admin User Login With Password =================================
+2026-07-11 12:04:53 INFO     | Process 12388 | Thread: 5632 | administration.views | views.userPassLogin:ln 78 |--  Received Login payload - Username: 9876543210
+2026-07-11 12:04:53 WARNING  | Process 12388 | Thread: 5632 | administration.views | views.userPassLogin:ln 188 |--  ================================== END - Admin User Login with Password =================================
+2026-07-11 12:05:00 WARNING  | Process 12388 | Thread: 21548 | administration.views | views.userPassLogin:ln 71 |--  ================================== START - Admin User Login With Password =================================
+2026-07-11 12:05:00 INFO     | Process 12388 | Thread: 21548 | administration.views | views.userPassLogin:ln 78 |--  Received Login payload - Username: 9876543210
+2026-07-11 12:05:00 WARNING  | Process 12388 | Thread: 21548 | administration.views | views.userPassLogin:ln 188 |--  ================================== END - Admin User Login with Password =================================
+2026-07-11 12:47:15 WARNING  | Process 12388 | Thread: 11672 | administration.views | views.userPassLogin:ln 71 |--  ================================== START - Admin User Login With Password =================================
+2026-07-11 12:47:15 INFO     | Process 12388 | Thread: 11672 | administration.views | views.userPassLogin:ln 78 |--  Received Login payload - Username: 9876543210
+2026-07-11 12:47:15 WARNING  | Process 12388 | Thread: 11672 | administration.views | views.userPassLogin:ln 188 |--  ================================== END - Admin User Login with Password =================================
+2026-07-11 13:12:54 WARNING  | Process 17764 | Thread: 11108 | master_management | views.add_state:ln 26 |--  ================================== START - Add State =================================
+2026-07-11 13:12:54 INFO     | Process 17764 | Thread: 11108 | master_management | views.add_state:ln 28 |--  Received add state payload: {'state_code': 'TST01', 'state_name': 'Test State 1'}
+2026-07-11 13:12:54 WARNING  | Process 17764 | Thread: 11108 | master_management | views.add_state:ln 75 |--  ================================== END - Add State =================================
+2026-07-11 13:12:54 WARNING  | Process 17764 | Thread: 11108 | master_management | views.add_state:ln 26 |--  ================================== START - Add State =================================
+2026-07-11 13:12:54 INFO     | Process 17764 | Thread: 11108 | master_management | views.add_state:ln 28 |--  Received add state payload: {'state_code': 'TST01', 'state_name': 'Test State 1 Duplicate'}
+2026-07-11 13:12:54 WARNING  | Process 17764 | Thread: 11108 | master_management | views.list_states:ln 186 |--  ================================== START - List States =================================
+2026-07-11 13:12:54 INFO     | Process 17764 | Thread: 11108 | master_management | views.list_states:ln 188 |--  Received list states params: {'search': 'Test State'}
+2026-07-11 13:12:54 WARNING  | Process 17764 | Thread: 11108 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
+2026-07-11 13:12:54 WARNING  | Process 17764 | Thread: 11108 | master_management | views.edit_state:ln 95 |--  ================================== START - Edit State =================================
+2026-07-11 13:12:54 INFO     | Process 17764 | Thread: 11108 | master_management | views.edit_state:ln 97 |--  Received edit state payload: {'id': 1, 'state_name': 'Test State 1 Modified', 'is_active': False}
+2026-07-11 13:12:54 WARNING  | Process 17764 | Thread: 11108 | master_management | views.edit_state:ln 173 |--  ================================== END - Edit State =================================
+2026-07-11 13:12:54 WARNING  | Process 17764 | Thread: 11108 | master_management | views.get_state_detail:ln 237 |--  ================================== START - Get State Detail =================================
+2026-07-11 13:12:54 INFO     | Process 17764 | Thread: 11108 | master_management | views.get_state_detail:ln 239 |--  Received get state detail params: {'id': 1}
+2026-07-11 13:12:54 WARNING  | Process 17764 | Thread: 11108 | master_management | views.get_state_detail:ln 251 |--  ================================== END - Get State Detail =================================
+2026-07-11 13:32:02 WARNING  | Process 19748 | Thread: 468 | administration.views | views.userPassLogin:ln 71 |--  ================================== START - Admin User Login With Password =================================
+2026-07-11 13:32:02 INFO     | Process 19748 | Thread: 468 | administration.views | views.userPassLogin:ln 78 |--  Received Login payload - Username: 9876543210
+2026-07-11 13:32:02 WARNING  | Process 19748 | Thread: 468 | administration.views | views.userPassLogin:ln 188 |--  ================================== END - Admin User Login with Password =================================
+2026-07-11 13:32:02 WARNING  | Process 19748 | Thread: 468 | master_management | views.add_state:ln 26 |--  ================================== START - Add State =================================
+2026-07-11 13:32:02 INFO     | Process 19748 | Thread: 468 | master_management | views.add_state:ln 28 |--  Received add state payload: {'state_code': 'ST01', 'state_name': 'West Bengal'}
+2026-07-11 13:32:02 WARNING  | Process 19748 | Thread: 468 | master_management | views.add_state:ln 75 |--  ================================== END - Add State =================================
+2026-07-11 13:32:07 WARNING  | Process 19748 | Thread: 14700 | administration.views | views.userPassLogin:ln 71 |--  ================================== START - Admin User Login With Password =================================
+2026-07-11 13:32:07 INFO     | Process 19748 | Thread: 14700 | administration.views | views.userPassLogin:ln 78 |--  Received Login payload - Username: 9876543210
+2026-07-11 13:32:08 WARNING  | Process 19748 | Thread: 14700 | administration.views | views.userPassLogin:ln 188 |--  ================================== END - Admin User Login with Password =================================
+2026-07-11 13:32:08 WARNING  | Process 19748 | Thread: 14700 | master_management | views.list_states:ln 186 |--  ================================== START - List States =================================
+2026-07-11 13:32:08 INFO     | Process 19748 | Thread: 14700 | master_management | views.list_states:ln 188 |--  Received list states params: {'search': 'Bengal', 'is_active': True}
+2026-07-11 13:32:08 WARNING  | Process 19748 | Thread: 14700 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
+2026-07-11 13:32:15 WARNING  | Process 19748 | Thread: 11920 | administration.views | views.userPassLogin:ln 71 |--  ================================== START - Admin User Login With Password =================================
+2026-07-11 13:32:15 INFO     | Process 19748 | Thread: 11920 | administration.views | views.userPassLogin:ln 78 |--  Received Login payload - Username: 9876543210
+2026-07-11 13:32:15 WARNING  | Process 19748 | Thread: 11920 | administration.views | views.userPassLogin:ln 188 |--  ================================== END - Admin User Login with Password =================================
+2026-07-11 13:32:15 WARNING  | Process 19748 | Thread: 11920 | master_management | views.get_state_detail:ln 237 |--  ================================== START - Get State Detail =================================
+2026-07-11 13:32:15 INFO     | Process 19748 | Thread: 11920 | master_management | views.get_state_detail:ln 239 |--  Received get state detail params: {'id': 2}
+2026-07-11 13:32:15 WARNING  | Process 19748 | Thread: 11920 | master_management | views.get_state_detail:ln 251 |--  ================================== END - Get State Detail =================================
+2026-07-11 13:33:39 WARNING  | Process 19748 | Thread: 9392 | administration.views | views.userPassLogin:ln 71 |--  ================================== START - Admin User Login With Password =================================
+2026-07-11 13:33:39 INFO     | Process 19748 | Thread: 9392 | administration.views | views.userPassLogin:ln 78 |--  Received Login payload - Username: 9876543210
+2026-07-11 13:33:39 WARNING  | Process 19748 | Thread: 9392 | administration.views | views.userPassLogin:ln 188 |--  ================================== END - Admin User Login with Password =================================
+2026-07-11 13:33:39 WARNING  | Process 19748 | Thread: 9392 | master_management | views.edit_state:ln 95 |--  ================================== START - Edit State =================================
+2026-07-11 13:33:39 INFO     | Process 19748 | Thread: 9392 | master_management | views.edit_state:ln 97 |--  Received edit state payload: {'id': 2, 'state_code': 'ST01-UPDATED', 'state_name': 'West Bengal Updated', 'is_active': False}
+2026-07-11 13:33:39 WARNING  | Process 19748 | Thread: 9392 | master_management | views.edit_state:ln 173 |--  ================================== END - Edit State =================================
+2026-07-11 13:34:47 WARNING  | Process 19748 | Thread: 10896 | administration.views | views.userPassLogin:ln 71 |--  ================================== START - Admin User Login With Password =================================
+2026-07-11 13:34:47 INFO     | Process 19748 | Thread: 10896 | administration.views | views.userPassLogin:ln 78 |--  Received Login payload - Username: 9876543210
+2026-07-11 13:34:47 WARNING  | Process 19748 | Thread: 10896 | administration.views | views.userPassLogin:ln 188 |--  ================================== END - Admin User Login with Password =================================
+2026-07-11 13:34:47 WARNING  | Process 19748 | Thread: 10896 | master_management | views.get_state_detail:ln 237 |--  ================================== START - Get State Detail =================================
+2026-07-11 13:34:47 INFO     | Process 19748 | Thread: 10896 | master_management | views.get_state_detail:ln 239 |--  Received get state detail params: {'id': 2}
+2026-07-11 13:34:47 WARNING  | Process 19748 | Thread: 10896 | master_management | views.get_state_detail:ln 251 |--  ================================== END - Get State Detail =================================

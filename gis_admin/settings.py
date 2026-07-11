@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'common',
     'administration',
     'survey_management',
+    'master_management',
 ]
 
 PASSWORD_HASHERS = [
@@ -256,6 +257,11 @@ LOGGING = {
         'survey_management': {
             'level': str(LOGGING_LEVEL),
             'handlers': ['file_survey'],
+            'propagate': True,
+        },
+        'master_management': {
+            'level': str(LOGGING_LEVEL),
+            'handlers': ['file_admin'],
             'propagate': True,
         },
     }
