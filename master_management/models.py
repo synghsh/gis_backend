@@ -76,4 +76,25 @@ class RoleMaster(models.Model):
         return f"{self.role_name} ({self.role_code})"
 
 
+class DesignationMaster(models.Model):
+    id = models.AutoField(primary_key=True)
+    role = models.ForeignKey(RoleMaster, on_delete=models.PROTECT, related_name='designations', db_column='role_id')
+    designation_name = models.CharField(max_length=150, unique=True)
+    designation_code = models.CharField(max_length=50, unique=True, db_index=True)
+    description = models.TextField(blank=True, null=True)
+    is_active = models.BooleanField(default=True)
+    created_by = models.IntegerField(null=True, blank=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_by = models.IntegerField(null=True, blank=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        managed = True
+        db_table = 'designation_master'
+
+    def __str__(self):
+        return f"{self.designation_name} ({self.designation_code})"
+
+
+
 

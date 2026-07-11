@@ -3,7 +3,8 @@ from master_management.views import (
     add_state, edit_state, list_states, get_state_detail,
     add_district, edit_district, list_districts, get_district_detail,
     add_block, edit_block, list_blocks, get_block_detail,
-    add_role, edit_role, list_roles, get_role_detail
+    add_role, edit_role, list_roles, get_role_detail,
+    add_designation, edit_designation, list_designations, get_designation_detail
 )
 
 urlpatterns = [
@@ -30,6 +31,13 @@ urlpatterns = [
     path('role/edit/', edit_role),
     path('role/list/', list_roles),
     path('role/detail/', get_role_detail),
+
+    # Designation Master
+    path('designation/add/', add_designation),
+    path('designation/edit/', edit_designation),
+    path('designation/list/', list_designations),
+    path('designation/detail/', get_designation_detail),
 ]
+
 
 

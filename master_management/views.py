@@ -9,7 +9,7 @@ from exception import (
 from commonUtility.decorators import require_post
 from commonUtility.utils import mandatoryInputCheck
 from common.models import AuditLog
-from master_management.models import StateMaster, DistrictMaster, BlockMaster, RoleMaster
+from master_management.models import StateMaster, DistrictMaster, BlockMaster, RoleMaster, DesignationMaster
 
 logger = logging.getLogger('master_management')
 
@@ -1194,6 +1194,335 @@ def get_role_detail(request):
             "updated_on": role.updated_on.strftime('%Y-%m-%d %H:%M:%S') if role.updated_on else None,
         }
     })
+
+
+@csrf_exempt
+@require_post
+def add_designation(request):
+    """
+    POST Request:
+    {
+        "role_id": 1,
+        "designation_name": "Senior Surveyor",
+        "designation_code": "SR_SURVEYOR",
+        "description": "Senior field surveyor designation"
+    }
+    """
+    logger.warning('================================== START - Add Designation =================================')
+    payload = request.data
+    logger.info(f'Received add designation payload: {payload}')
+
+    # Validate Mandatory Inputs
+    required_fields = ["role_id", "designation_name", "designation_code"]
+    if not mandatoryInputCheck(payload, required_fields):
+        raise MandatoryInputMissingException(f"Mandatory Required Fields: {required_fields}")
+
+    role_id = payload.get('role_id')
+    designation_name = str(payload.get('designation_name')).strip()
+    designation_code = str(payload.get('designation_code')).strip()
+    description = payload.get('description')
+
+    if not designation_name or not designation_code:
+        raise MandatoryInputMissingException("designation_name and designation_code cannot be empty strings.")
+
+    # Check if Role exists
+    role = RoleMaster.objects.filter(id=role_id).first()
+    if not role:
+        raise UserNotFoundException(f"Role with ID {role_id} not found.")
+
+    # Check for duplicates
+    duplicate = DesignationMaster.objects.filter(
+        Q(designation_name__iexact=designation_name) | Q(designation_code__iexact=designation_code)
+    ).first()
+
+    if duplicate:
+        if duplicate.designation_code.lower() == designation_code.lower():
+            raise UserAlreadyExistException(f"Designation Code '{designation_code}' already exists.")
+        else:
+            raise UserAlreadyExistException(f"Designation Name '{designation_name}' already exists.")
+
+    # Fetch user ID from authenticated token
+    user_id = None
+    if hasattr(request, 'token_details') and request.token_details:
+        user_id = request.token_details.get('user_id')
+
+    # Create Designation
+    designation = DesignationMaster.objects.create(
+        role=role,
+        designation_name=designation_name,
+        designation_code=designation_code,
+        description=description,
+        created_by=user_id,
+        updated_by=user_id
+    )
+
+    # Create Audit Log
+    AuditLog.objects.create(
+        table_name='designation_master',
+        operation='INSERT',
+        ref_id=designation.id,
+        old_data=None,
+        updated_by=user_id,
+        remarks=f"Designation created: {designation.designation_name} ({designation.designation_code}) under Role: {role.role_name}"
+    )
+
+    logger.warning('================================== END - Add Designation =================================')
+    return JsonResponse({
+        "Code": "SUCCESS001",
+        "Message": "Designation created successfully.",
+        "designation_id": designation.id
+    })
+
+
+@csrf_exempt
+@require_post
+def edit_designation(request):
+    """
+    POST Request:
+    {
+        "id": 1,
+        "role_id": 2,
+        "designation_name": "Senior Surveyor Updated",
+        "designation_code": "SR_SURVEYOR_UPD",
+        "description": "Updated description",
+        "is_active": true
+    }
+    """
+    logger.warning('================================== START - Edit Designation =================================')
+    payload = request.data
+    logger.info(f'Received edit designation payload: {payload}')
+
+    # Validate Mandatory Inputs
+    required_fields = ["id"]
+    if not mandatoryInputCheck(payload, required_fields):
+        raise MandatoryInputMissingException(f"Mandatory Required Fields: {required_fields}")
+
+    designation_id = payload.get('id')
+    designation = DesignationMaster.objects.filter(id=designation_id).first()
+    if not designation:
+        raise UserNotFoundException(f"Designation with ID {designation_id} not found.")
+
+    # Store original values for Audit log
+    old_data = {
+        "role_id": designation.role.id,
+        "designation_name": designation.designation_name,
+        "designation_code": designation.designation_code,
+        "description": designation.description,
+        "is_active": designation.is_active
+    }
+
+    updated = False
+    role_id = payload.get('role_id')
+    designation_name = payload.get('designation_name')
+    designation_code = payload.get('designation_code')
+    description = payload.get('description')
+    is_active = payload.get('is_active')
+
+    # Update role_id if provided
+    if role_id is not None:
+        role = RoleMaster.objects.filter(id=role_id).first()
+        if not role:
+            raise UserNotFoundException(f"Role with ID {role_id} not found.")
+        if designation.role.id != role.id:
+            designation.role = role
+            updated = True
+
+    # Update designation_name if provided
+    if designation_name is not None:
+        designation_name = str(designation_name).strip()
+        if not designation_name:
+            raise MandatoryInputMissingException("designation_name cannot be empty.")
+        # Check uniqueness excluding current record
+        if DesignationMaster.objects.filter(designation_name__iexact=designation_name).exclude(id=designation.id).exists():
+            raise UserAlreadyExistException(f"Designation Name '{designation_name}' already exists.")
+        if designation.designation_name != designation_name:
+            designation.designation_name = designation_name
+            updated = True
+
+    # Update designation_code if provided
+    if designation_code is not None:
+        designation_code = str(designation_code).strip()
+        if not designation_code:
+            raise MandatoryInputMissingException("designation_code cannot be empty.")
+        # Check uniqueness excluding current record
+        if DesignationMaster.objects.filter(designation_code__iexact=designation_code).exclude(id=designation.id).exists():
+            raise UserAlreadyExistException(f"Designation Code '{designation_code}' already exists.")
+        if designation.designation_code != designation_code:
+            designation.designation_code = designation_code
+            updated = True
+
+    # Update description if provided
+    if description is not None:
+        description = str(description).strip()
+        if designation.description != description:
+            designation.description = description
+            updated = True
+
+    # Update is_active if provided
+    if is_active is not None:
+        if isinstance(is_active, str):
+            is_active_val = is_active.lower() in ['true', '1', 'yes']
+        else:
+            is_active_val = bool(is_active)
+        if designation.is_active != is_active_val:
+            designation.is_active = is_active_val
+            updated = True
+
+    # Save changes and log audit trail if updates occurred
+    if updated:
+        user_id = None
+        if hasattr(request, 'token_details') and request.token_details:
+            user_id = request.token_details.get('user_id')
+
+        designation.updated_by = user_id
+        designation.save()
+
+        AuditLog.objects.create(
+            table_name='designation_master',
+            operation='UPDATE',
+            ref_id=designation.id,
+            old_data=old_data,
+            updated_by=user_id,
+            remarks=f"Designation updated: {designation.designation_name} ({designation.designation_code})"
+        )
+
+    logger.warning('================================== END - Edit Designation =================================')
+    return JsonResponse({
+        "Code": "SUCCESS001",
+        "Message": "Designation updated successfully."
+    })
+
+
+@csrf_exempt
+def list_designations(request):
+    """
+    GET / POST Request:
+    Supports filtering by role_id, search query, and is_active status.
+    """
+    logger.warning('================================== START - List Designations =================================')
+    payload = request.data
+    logger.info(f'Received list designations params: {payload}')
+
+    # Fetch designations, prefetching role model
+    queryset = DesignationMaster.objects.select_related('role').all()
+
+    # Filter by role_id
+    role_id = payload.get('role_id')
+    if role_id is not None:
+        queryset = queryset.filter(role_id=role_id)
+
+    # Search filter (matches name, code or description)
+    search = payload.get('search')
+    if search:
+        search = str(search).strip()
+        queryset = queryset.filter(
+            Q(designation_name__icontains=search) | Q(designation_code__icontains=search) | Q(description__icontains=search)
+        )
+
+    # Active status filter
+    is_active = payload.get('is_active')
+    if is_active is not None:
+        if isinstance(is_active, str):
+            is_active_val = is_active.lower() in ['true', '1', 'yes', 'active']
+        else:
+            is_active_val = bool(is_active)
+        queryset = queryset.filter(is_active=is_active_val)
+
+    # Order alphabetically by designation name
+    queryset = queryset.order_by('designation_name')
+
+    # Total Count matching filters
+    total_count = queryset.count()
+
+    # Pagination parameters
+    try:
+        page_no = int(payload.get('page_no', 1))
+        if page_no < 1:
+            page_no = 1
+    except (ValueError, TypeError):
+        page_no = 1
+
+    try:
+        page_size = int(payload.get('page_size', 10))
+        if page_size < 1:
+            page_size = 10
+    except (ValueError, TypeError):
+        page_size = 10
+
+    offset = (page_no - 1) * page_size
+    limit = page_size
+
+    # Slice queryset for pagination
+    queryset = queryset[offset:offset + limit]
+    total_pages = (total_count + page_size - 1) // page_size if total_count > 0 else 0
+
+    designations_list = []
+    for designation in queryset:
+        designations_list.append({
+            "id": designation.id,
+            "role_id": designation.role.id,
+            "role_name": designation.role.role_name,
+            "designation_name": designation.designation_name,
+            "designation_code": designation.designation_code,
+            "description": designation.description,
+            "is_active": designation.is_active,
+            "created_on": designation.created_on.strftime('%Y-%m-%d %H:%M:%S') if designation.created_on else None,
+            "updated_on": designation.updated_on.strftime('%Y-%m-%d %H:%M:%S') if designation.updated_on else None,
+        })
+
+    logger.warning('================================== END - List Designations =================================')
+    return JsonResponse({
+        "Code": "SUCCESS001",
+        "Message": "Designations retrieved successfully.",
+        "total_count": total_count,
+        "total_pages": total_pages,
+        "current_page": page_no,
+        "page_size": page_size,
+        "designations": designations_list
+    })
+
+
+@csrf_exempt
+def get_designation_detail(request):
+    """
+    GET / POST Request:
+    {
+        "id": 1
+    }
+    """
+    logger.warning('================================== START - Get Designation Detail =================================')
+    payload = request.data
+    logger.info(f'Received get designation detail params: {payload}')
+
+    # Validate Mandatory Inputs
+    required_fields = ["id"]
+    if not mandatoryInputCheck(payload, required_fields):
+        raise MandatoryInputMissingException(f"Mandatory Required Fields: {required_fields}")
+
+    designation_id = payload.get('id')
+    designation = DesignationMaster.objects.select_related('role').filter(id=designation_id).first()
+    if not designation:
+        raise UserNotFoundException(f"Designation with ID {designation_id} not found.")
+
+    logger.warning('================================== END - Get Designation Detail =================================')
+    return JsonResponse({
+        "Code": "SUCCESS001",
+        "Message": "Designation detail retrieved successfully.",
+        "designation": {
+            "id": designation.id,
+            "role_id": designation.role.id,
+            "role_name": designation.role.role_name,
+            "designation_name": designation.designation_name,
+            "designation_code": designation.designation_code,
+            "description": designation.description,
+            "is_active": designation.is_active,
+            "created_by": designation.created_by,
+            "created_on": designation.created_on.strftime('%Y-%m-%d %H:%M:%S') if designation.created_on else None,
+            "updated_by": designation.updated_by,
+            "updated_on": designation.updated_on.strftime('%Y-%m-%d %H:%M:%S') if designation.updated_on else None,
+        }
+    })
+
 
 
 
