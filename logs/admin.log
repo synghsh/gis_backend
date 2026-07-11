@@ -188,3 +188,31 @@ Exception: Token generation failed
 2026-07-11 14:58:35 WARNING  | Process 18680 | Thread: 13548 | master_management | views.list_districts:ln 458 |--  ================================== START - List Districts =================================
 2026-07-11 14:58:35 INFO     | Process 18680 | Thread: 13548 | master_management | views.list_districts:ln 460 |--  Received list districts params: {}
 2026-07-11 14:58:35 WARNING  | Process 18680 | Thread: 13548 | master_management | views.list_districts:ln 501 |--  ================================== END - List Districts =================================
+2026-07-11 15:19:07 WARNING  | Process 15484 | Thread: 21080 | master_management | views.add_block:ln 562 |--  ================================== START - Add Block =================================
+2026-07-11 15:19:07 INFO     | Process 15484 | Thread: 21080 | master_management | views.add_block:ln 564 |--  Received add block payload: {'state_id': 5, 'district_id': 4, 'block_code': 'BL_TST01', 'block_name': 'Test Block 1'}
+2026-07-11 15:19:07 WARNING  | Process 15484 | Thread: 21080 | master_management | views.add_block:ln 629 |--  ================================== END - Add Block =================================
+2026-07-11 15:19:07 WARNING  | Process 15484 | Thread: 21080 | master_management | views.add_block:ln 562 |--  ================================== START - Add Block =================================
+2026-07-11 15:19:07 INFO     | Process 15484 | Thread: 21080 | master_management | views.add_block:ln 564 |--  Received add block payload: {'state_id': 5, 'district_id': 4, 'block_code': 'BL_TST01', 'block_name': 'Test Block 1 Duplicate'}
+2026-07-11 15:19:07 WARNING  | Process 15484 | Thread: 21080 | master_management | views.list_blocks:ln 771 |--  ================================== START - List Blocks =================================
+2026-07-11 15:19:07 INFO     | Process 15484 | Thread: 21080 | master_management | views.list_blocks:ln 773 |--  Received list blocks params: {'state_id': 5, 'district_id': 4, 'search': 'Test Block'}
+2026-07-11 15:19:07 WARNING  | Process 15484 | Thread: 21080 | master_management | views.list_blocks:ln 821 |--  ================================== END - List Blocks =================================
+2026-07-11 15:19:07 WARNING  | Process 15484 | Thread: 21080 | master_management | views.edit_block:ln 651 |--  ================================== START - Edit Block =================================
+2026-07-11 15:19:07 INFO     | Process 15484 | Thread: 21080 | master_management | views.edit_block:ln 653 |--  Received edit block payload: {'id': 1, 'block_name': 'Test Block 1 Modified', 'is_active': False}
+2026-07-11 15:19:07 WARNING  | Process 15484 | Thread: 21080 | master_management | views.edit_block:ln 758 |--  ================================== END - Edit Block =================================
+2026-07-11 15:19:07 WARNING  | Process 15484 | Thread: 21080 | master_management | views.get_block_detail:ln 837 |--  ================================== START - Get Block Detail =================================
+2026-07-11 15:19:07 INFO     | Process 15484 | Thread: 21080 | master_management | views.get_block_detail:ln 839 |--  Received get block detail params: {'id': 1}
+2026-07-11 15:19:07 WARNING  | Process 15484 | Thread: 21080 | master_management | views.get_block_detail:ln 851 |--  ================================== END - Get Block Detail =================================
+2026-07-11 15:22:09 WARNING  | Process 12412 | Thread: 22188 | master_management | views.add_block:ln 562 |--  ================================== START - Add Block =================================
+2026-07-11 15:22:09 INFO     | Process 12412 | Thread: 22188 | master_management | views.add_block:ln 564 |--  Received add block payload: {'state_id': 6, 'district_id': 5, 'block_code': 'BL_TST01', 'block_name': 'Test Block 1'}
+2026-07-11 15:22:09 WARNING  | Process 12412 | Thread: 22188 | master_management | views.add_block:ln 629 |--  ================================== END - Add Block =================================
+2026-07-11 15:22:09 WARNING  | Process 12412 | Thread: 22188 | master_management | views.add_block:ln 562 |--  ================================== START - Add Block =================================
+2026-07-11 15:22:09 INFO     | Process 12412 | Thread: 22188 | master_management | views.add_block:ln 564 |--  Received add block payload: {'state_id': 6, 'district_id': 5, 'block_code': 'BL_TST01', 'block_name': 'Test Block 1 Duplicate'}
+2026-07-11 15:22:09 WARNING  | Process 12412 | Thread: 22188 | master_management | views.list_blocks:ln 771 |--  ================================== START - List Blocks =================================
+2026-07-11 15:22:09 INFO     | Process 12412 | Thread: 22188 | master_management | views.list_blocks:ln 773 |--  Received list blocks params: {'state_id': 6, 'district_id': 5, 'search': 'Test Block'}
+2026-07-11 15:22:09 WARNING  | Process 12412 | Thread: 22188 | master_management | views.list_blocks:ln 846 |--  ================================== END - List Blocks =================================
+2026-07-11 15:22:09 WARNING  | Process 12412 | Thread: 22188 | master_management | views.edit_block:ln 651 |--  ================================== START - Edit Block =================================
+2026-07-11 15:22:09 INFO     | Process 12412 | Thread: 22188 | master_management | views.edit_block:ln 653 |--  Received edit block payload: {'id': 2, 'block_name': 'Test Block 1 Modified', 'is_active': False}
+2026-07-11 15:22:09 WARNING  | Process 12412 | Thread: 22188 | master_management | views.edit_block:ln 758 |--  ================================== END - Edit Block =================================
+2026-07-11 15:22:09 WARNING  | Process 12412 | Thread: 22188 | master_management | views.get_block_detail:ln 866 |--  ================================== START - Get Block Detail =================================
+2026-07-11 15:22:09 INFO     | Process 12412 | Thread: 22188 | master_management | views.get_block_detail:ln 868 |--  Received get block detail params: {'id': 2}
+2026-07-11 15:22:09 WARNING  | Process 12412 | Thread: 22188 | master_management | views.get_block_detail:ln 880 |--  ================================== END - Get Block Detail =================================
