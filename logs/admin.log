@@ -216,3 +216,78 @@ Exception: Token generation failed
 2026-07-11 15:22:09 WARNING  | Process 12412 | Thread: 22188 | master_management | views.get_block_detail:ln 866 |--  ================================== START - Get Block Detail =================================
 2026-07-11 15:22:09 INFO     | Process 12412 | Thread: 22188 | master_management | views.get_block_detail:ln 868 |--  Received get block detail params: {'id': 2}
 2026-07-11 15:22:09 WARNING  | Process 12412 | Thread: 22188 | master_management | views.get_block_detail:ln 880 |--  ================================== END - Get Block Detail =================================
+2026-07-11 15:24:55 WARNING  | Process 4464 | Thread: 20780 | administration.views | views.userPassLogin:ln 71 |--  ================================== START - Admin User Login With Password =================================
+2026-07-11 15:24:55 INFO     | Process 4464 | Thread: 20780 | administration.views | views.userPassLogin:ln 78 |--  Received Login payload - Username: 9876543210
+2026-07-11 15:24:55 WARNING  | Process 4464 | Thread: 20780 | administration.views | views.userPassLogin:ln 188 |--  ================================== END - Admin User Login with Password =================================
+2026-07-11 15:24:55 WARNING  | Process 4464 | Thread: 20780 | master_management | views.add_block:ln 562 |--  ================================== START - Add Block =================================
+2026-07-11 15:24:55 INFO     | Process 4464 | Thread: 20780 | master_management | views.add_block:ln 564 |--  Received add block payload: {'state_id': 3, 'district_id': 2, 'block_code': 'BLK_TST01', 'block_name': 'Test Block 1'}
+2026-07-11 15:24:55 WARNING  | Process 4464 | Thread: 20780 | master_management | views.add_block:ln 629 |--  ================================== END - Add Block =================================
+2026-07-11 15:25:03 WARNING  | Process 4464 | Thread: 15228 | administration.views | views.userPassLogin:ln 71 |--  ================================== START - Admin User Login With Password =================================
+2026-07-11 15:25:03 INFO     | Process 4464 | Thread: 15228 | administration.views | views.userPassLogin:ln 78 |--  Received Login payload - Username: 9876543210
+2026-07-11 15:25:03 WARNING  | Process 4464 | Thread: 15228 | administration.views | views.userPassLogin:ln 188 |--  ================================== END - Admin User Login with Password =================================
+2026-07-11 15:25:03 WARNING  | Process 4464 | Thread: 15228 | master_management | views.list_blocks:ln 771 |--  ================================== START - List Blocks =================================
+2026-07-11 15:25:03 INFO     | Process 4464 | Thread: 15228 | master_management | views.list_blocks:ln 773 |--  Received list blocks params: {'state_id': 3, 'district_id': 2, 'page_no': 1, 'page_size': 10}
+2026-07-11 15:25:03 WARNING  | Process 4464 | Thread: 15228 | master_management | views.list_blocks:ln 846 |--  ================================== END - List Blocks =================================
+2026-07-11 15:28:22 WARNING  | Process 4464 | Thread: 4036 | administration.views | views.userPassLogin:ln 71 |--  ================================== START - Admin User Login With Password =================================
+2026-07-11 15:28:22 INFO     | Process 4464 | Thread: 4036 | administration.views | views.userPassLogin:ln 78 |--  Received Login payload - Username: 9876543210
+2026-07-11 15:28:22 WARNING  | Process 4464 | Thread: 4036 | administration.views | views.userPassLogin:ln 188 |--  ================================== END - Admin User Login with Password =================================
+2026-07-11 15:28:27 WARNING  | Process 4464 | Thread: 13472 | master_management | views.list_districts:ln 458 |--  ================================== START - List Districts =================================
+2026-07-11 15:28:27 INFO     | Process 4464 | Thread: 13472 | master_management | views.list_districts:ln 460 |--  Received list districts params: {}
+2026-07-11 15:28:27 WARNING  | Process 4464 | Thread: 4036 | master_management | views.list_states:ln 186 |--  ================================== START - List States =================================
+2026-07-11 15:28:27 INFO     | Process 4464 | Thread: 4036 | master_management | views.list_states:ln 188 |--  Received list states params: {}
+2026-07-11 15:28:27 WARNING  | Process 4464 | Thread: 18648 | master_management | views.list_states:ln 186 |--  ================================== START - List States =================================
+2026-07-11 15:28:27 WARNING  | Process 4464 | Thread: 3336 | master_management | views.list_blocks:ln 771 |--  ================================== START - List Blocks =================================
+2026-07-11 15:28:27 INFO     | Process 4464 | Thread: 18648 | master_management | views.list_states:ln 188 |--  Received list states params: {}
+2026-07-11 15:28:27 INFO     | Process 4464 | Thread: 3336 | master_management | views.list_blocks:ln 773 |--  Received list blocks params: {'page_no': 1, 'page_size': 10}
+2026-07-11 15:28:27 WARNING  | Process 4464 | Thread: 4036 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
+2026-07-11 15:28:27 WARNING  | Process 4464 | Thread: 18648 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
+2026-07-11 15:28:27 WARNING  | Process 4464 | Thread: 13472 | master_management | views.list_districts:ln 501 |--  ================================== END - List Districts =================================
+2026-07-11 15:28:27 WARNING  | Process 4464 | Thread: 3336 | master_management | views.list_blocks:ln 846 |--  ================================== END - List Blocks =================================
+2026-07-11 15:28:27 WARNING  | Process 4464 | Thread: 2872 | master_management | views.list_districts:ln 458 |--  ================================== START - List Districts =================================
+2026-07-11 15:28:27 INFO     | Process 4464 | Thread: 2872 | master_management | views.list_districts:ln 460 |--  Received list districts params: {}
+2026-07-11 15:28:27 WARNING  | Process 4464 | Thread: 6276 | master_management | views.list_blocks:ln 771 |--  ================================== START - List Blocks =================================
+2026-07-11 15:28:27 INFO     | Process 4464 | Thread: 6276 | master_management | views.list_blocks:ln 773 |--  Received list blocks params: {'page_no': 1, 'page_size': 10}
+2026-07-11 15:28:27 WARNING  | Process 4464 | Thread: 2872 | master_management | views.list_districts:ln 501 |--  ================================== END - List Districts =================================
+2026-07-11 15:28:27 WARNING  | Process 4464 | Thread: 6276 | master_management | views.list_blocks:ln 846 |--  ================================== END - List Blocks =================================
+2026-07-11 15:28:43 WARNING  | Process 4464 | Thread: 6276 | master_management | views.list_blocks:ln 771 |--  ================================== START - List Blocks =================================
+2026-07-11 15:28:43 INFO     | Process 4464 | Thread: 6276 | master_management | views.list_blocks:ln 773 |--  Received list blocks params: {'page_no': 1, 'page_size': 10, 'state_id': 3}
+2026-07-11 15:28:43 WARNING  | Process 4464 | Thread: 6276 | master_management | views.list_blocks:ln 846 |--  ================================== END - List Blocks =================================
+2026-07-11 15:29:13 WARNING  | Process 4464 | Thread: 6276 | master_management | views.add_block:ln 562 |--  ================================== START - Add Block =================================
+2026-07-11 15:29:13 INFO     | Process 4464 | Thread: 6276 | master_management | views.add_block:ln 564 |--  Received add block payload: {'state_id': 3, 'district_id': 3, 'block_code': 'ASDHMH', 'block_name': 'Mahamaya'}
+2026-07-11 15:29:13 WARNING  | Process 4464 | Thread: 6276 | master_management | views.add_block:ln 629 |--  ================================== END - Add Block =================================
+2026-07-11 15:29:13 WARNING  | Process 4464 | Thread: 6276 | master_management | views.list_blocks:ln 771 |--  ================================== START - List Blocks =================================
+2026-07-11 15:29:13 INFO     | Process 4464 | Thread: 6276 | master_management | views.list_blocks:ln 773 |--  Received list blocks params: {'page_no': 1, 'page_size': 10, 'state_id': 3}
+2026-07-11 15:29:13 WARNING  | Process 4464 | Thread: 6276 | master_management | views.list_blocks:ln 846 |--  ================================== END - List Blocks =================================
+2026-07-11 15:29:18 WARNING  | Process 4464 | Thread: 6276 | master_management | views.list_blocks:ln 771 |--  ================================== START - List Blocks =================================
+2026-07-11 15:29:18 INFO     | Process 4464 | Thread: 6276 | master_management | views.list_blocks:ln 773 |--  Received list blocks params: {'page_no': 1, 'page_size': 10, 'state_id': 3}
+2026-07-11 15:29:18 WARNING  | Process 4464 | Thread: 6276 | master_management | views.list_blocks:ln 846 |--  ================================== END - List Blocks =================================
+2026-07-11 15:29:30 WARNING  | Process 4464 | Thread: 6276 | master_management | views.list_blocks:ln 771 |--  ================================== START - List Blocks =================================
+2026-07-11 15:29:30 INFO     | Process 4464 | Thread: 6276 | master_management | views.list_blocks:ln 773 |--  Received list blocks params: {'page_no': 1, 'page_size': 10, 'state_id': 3, 'search': 'maham'}
+2026-07-11 15:29:30 WARNING  | Process 4464 | Thread: 6276 | master_management | views.list_blocks:ln 846 |--  ================================== END - List Blocks =================================
+2026-07-11 15:29:38 WARNING  | Process 4464 | Thread: 6276 | master_management | views.list_blocks:ln 771 |--  ================================== START - List Blocks =================================
+2026-07-11 15:29:38 INFO     | Process 4464 | Thread: 6276 | master_management | views.list_blocks:ln 773 |--  Received list blocks params: {'page_no': 1, 'page_size': 10, 'state_id': 3}
+2026-07-11 15:29:38 WARNING  | Process 4464 | Thread: 6276 | master_management | views.list_blocks:ln 846 |--  ================================== END - List Blocks =================================
+2026-07-11 15:29:46 WARNING  | Process 4464 | Thread: 6276 | master_management | views.list_blocks:ln 771 |--  ================================== START - List Blocks =================================
+2026-07-11 15:29:46 INFO     | Process 4464 | Thread: 6276 | master_management | views.list_blocks:ln 773 |--  Received list blocks params: {'page_no': 1, 'page_size': 50, 'state_id': 3}
+2026-07-11 15:29:46 WARNING  | Process 4464 | Thread: 6276 | master_management | views.list_blocks:ln 846 |--  ================================== END - List Blocks =================================
+2026-07-11 15:29:49 WARNING  | Process 4464 | Thread: 6276 | master_management | views.list_blocks:ln 771 |--  ================================== START - List Blocks =================================
+2026-07-11 15:29:49 INFO     | Process 4464 | Thread: 6276 | master_management | views.list_blocks:ln 773 |--  Received list blocks params: {'page_no': 1, 'page_size': 5, 'state_id': 3}
+2026-07-11 15:29:49 WARNING  | Process 4464 | Thread: 6276 | master_management | views.list_blocks:ln 846 |--  ================================== END - List Blocks =================================
+2026-07-11 15:30:02 WARNING  | Process 4464 | Thread: 6276 | master_management | views.list_states:ln 186 |--  ================================== START - List States =================================
+2026-07-11 15:30:02 INFO     | Process 4464 | Thread: 6276 | master_management | views.list_states:ln 188 |--  Received list states params: {}
+2026-07-11 15:30:02 WARNING  | Process 4464 | Thread: 6276 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
+2026-07-11 15:30:02 WARNING  | Process 4464 | Thread: 3336 | master_management | views.list_blocks:ln 771 |--  ================================== START - List Blocks =================================
+2026-07-11 15:30:02 WARNING  | Process 4464 | Thread: 18648 | master_management | views.list_blocks:ln 771 |--  ================================== START - List Blocks =================================
+2026-07-11 15:30:02 INFO     | Process 4464 | Thread: 3336 | master_management | views.list_blocks:ln 773 |--  Received list blocks params: {'page_no': 1, 'page_size': 10}
+2026-07-11 15:30:02 WARNING  | Process 4464 | Thread: 13472 | master_management | views.list_states:ln 186 |--  ================================== START - List States =================================
+2026-07-11 15:30:02 INFO     | Process 4464 | Thread: 18648 | master_management | views.list_blocks:ln 773 |--  Received list blocks params: {'page_no': 1, 'page_size': 10}
+2026-07-11 15:30:02 WARNING  | Process 4464 | Thread: 4036 | master_management | views.list_districts:ln 458 |--  ================================== START - List Districts =================================
+2026-07-11 15:30:02 INFO     | Process 4464 | Thread: 4036 | master_management | views.list_districts:ln 460 |--  Received list districts params: {}
+2026-07-11 15:30:02 INFO     | Process 4464 | Thread: 13472 | master_management | views.list_states:ln 188 |--  Received list states params: {}
+2026-07-11 15:30:02 WARNING  | Process 4464 | Thread: 3336 | master_management | views.list_blocks:ln 846 |--  ================================== END - List Blocks =================================
+2026-07-11 15:30:02 WARNING  | Process 4464 | Thread: 2872 | master_management | views.list_districts:ln 458 |--  ================================== START - List Districts =================================
+2026-07-11 15:30:02 WARNING  | Process 4464 | Thread: 18648 | master_management | views.list_blocks:ln 846 |--  ================================== END - List Blocks =================================
+2026-07-11 15:30:02 WARNING  | Process 4464 | Thread: 4036 | master_management | views.list_districts:ln 501 |--  ================================== END - List Districts =================================
+2026-07-11 15:30:02 WARNING  | Process 4464 | Thread: 13472 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
+2026-07-11 15:30:02 INFO     | Process 4464 | Thread: 2872 | master_management | views.list_districts:ln 460 |--  Received list districts params: {}
+2026-07-11 15:30:02 WARNING  | Process 4464 | Thread: 2872 | master_management | views.list_districts:ln 501 |--  ================================== END - List Districts =================================
