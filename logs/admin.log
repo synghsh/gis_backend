@@ -123,3 +123,68 @@ Exception: Token generation failed
 2026-07-11 13:52:36 WARNING  | Process 11640 | Thread: 17164 | master_management | views.list_states:ln 186 |--  ================================== START - List States =================================
 2026-07-11 13:52:36 INFO     | Process 11640 | Thread: 17164 | master_management | views.list_states:ln 188 |--  Received list states params: {}
 2026-07-11 13:52:36 WARNING  | Process 11640 | Thread: 17164 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
+2026-07-11 14:44:42 WARNING  | Process 18680 | Thread: 1340 | master_management | views.add_district:ln 279 |--  ================================== START - Add District =================================
+2026-07-11 14:44:42 INFO     | Process 18680 | Thread: 1340 | master_management | views.add_district:ln 281 |--  Received add district payload: {'state_id': 4, 'district_code': 'DST_TST01', 'district_name': 'Test District 1'}
+2026-07-11 14:44:42 WARNING  | Process 18680 | Thread: 1340 | master_management | views.add_district:ln 335 |--  ================================== END - Add District =================================
+2026-07-11 14:44:42 WARNING  | Process 18680 | Thread: 1340 | master_management | views.add_district:ln 279 |--  ================================== START - Add District =================================
+2026-07-11 14:44:42 INFO     | Process 18680 | Thread: 1340 | master_management | views.add_district:ln 281 |--  Received add district payload: {'state_id': 4, 'district_code': 'DST_TST01', 'district_name': 'Test District 1 Duplicate'}
+2026-07-11 14:44:42 WARNING  | Process 18680 | Thread: 1340 | master_management | views.list_districts:ln 458 |--  ================================== START - List Districts =================================
+2026-07-11 14:44:42 INFO     | Process 18680 | Thread: 1340 | master_management | views.list_districts:ln 460 |--  Received list districts params: {'state_id': 4, 'search': 'Test District'}
+2026-07-11 14:44:42 WARNING  | Process 18680 | Thread: 1340 | master_management | views.list_districts:ln 501 |--  ================================== END - List Districts =================================
+2026-07-11 14:44:42 WARNING  | Process 18680 | Thread: 1340 | master_management | views.edit_district:ln 356 |--  ================================== START - Edit District =================================
+2026-07-11 14:44:42 INFO     | Process 18680 | Thread: 1340 | master_management | views.edit_district:ln 358 |--  Received edit district payload: {'id': 1, 'district_name': 'Test District 1 Modified', 'is_active': False}
+2026-07-11 14:44:42 WARNING  | Process 18680 | Thread: 1340 | master_management | views.edit_district:ln 445 |--  ================================== END - Edit District =================================
+2026-07-11 14:44:42 WARNING  | Process 18680 | Thread: 1340 | master_management | views.get_district_detail:ln 517 |--  ================================== START - Get District Detail =================================
+2026-07-11 14:44:42 INFO     | Process 18680 | Thread: 1340 | master_management | views.get_district_detail:ln 519 |--  Received get district detail params: {'id': 1}
+2026-07-11 14:44:42 WARNING  | Process 18680 | Thread: 1340 | master_management | views.get_district_detail:ln 531 |--  ================================== END - Get District Detail =================================
+2026-07-11 14:56:07 WARNING  | Process 18680 | Thread: 5988 | administration.views | views.userPassLogin:ln 71 |--  ================================== START - Admin User Login With Password =================================
+2026-07-11 14:56:07 INFO     | Process 18680 | Thread: 5988 | administration.views | views.userPassLogin:ln 78 |--  Received Login payload - Username: 9876543210
+2026-07-11 14:56:07 WARNING  | Process 18680 | Thread: 5988 | administration.views | views.userPassLogin:ln 188 |--  ================================== END - Admin User Login with Password =================================
+2026-07-11 14:56:08 WARNING  | Process 18680 | Thread: 5988 | master_management | views.add_district:ln 279 |--  ================================== START - Add District =================================
+2026-07-11 14:56:08 INFO     | Process 18680 | Thread: 5988 | master_management | views.add_district:ln 281 |--  Received add district payload: {'state_id': 3, 'district_code': 'DST_TST01', 'district_name': 'Test District 1'}
+2026-07-11 14:56:08 WARNING  | Process 18680 | Thread: 5988 | master_management | views.add_district:ln 335 |--  ================================== END - Add District =================================
+2026-07-11 14:56:13 WARNING  | Process 18680 | Thread: 5136 | administration.views | views.userPassLogin:ln 71 |--  ================================== START - Admin User Login With Password =================================
+2026-07-11 14:56:13 INFO     | Process 18680 | Thread: 5136 | administration.views | views.userPassLogin:ln 78 |--  Received Login payload - Username: 9876543210
+2026-07-11 14:56:13 WARNING  | Process 18680 | Thread: 5136 | administration.views | views.userPassLogin:ln 188 |--  ================================== END - Admin User Login with Password =================================
+2026-07-11 14:56:13 WARNING  | Process 18680 | Thread: 5136 | master_management | views.list_districts:ln 458 |--  ================================== START - List Districts =================================
+2026-07-11 14:56:13 INFO     | Process 18680 | Thread: 5136 | master_management | views.list_districts:ln 460 |--  Received list districts params: {'state_id': 3, 'search': 'District', 'is_active': True}
+2026-07-11 14:56:13 WARNING  | Process 18680 | Thread: 5136 | master_management | views.list_districts:ln 501 |--  ================================== END - List Districts =================================
+2026-07-11 14:56:18 WARNING  | Process 18680 | Thread: 18348 | administration.views | views.userPassLogin:ln 71 |--  ================================== START - Admin User Login With Password =================================
+2026-07-11 14:56:18 INFO     | Process 18680 | Thread: 18348 | administration.views | views.userPassLogin:ln 78 |--  Received Login payload - Username: 9876543210
+2026-07-11 14:56:18 WARNING  | Process 18680 | Thread: 18348 | administration.views | views.userPassLogin:ln 188 |--  ================================== END - Admin User Login with Password =================================
+2026-07-11 14:56:18 WARNING  | Process 18680 | Thread: 18348 | master_management | views.get_district_detail:ln 517 |--  ================================== START - Get District Detail =================================
+2026-07-11 14:56:18 INFO     | Process 18680 | Thread: 18348 | master_management | views.get_district_detail:ln 519 |--  Received get district detail params: {'id': 2}
+2026-07-11 14:56:18 WARNING  | Process 18680 | Thread: 18348 | master_management | views.get_district_detail:ln 531 |--  ================================== END - Get District Detail =================================
+2026-07-11 14:56:23 WARNING  | Process 18680 | Thread: 18656 | administration.views | views.userPassLogin:ln 71 |--  ================================== START - Admin User Login With Password =================================
+2026-07-11 14:56:23 INFO     | Process 18680 | Thread: 18656 | administration.views | views.userPassLogin:ln 78 |--  Received Login payload - Username: 9876543210
+2026-07-11 14:56:23 WARNING  | Process 18680 | Thread: 18656 | administration.views | views.userPassLogin:ln 188 |--  ================================== END - Admin User Login with Password =================================
+2026-07-11 14:56:23 WARNING  | Process 18680 | Thread: 18656 | master_management | views.edit_district:ln 356 |--  ================================== START - Edit District =================================
+2026-07-11 14:56:23 INFO     | Process 18680 | Thread: 18656 | master_management | views.edit_district:ln 358 |--  Received edit district payload: {'id': 2, 'district_name': 'Test Dist Updated', 'is_active': False}
+2026-07-11 14:56:23 WARNING  | Process 18680 | Thread: 18656 | master_management | views.edit_district:ln 445 |--  ================================== END - Edit District =================================
+2026-07-11 14:56:28 WARNING  | Process 18680 | Thread: 18784 | administration.views | views.userPassLogin:ln 71 |--  ================================== START - Admin User Login With Password =================================
+2026-07-11 14:56:28 INFO     | Process 18680 | Thread: 18784 | administration.views | views.userPassLogin:ln 78 |--  Received Login payload - Username: 9876543210
+2026-07-11 14:56:28 WARNING  | Process 18680 | Thread: 18784 | administration.views | views.userPassLogin:ln 188 |--  ================================== END - Admin User Login with Password =================================
+2026-07-11 14:56:28 WARNING  | Process 18680 | Thread: 18784 | master_management | views.get_district_detail:ln 517 |--  ================================== START - Get District Detail =================================
+2026-07-11 14:56:28 INFO     | Process 18680 | Thread: 18784 | master_management | views.get_district_detail:ln 519 |--  Received get district detail params: {'id': 2}
+2026-07-11 14:56:28 WARNING  | Process 18680 | Thread: 18784 | master_management | views.get_district_detail:ln 531 |--  ================================== END - Get District Detail =================================
+2026-07-11 14:57:41 WARNING  | Process 18680 | Thread: 8060 | administration.views | views.userPassLogin:ln 71 |--  ================================== START - Admin User Login With Password =================================
+2026-07-11 14:57:41 INFO     | Process 18680 | Thread: 8060 | administration.views | views.userPassLogin:ln 78 |--  Received Login payload - Username: 9876543210
+2026-07-11 14:57:41 WARNING  | Process 18680 | Thread: 8060 | administration.views | views.userPassLogin:ln 188 |--  ================================== END - Admin User Login with Password =================================
+2026-07-11 14:57:47 WARNING  | Process 18680 | Thread: 8060 | master_management | views.list_states:ln 186 |--  ================================== START - List States =================================
+2026-07-11 14:57:47 INFO     | Process 18680 | Thread: 8060 | master_management | views.list_states:ln 188 |--  Received list states params: {}
+2026-07-11 14:57:47 WARNING  | Process 18680 | Thread: 8060 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
+2026-07-11 14:57:47 WARNING  | Process 18680 | Thread: 8060 | master_management | views.list_districts:ln 458 |--  ================================== START - List Districts =================================
+2026-07-11 14:57:47 INFO     | Process 18680 | Thread: 8060 | master_management | views.list_districts:ln 460 |--  Received list districts params: {}
+2026-07-11 14:57:47 WARNING  | Process 18680 | Thread: 8060 | master_management | views.list_districts:ln 501 |--  ================================== END - List Districts =================================
+2026-07-11 14:57:47 WARNING  | Process 18680 | Thread: 9776 | master_management | views.list_districts:ln 458 |--  ================================== START - List Districts =================================
+2026-07-11 14:57:47 INFO     | Process 18680 | Thread: 9776 | master_management | views.list_districts:ln 460 |--  Received list districts params: {}
+2026-07-11 14:57:47 WARNING  | Process 18680 | Thread: 9776 | master_management | views.list_districts:ln 501 |--  ================================== END - List Districts =================================
+2026-07-11 14:57:47 WARNING  | Process 18680 | Thread: 13548 | master_management | views.list_states:ln 186 |--  ================================== START - List States =================================
+2026-07-11 14:57:47 INFO     | Process 18680 | Thread: 13548 | master_management | views.list_states:ln 188 |--  Received list states params: {}
+2026-07-11 14:57:47 WARNING  | Process 18680 | Thread: 13548 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
+2026-07-11 14:58:35 WARNING  | Process 18680 | Thread: 13548 | master_management | views.add_district:ln 279 |--  ================================== START - Add District =================================
+2026-07-11 14:58:35 INFO     | Process 18680 | Thread: 13548 | master_management | views.add_district:ln 281 |--  Received add district payload: {'state_id': 3, 'district_code': 'ASDH', 'district_name': 'Dhubri'}
+2026-07-11 14:58:35 WARNING  | Process 18680 | Thread: 13548 | master_management | views.add_district:ln 335 |--  ================================== END - Add District =================================
+2026-07-11 14:58:35 WARNING  | Process 18680 | Thread: 13548 | master_management | views.list_districts:ln 458 |--  ================================== START - List Districts =================================
+2026-07-11 14:58:35 INFO     | Process 18680 | Thread: 13548 | master_management | views.list_districts:ln 460 |--  Received list districts params: {}
+2026-07-11 14:58:35 WARNING  | Process 18680 | Thread: 13548 | master_management | views.list_districts:ln 501 |--  ================================== END - List Districts =================================
