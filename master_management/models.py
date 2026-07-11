@@ -57,3 +57,23 @@ class BlockMaster(models.Model):
         return f"{self.block_name} ({self.block_code})"
 
 
+class RoleMaster(models.Model):
+    id = models.AutoField(primary_key=True)
+    role_name = models.CharField(max_length=100, unique=True)
+    role_code = models.CharField(max_length=50, unique=True, db_index=True)
+    description = models.TextField(blank=True, null=True)
+    is_active = models.BooleanField(default=True)
+    created_by = models.IntegerField(null=True, blank=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_by = models.IntegerField(null=True, blank=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        managed = True
+        db_table = 'role_master'
+
+    def __str__(self):
+        return f"{self.role_name} ({self.role_code})"
+
+
+

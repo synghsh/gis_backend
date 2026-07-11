@@ -9,7 +9,7 @@ from exception import (
 from commonUtility.decorators import require_post
 from commonUtility.utils import mandatoryInputCheck
 from common.models import AuditLog
-from master_management.models import StateMaster, DistrictMaster, BlockMaster
+from master_management.models import StateMaster, DistrictMaster, BlockMaster, RoleMaster
 
 logger = logging.getLogger('master_management')
 
@@ -896,5 +896,304 @@ def get_block_detail(request):
             "updated_on": block.updated_on.strftime('%Y-%m-%d %H:%M:%S') if block.updated_on else None,
         }
     })
+
+
+@csrf_exempt
+@require_post
+def add_role(request):
+    """
+    POST Request:
+    {
+        "role_name": "Field Level Surveyor",
+        "role_code": "FIELD_SURVEYOR",
+        "description": "Field level surveyor role"
+    }
+    """
+    logger.warning('================================== START - Add Role =================================')
+    payload = request.data
+    logger.info(f'Received add role payload: {payload}')
+
+    # Validate Mandatory Inputs
+    required_fields = ["role_name", "role_code"]
+    if not mandatoryInputCheck(payload, required_fields):
+        raise MandatoryInputMissingException(f"Mandatory Required Fields: {required_fields}")
+
+    role_name = str(payload.get('role_name')).strip()
+    role_code = str(payload.get('role_code')).strip()
+    description = payload.get('description')
+
+    if not role_name or not role_code:
+        raise MandatoryInputMissingException("role_name and role_code cannot be empty strings.")
+
+    # Check for duplicates
+    duplicate = RoleMaster.objects.filter(
+        Q(role_name__iexact=role_name) | Q(role_code__iexact=role_code)
+    ).first()
+
+    if duplicate:
+        if duplicate.role_code.lower() == role_code.lower():
+            raise UserAlreadyExistException(f"Role Code '{role_code}' already exists.")
+        else:
+            raise UserAlreadyExistException(f"Role Name '{role_name}' already exists.")
+
+    # Fetch user ID from authenticated token
+    user_id = None
+    if hasattr(request, 'token_details') and request.token_details:
+        user_id = request.token_details.get('user_id')
+
+    # Create Role
+    role = RoleMaster.objects.create(
+        role_name=role_name,
+        role_code=role_code,
+        description=description,
+        created_by=user_id,
+        updated_by=user_id
+    )
+
+    # Create Audit Log
+    AuditLog.objects.create(
+        table_name='role_master',
+        operation='INSERT',
+        ref_id=role.id,
+        old_data=None,
+        updated_by=user_id,
+        remarks=f"Role created: {role.role_name} ({role.role_code})"
+    )
+
+    logger.warning('================================== END - Add Role =================================')
+    return JsonResponse({
+        "Code": "SUCCESS001",
+        "Message": "Role created successfully.",
+        "role_id": role.id
+    })
+
+
+@csrf_exempt
+@require_post
+def edit_role(request):
+    """
+    POST Request:
+    {
+        "id": 1,
+        "role_name": "Field Level Surveyor Updated",
+        "role_code": "FIELD_SURVEYOR_UPD",
+        "description": "Updated description",
+        "is_active": true
+    }
+    """
+    logger.warning('================================== START - Edit Role =================================')
+    payload = request.data
+    logger.info(f'Received edit role payload: {payload}')
+
+    # Validate Mandatory Inputs
+    required_fields = ["id"]
+    if not mandatoryInputCheck(payload, required_fields):
+        raise MandatoryInputMissingException(f"Mandatory Required Fields: {required_fields}")
+
+    role_id = payload.get('id')
+    role = RoleMaster.objects.filter(id=role_id).first()
+    if not role:
+        raise UserNotFoundException(f"Role with ID {role_id} not found.")
+
+    # Store original values for Audit log
+    old_data = {
+        "role_name": role.role_name,
+        "role_code": role.role_code,
+        "description": role.description,
+        "is_active": role.is_active
+    }
+
+    updated = False
+    role_name = payload.get('role_name')
+    role_code = payload.get('role_code')
+    description = payload.get('description')
+    is_active = payload.get('is_active')
+
+    # Update role_name if provided
+    if role_name is not None:
+        role_name = str(role_name).strip()
+        if not role_name:
+            raise MandatoryInputMissingException("role_name cannot be empty.")
+        # Check uniqueness excluding current record
+        if RoleMaster.objects.filter(role_name__iexact=role_name).exclude(id=role.id).exists():
+            raise UserAlreadyExistException(f"Role Name '{role_name}' already exists.")
+        if role.role_name != role_name:
+            role.role_name = role_name
+            updated = True
+
+    # Update role_code if provided
+    if role_code is not None:
+        role_code = str(role_code).strip()
+        if not role_code:
+            raise MandatoryInputMissingException("role_code cannot be empty.")
+        # Check uniqueness excluding current record
+        if RoleMaster.objects.filter(role_code__iexact=role_code).exclude(id=role.id).exists():
+            raise UserAlreadyExistException(f"Role Code '{role_code}' already exists.")
+        if role.role_code != role_code:
+            role.role_code = role_code
+            updated = True
+
+    # Update description if provided
+    if description is not None:
+        description = str(description).strip()
+        if role.description != description:
+            role.description = description
+            updated = True
+
+    # Update is_active if provided
+    if is_active is not None:
+        if isinstance(is_active, str):
+            is_active_val = is_active.lower() in ['true', '1', 'yes']
+        else:
+            is_active_val = bool(is_active)
+        if role.is_active != is_active_val:
+            role.is_active = is_active_val
+            updated = True
+
+    # Save changes and log audit trail if updates occurred
+    if updated:
+        user_id = None
+        if hasattr(request, 'token_details') and request.token_details:
+            user_id = request.token_details.get('user_id')
+
+        role.updated_by = user_id
+        role.save()
+
+        AuditLog.objects.create(
+            table_name='role_master',
+            operation='UPDATE',
+            ref_id=role.id,
+            old_data=old_data,
+            updated_by=user_id,
+            remarks=f"Role updated: {role.role_name} ({role.role_code})"
+        )
+
+    logger.warning('================================== END - Edit Role =================================')
+    return JsonResponse({
+        "Code": "SUCCESS001",
+        "Message": "Role updated successfully."
+    })
+
+
+@csrf_exempt
+def list_roles(request):
+    """
+    GET / POST Request:
+    Supports filtering by search query and is_active status.
+    """
+    logger.warning('================================== START - List Roles =================================')
+    payload = request.data
+    logger.info(f'Received list roles params: {payload}')
+
+    queryset = RoleMaster.objects.all()
+
+    # Search filter (matches role_name or role_code or description)
+    search = payload.get('search')
+    if search:
+        search = str(search).strip()
+        queryset = queryset.filter(
+            Q(role_name__icontains=search) | Q(role_code__icontains=search) | Q(description__icontains=search)
+        )
+
+    # Active status filter
+    is_active = payload.get('is_active')
+    if is_active is not None:
+        if isinstance(is_active, str):
+            is_active_val = is_active.lower() in ['true', '1', 'yes', 'active']
+        else:
+            is_active_val = bool(is_active)
+        queryset = queryset.filter(is_active=is_active_val)
+
+    # Order alphabetically by role name
+    queryset = queryset.order_by('role_name')
+
+    # Total Count matching filters
+    total_count = queryset.count()
+
+    # Pagination parameters
+    try:
+        page_no = int(payload.get('page_no', 1))
+        if page_no < 1:
+            page_no = 1
+    except (ValueError, TypeError):
+        page_no = 1
+
+    try:
+        page_size = int(payload.get('page_size', 10))
+        if page_size < 1:
+            page_size = 10
+    except (ValueError, TypeError):
+        page_size = 10
+
+    offset = (page_no - 1) * page_size
+    limit = page_size
+
+    # Slice queryset for pagination
+    queryset = queryset[offset:offset + limit]
+    total_pages = (total_count + page_size - 1) // page_size if total_count > 0 else 0
+
+    roles_list = []
+    for role in queryset:
+        roles_list.append({
+            "id": role.id,
+            "role_name": role.role_name,
+            "role_code": role.role_code,
+            "description": role.description,
+            "is_active": role.is_active,
+            "created_on": role.created_on.strftime('%Y-%m-%d %H:%M:%S') if role.created_on else None,
+            "updated_on": role.updated_on.strftime('%Y-%m-%d %H:%M:%S') if role.updated_on else None,
+        })
+
+    logger.warning('================================== END - List Roles =================================')
+    return JsonResponse({
+        "Code": "SUCCESS001",
+        "Message": "Roles retrieved successfully.",
+        "total_count": total_count,
+        "total_pages": total_pages,
+        "current_page": page_no,
+        "page_size": page_size,
+        "roles": roles_list
+    })
+
+
+@csrf_exempt
+def get_role_detail(request):
+    """
+    GET / POST Request:
+    {
+        "id": 1
+    }
+    """
+    logger.warning('================================== START - Get Role Detail =================================')
+    payload = request.data
+    logger.info(f'Received get role detail params: {payload}')
+
+    # Validate Mandatory Inputs
+    required_fields = ["id"]
+    if not mandatoryInputCheck(payload, required_fields):
+        raise MandatoryInputMissingException(f"Mandatory Required Fields: {required_fields}")
+
+    role_id = payload.get('id')
+    role = RoleMaster.objects.filter(id=role_id).first()
+    if not role:
+        raise UserNotFoundException(f"Role with ID {role_id} not found.")
+
+    logger.warning('================================== END - Get Role Detail =================================')
+    return JsonResponse({
+        "Code": "SUCCESS001",
+        "Message": "Role detail retrieved successfully.",
+        "role": {
+            "id": role.id,
+            "role_name": role.role_name,
+            "role_code": role.role_code,
+            "description": role.description,
+            "is_active": role.is_active,
+            "created_by": role.created_by,
+            "created_on": role.created_on.strftime('%Y-%m-%d %H:%M:%S') if role.created_on else None,
+            "updated_by": role.updated_by,
+            "updated_on": role.updated_on.strftime('%Y-%m-%d %H:%M:%S') if role.updated_on else None,
+        }
+    })
+
 
 

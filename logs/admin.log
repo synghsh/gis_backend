@@ -291,3 +291,68 @@ Exception: Token generation failed
 2026-07-11 15:30:02 WARNING  | Process 4464 | Thread: 13472 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
 2026-07-11 15:30:02 INFO     | Process 4464 | Thread: 2872 | master_management | views.list_districts:ln 460 |--  Received list districts params: {}
 2026-07-11 15:30:02 WARNING  | Process 4464 | Thread: 2872 | master_management | views.list_districts:ln 501 |--  ================================== END - List Districts =================================
+2026-07-11 19:42:37 WARNING  | Process 2236 | Thread: 5124 | master_management | views.add_role:ln 912 |--  ================================== START - Add Role =================================
+2026-07-11 19:42:37 INFO     | Process 2236 | Thread: 5124 | master_management | views.add_role:ln 914 |--  Received add role payload: {'role_name': 'Test Role 1', 'role_code': 'RL_TST01', 'description': 'Test Role 1 Description'}
+2026-07-11 19:42:37 WARNING  | Process 2236 | Thread: 5124 | master_management | views.add_role:ln 963 |--  ================================== END - Add Role =================================
+2026-07-11 19:42:37 WARNING  | Process 2236 | Thread: 5124 | master_management | views.add_role:ln 912 |--  ================================== START - Add Role =================================
+2026-07-11 19:42:37 INFO     | Process 2236 | Thread: 5124 | master_management | views.add_role:ln 914 |--  Received add role payload: {'role_name': 'Test Role 1 Duplicate', 'role_code': 'RL_TST01'}
+2026-07-11 19:42:37 WARNING  | Process 2236 | Thread: 5124 | master_management | views.list_roles:ln 1084 |--  ================================== START - List Roles =================================
+2026-07-11 19:42:37 INFO     | Process 2236 | Thread: 5124 | master_management | views.list_roles:ln 1086 |--  Received list roles params: {'search': 'Test Role'}
+2026-07-11 19:42:37 WARNING  | Process 2236 | Thread: 5124 | master_management | views.list_roles:ln 1147 |--  ================================== END - List Roles =================================
+2026-07-11 19:42:37 WARNING  | Process 2236 | Thread: 5124 | master_management | views.edit_role:ln 984 |--  ================================== START - Edit Role =================================
+2026-07-11 19:42:37 INFO     | Process 2236 | Thread: 5124 | master_management | views.edit_role:ln 986 |--  Received edit role payload: {'id': 1, 'role_name': 'Test Role 1 Modified', 'is_active': False}
+2026-07-11 19:42:37 WARNING  | Process 2236 | Thread: 5124 | master_management | views.edit_role:ln 1071 |--  ================================== END - Edit Role =================================
+2026-07-11 19:42:37 WARNING  | Process 2236 | Thread: 5124 | master_management | views.get_role_detail:ln 1167 |--  ================================== START - Get Role Detail =================================
+2026-07-11 19:42:37 INFO     | Process 2236 | Thread: 5124 | master_management | views.get_role_detail:ln 1169 |--  Received get role detail params: {'id': 1}
+2026-07-11 19:42:37 WARNING  | Process 2236 | Thread: 5124 | master_management | views.get_role_detail:ln 1181 |--  ================================== END - Get Role Detail =================================
+2026-07-11 19:45:35 WARNING  | Process 26348 | Thread: 24908 | administration.views | views.userPassLogin:ln 71 |--  ================================== START - Admin User Login With Password =================================
+2026-07-11 19:45:35 INFO     | Process 26348 | Thread: 24908 | administration.views | views.userPassLogin:ln 78 |--  Received Login payload - Username: 9876543210
+2026-07-11 19:45:36 WARNING  | Process 26348 | Thread: 24908 | administration.views | views.userPassLogin:ln 188 |--  ================================== END - Admin User Login with Password =================================
+2026-07-11 19:45:36 WARNING  | Process 26348 | Thread: 24908 | master_management | views.add_role:ln 912 |--  ================================== START - Add Role =================================
+2026-07-11 19:45:36 INFO     | Process 26348 | Thread: 24908 | master_management | views.add_role:ln 914 |--  Received add role payload: {'role_name': 'Field Level Surveyor', 'role_code': 'FIELD_SURVEYOR', 'description': 'Field level surveyor role'}
+2026-07-11 19:45:36 WARNING  | Process 26348 | Thread: 24908 | master_management | views.add_role:ln 963 |--  ================================== END - Add Role =================================
+2026-07-11 19:45:59 WARNING  | Process 26348 | Thread: 9568 | administration.views | views.userPassLogin:ln 71 |--  ================================== START - Admin User Login With Password =================================
+2026-07-11 19:45:59 INFO     | Process 26348 | Thread: 9568 | administration.views | views.userPassLogin:ln 78 |--  Received Login payload - Username: 9876543210
+2026-07-11 19:45:59 WARNING  | Process 26348 | Thread: 9568 | administration.views | views.userPassLogin:ln 188 |--  ================================== END - Admin User Login with Password =================================
+2026-07-11 19:45:59 WARNING  | Process 26348 | Thread: 9568 | master_management | views.list_roles:ln 1084 |--  ================================== START - List Roles =================================
+2026-07-11 19:45:59 INFO     | Process 26348 | Thread: 9568 | master_management | views.list_roles:ln 1086 |--  Received list roles params: {'search': 'Surveyor', 'page_no': 1, 'page_size': 10}
+2026-07-11 19:45:59 WARNING  | Process 26348 | Thread: 9568 | master_management | views.list_roles:ln 1147 |--  ================================== END - List Roles =================================
+2026-07-11 19:47:57 WARNING  | Process 26348 | Thread: 20688 | administration.views | views.userPassLogin:ln 71 |--  ================================== START - Admin User Login With Password =================================
+2026-07-11 19:47:57 INFO     | Process 26348 | Thread: 20688 | administration.views | views.userPassLogin:ln 78 |--  Received Login payload - Username: 9876543210
+2026-07-11 19:47:58 WARNING  | Process 26348 | Thread: 20688 | administration.views | views.userPassLogin:ln 188 |--  ================================== END - Admin User Login with Password =================================
+2026-07-11 19:48:19 WARNING  | Process 26348 | Thread: 20688 | master_management | views.list_states:ln 186 |--  ================================== START - List States =================================
+2026-07-11 19:48:19 INFO     | Process 26348 | Thread: 20688 | master_management | views.list_states:ln 188 |--  Received list states params: {}
+2026-07-11 19:48:19 WARNING  | Process 26348 | Thread: 20688 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
+2026-07-11 19:48:19 WARNING  | Process 26348 | Thread: 368 | master_management | views.list_districts:ln 458 |--  ================================== START - List Districts =================================
+2026-07-11 19:48:19 INFO     | Process 26348 | Thread: 368 | master_management | views.list_districts:ln 460 |--  Received list districts params: {}
+2026-07-11 19:48:19 WARNING  | Process 26348 | Thread: 368 | master_management | views.list_districts:ln 501 |--  ================================== END - List Districts =================================
+2026-07-11 19:48:19 WARNING  | Process 26348 | Thread: 2968 | master_management | views.list_districts:ln 458 |--  ================================== START - List Districts =================================
+2026-07-11 19:48:19 INFO     | Process 26348 | Thread: 2968 | master_management | views.list_districts:ln 460 |--  Received list districts params: {}
+2026-07-11 19:48:19 WARNING  | Process 26348 | Thread: 22672 | master_management | views.list_blocks:ln 771 |--  ================================== START - List Blocks =================================
+2026-07-11 19:48:19 INFO     | Process 26348 | Thread: 22672 | master_management | views.list_blocks:ln 773 |--  Received list blocks params: {'page_no': 1, 'page_size': 10}
+2026-07-11 19:48:19 WARNING  | Process 26348 | Thread: 2968 | master_management | views.list_districts:ln 501 |--  ================================== END - List Districts =================================
+2026-07-11 19:48:19 WARNING  | Process 26348 | Thread: 20776 | master_management | views.list_blocks:ln 771 |--  ================================== START - List Blocks =================================
+2026-07-11 19:48:19 INFO     | Process 26348 | Thread: 20776 | master_management | views.list_blocks:ln 773 |--  Received list blocks params: {'page_no': 1, 'page_size': 10}
+2026-07-11 19:48:19 WARNING  | Process 26348 | Thread: 22672 | master_management | views.list_blocks:ln 846 |--  ================================== END - List Blocks =================================
+2026-07-11 19:48:19 WARNING  | Process 26348 | Thread: 25208 | master_management | views.list_states:ln 186 |--  ================================== START - List States =================================
+2026-07-11 19:48:19 INFO     | Process 26348 | Thread: 25208 | master_management | views.list_states:ln 188 |--  Received list states params: {}
+2026-07-11 19:48:19 WARNING  | Process 26348 | Thread: 25208 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
+2026-07-11 19:48:19 WARNING  | Process 26348 | Thread: 20776 | master_management | views.list_blocks:ln 846 |--  ================================== END - List Blocks =================================
+2026-07-11 20:02:36 WARNING  | Process 26348 | Thread: 25832 | master_management | views.list_roles:ln 1084 |--  ================================== START - List Roles =================================
+2026-07-11 20:02:36 INFO     | Process 26348 | Thread: 25832 | master_management | views.list_roles:ln 1086 |--  Received list roles params: {'page_no': 1, 'page_size': 10}
+2026-07-11 20:02:36 WARNING  | Process 26348 | Thread: 22896 | master_management | views.list_roles:ln 1084 |--  ================================== START - List Roles =================================
+2026-07-11 20:02:36 INFO     | Process 26348 | Thread: 22896 | master_management | views.list_roles:ln 1086 |--  Received list roles params: {'page_no': 1, 'page_size': 10}
+2026-07-11 20:02:36 WARNING  | Process 26348 | Thread: 25832 | master_management | views.list_roles:ln 1147 |--  ================================== END - List Roles =================================
+2026-07-11 20:02:36 WARNING  | Process 26348 | Thread: 22896 | master_management | views.list_roles:ln 1147 |--  ================================== END - List Roles =================================
+2026-07-11 20:03:38 WARNING  | Process 26348 | Thread: 22896 | master_management | views.add_role:ln 912 |--  ================================== START - Add Role =================================
+2026-07-11 20:03:38 INFO     | Process 26348 | Thread: 22896 | master_management | views.add_role:ln 914 |--  Received add role payload: {'role_name': 'Super Admin', 'role_code': 'SUAD', 'description': 'All permissions given.'}
+2026-07-11 20:03:38 WARNING  | Process 26348 | Thread: 22896 | master_management | views.add_role:ln 963 |--  ================================== END - Add Role =================================
+2026-07-11 20:03:38 WARNING  | Process 26348 | Thread: 22896 | master_management | views.list_roles:ln 1084 |--  ================================== START - List Roles =================================
+2026-07-11 20:03:38 INFO     | Process 26348 | Thread: 22896 | master_management | views.list_roles:ln 1086 |--  Received list roles params: {'page_no': 1, 'page_size': 10}
+2026-07-11 20:03:38 WARNING  | Process 26348 | Thread: 22896 | master_management | views.list_roles:ln 1147 |--  ================================== END - List Roles =================================
+2026-07-11 20:04:11 WARNING  | Process 26348 | Thread: 22896 | master_management | views.edit_role:ln 984 |--  ================================== START - Edit Role =================================
+2026-07-11 20:04:11 INFO     | Process 26348 | Thread: 22896 | master_management | views.edit_role:ln 986 |--  Received edit role payload: {'id': 3, 'role_name': 'Super Admin', 'role_code': 'SU_AD', 'description': 'All permissions given.', 'is_active': True}
+2026-07-11 20:04:11 WARNING  | Process 26348 | Thread: 22896 | master_management | views.edit_role:ln 1071 |--  ================================== END - Edit Role =================================
+2026-07-11 20:04:11 WARNING  | Process 26348 | Thread: 22896 | master_management | views.list_roles:ln 1084 |--  ================================== START - List Roles =================================
+2026-07-11 20:04:11 INFO     | Process 26348 | Thread: 22896 | master_management | views.list_roles:ln 1086 |--  Received list roles params: {'page_no': 1, 'page_size': 10}
+2026-07-11 20:04:11 WARNING  | Process 26348 | Thread: 22896 | master_management | views.list_roles:ln 1147 |--  ================================== END - List Roles =================================

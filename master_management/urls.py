@@ -2,7 +2,8 @@ from django.urls import path
 from master_management.views import (
     add_state, edit_state, list_states, get_state_detail,
     add_district, edit_district, list_districts, get_district_detail,
-    add_block, edit_block, list_blocks, get_block_detail
+    add_block, edit_block, list_blocks, get_block_detail,
+    add_role, edit_role, list_roles, get_role_detail
 )
 
 urlpatterns = [
@@ -23,5 +24,12 @@ urlpatterns = [
     path('block/edit/', edit_block),
     path('block/list/', list_blocks),
     path('block/detail/', get_block_detail),
+
+    # Role Master
+    path('role/add/', add_role),
+    path('role/edit/', edit_role),
+    path('role/list/', list_roles),
+    path('role/detail/', get_role_detail),
 ]
+
 
