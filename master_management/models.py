@@ -96,5 +96,63 @@ class DesignationMaster(models.Model):
         return f"{self.designation_name} ({self.designation_code})"
 
 
+class ConductorMaster(models.Model):
+    id = models.AutoField(primary_key=True)
+    conductor_name = models.CharField(max_length=150, unique=True)
+    conductor_code = models.CharField(max_length=50, unique=True, db_index=True)
+    description = models.TextField(blank=True, null=True)
+    is_active = models.BooleanField(default=True)
+    created_by = models.IntegerField(null=True, blank=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_by = models.IntegerField(null=True, blank=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        managed = True
+        db_table = 'conductor_master'
+
+    def __str__(self):
+        return f"{self.conductor_name} ({self.conductor_code})"
+
+
+class PoleMaster(models.Model):
+    id = models.AutoField(primary_key=True)
+    pole_name = models.CharField(max_length=150, unique=True)
+    pole_code = models.CharField(max_length=50, unique=True, db_index=True)
+    description = models.TextField(blank=True, null=True)
+    is_active = models.BooleanField(default=True)
+    created_by = models.IntegerField(null=True, blank=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_by = models.IntegerField(null=True, blank=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        managed = True
+        db_table = 'pole_master'
+
+    def __str__(self):
+        return f"{self.pole_name} ({self.pole_code})"
+
+
+class TransformerMaster(models.Model):
+    id = models.AutoField(primary_key=True)
+    transformer_name = models.CharField(max_length=150, unique=True)
+    transformer_code = models.CharField(max_length=50, unique=True, db_index=True)
+    description = models.TextField(blank=True, null=True)
+    is_active = models.BooleanField(default=True)
+    created_by = models.IntegerField(null=True, blank=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_by = models.IntegerField(null=True, blank=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        managed = True
+        db_table = 'transformer_master'
+
+    def __str__(self):
+        return f"{self.transformer_name} ({self.transformer_code})"
+
+
+
 
 

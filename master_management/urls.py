@@ -4,7 +4,10 @@ from master_management.views import (
     add_district, edit_district, list_districts, get_district_detail,
     add_block, edit_block, list_blocks, get_block_detail,
     add_role, edit_role, list_roles, get_role_detail,
-    add_designation, edit_designation, list_designations, get_designation_detail
+    add_designation, edit_designation, list_designations, get_designation_detail,
+    add_conductor, edit_conductor, list_conductors, get_conductor_detail, delete_conductor,
+    add_pole, edit_pole, list_poles, get_pole_detail, delete_pole,
+    add_transformer, edit_transformer, list_transformers, get_transformer_detail, delete_transformer
 )
 
 urlpatterns = [
@@ -37,7 +40,29 @@ urlpatterns = [
     path('designation/edit/', edit_designation),
     path('designation/list/', list_designations),
     path('designation/detail/', get_designation_detail),
+
+    # Conductor Master
+    path('conductor/add/', add_conductor),
+    path('conductor/edit/', edit_conductor),
+    path('conductor/list/', list_conductors),
+    path('conductor/detail/', get_conductor_detail),
+    path('conductor/delete/', delete_conductor),
+
+    # Pole Master
+    path('pole/add/', add_pole),
+    path('pole/edit/', edit_pole),
+    path('pole/list/', list_poles),
+    path('pole/detail/', get_pole_detail),
+    path('pole/delete/', delete_pole),
+
+    # Transformer Master
+    path('transformer/add/', add_transformer),
+    path('transformer/edit/', edit_transformer),
+    path('transformer/list/', list_transformers),
+    path('transformer/detail/', get_transformer_detail),
+    path('transformer/delete/', delete_transformer),
 ]
+
 
 
 
