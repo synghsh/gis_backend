@@ -17,7 +17,8 @@ from constants import (
     DJANGO_DEBUG, SECRET_KEY, ALLOWED_HOSTS, DB_ENGINE, DB_HOST, DB_REPLICA_HOST, 
     DB_PORT, DB_NAME, DB_SCHEMA, DB_USER, DB_PASSWORD, DB_POOL, DB_OVER, CONN_MAX_AGE,
     LOGGING_LEVEL, LOG_FILESIZE, LOG_BACKUPCOUNT, LOG_FILE_HEALTH, LOG_FILE_AUTH, 
-    LOG_FILE_ADMIN, LOG_FILE_COMMON, LOG_FILE_SURVEY, QUERY_LOGGING
+    LOG_FILE_ADMIN, LOG_FILE_COMMON, LOG_FILE_SURVEY, QUERY_LOGGING,
+    R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_BUCKET_NAME, R2_ENDPOINT_URL, R2_PUBLIC_URL
 )
 
 ENVIRONMENT = os.getenv('DJANGO_ENV', 'development')
@@ -157,6 +158,40 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Cloudflare R2 / S3-compatible Storage Configuration with fallback
+if R2_ACCESS_KEY_ID and R2_ACCESS_KEY_ID != 'placeholder_r2_access_key':
+    AWS_ACCESS_KEY_ID = R2_ACCESS_KEY_ID
+    AWS_SECRET_ACCESS_KEY = R2_SECRET_ACCESS_KEY
+    AWS_STORAGE_BUCKET_NAME = R2_BUCKET_NAME
+    AWS_S3_ENDPOINT_URL = R2_ENDPOINT_URL
+    AWS_S3_CUSTOM_DOMAIN = R2_PUBLIC_URL.replace("https://", "").replace("http://", "") if R2_PUBLIC_URL else None
+    AWS_S3_REGION_NAME = 'auto'
+    AWS_S3_FILE_OVERWRITE = False
+    AWS_QUERYSTRING_AUTH = False
+    AWS_DEFAULT_ACL = None
+
+    STORAGES = {
+        "default": {
+            "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+        },
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
+    }
+    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/" if AWS_S3_CUSTOM_DOMAIN else f"{R2_ENDPOINT_URL}/{R2_BUCKET_NAME}/"
+else:
+    STORAGES = {
+        "default": {
+            "BACKEND": "django.core.files.storage.FileSystemStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
+    }
+    MEDIA_URL = 'media/'
+    MEDIA_ROOT = BASE_DIR / 'media'
+
 
 # Logging Configuration
 LOG_DIR = BASE_DIR / 'logs'

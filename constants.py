@@ -35,13 +35,12 @@ DB_POOL = os.getenv('DB_POOL', '10')
 DB_OVER = os.getenv('DB_OVER', '5')
 CONN_MAX_AGE = os.getenv('CONN_MAX_AGE', '600')
 
-# AWS Configuration
-AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
-AWS_S3_REGION = os.getenv('AWS_S3_REGION', 'ap-south-1')
-AWS_S3_BUCKET = os.getenv('AWS_S3_BUCKET')
-AWS_S3_OBJECT_NAME = os.getenv('AWS_S3_OBJECT_NAME', 'gis/development/')
-AWS_S3_ENDPOINT_URL = os.getenv('AWS_S3_ENDPOINT_URL')
+# Cloudflare R2 Configuration
+R2_ACCESS_KEY_ID = os.getenv('R2_ACCESS_KEY_ID')
+R2_SECRET_ACCESS_KEY = os.getenv('R2_SECRET_ACCESS_KEY')
+R2_BUCKET_NAME = os.getenv('R2_BUCKET_NAME', 'gis-survey-dev-documents')
+R2_ENDPOINT_URL = os.getenv('R2_ENDPOINT_URL')
+R2_PUBLIC_URL = os.getenv('R2_PUBLIC_URL')
 
 # Database Cursor Alias
 DB_ALIAS_MASTER = "default"
