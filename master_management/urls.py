@@ -7,10 +7,14 @@ from master_management.views import (
     add_designation, edit_designation, list_designations, get_designation_detail,
     add_conductor, edit_conductor, list_conductors, get_conductor_detail, delete_conductor,
     add_pole, edit_pole, list_poles, get_pole_detail, delete_pole,
-    add_transformer, edit_transformer, list_transformers, get_transformer_detail, delete_transformer
+    add_transformer, edit_transformer, list_transformers, get_transformer_detail, delete_transformer,
+    getDomainValueByTypes
 )
 
 urlpatterns = [
+    # Domain Lookup Master
+    path('domainvaluebydomaintype/', getDomainValueByTypes),
+
     # State Master
     path('state/add/', add_state),
     path('state/edit/', edit_state),

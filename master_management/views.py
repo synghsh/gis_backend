@@ -2565,3 +2565,41 @@ def delete_transformer(request):
         "Code": "SUCCESS001",
         "Message": "Transformer deleted successfully."
     })
+
+
+@csrf_exempt
+@require_post
+def getDomainValueByTypes(request):
+    logger.warning('================================== START - GET ALL DOMAIN MASTER LIST =================================')
+    payload = request.data
+    domain_type = payload.get('domain_type', None)
+    
+    if not domain_type:
+        return JsonResponse({"Exception": True, "Message": "domain_type is required"}, status=400)
+        
+    if isinstance(domain_type, str):
+        domain_type_list = [domain_type]
+    elif isinstance(domain_type, list):
+        domain_type_list = domain_type
+    else:
+        return JsonResponse({"Exception": True, "Message": "domain_type must be a string or list"}, status=400)
+        
+    # Lazy import of DomainLookup to avoid potential circular dependencies
+    from common.models import DomainLookup
+    getdomain_data = DomainLookup.objects.filter(
+        domain_type__in=domain_type_list, 
+        status=1
+    ).order_by('domain_code').values('domain_id', 'domain_type', 'domain_value', 'domain_code', 'domain_desc')
+    
+    result = {}
+    for d_type in domain_type_list:
+        result[d_type] = list(filter(lambda x: x['domain_type'] == d_type, getdomain_data))
+        
+    response_data = {
+        "Code": "SUCCESS001",
+        "Message": "Domain Values Fetched Successfully",
+        "Data": result
+    }
+    logger.warning('================================== END - GET ALL DOMAIN MASTER LIST =================================')
+    return JsonResponse(response_data)
+

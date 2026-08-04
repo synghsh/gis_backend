@@ -153,6 +153,44 @@ class TransformerMaster(models.Model):
         return f"{self.transformer_name} ({self.transformer_code})"
 
 
+class VillageMaster(models.Model):
+    id = models.AutoField(primary_key=True)
+    block = models.ForeignKey(BlockMaster, on_delete=models.PROTECT, related_name='villages', db_column='block_id')
+    village_code = models.CharField(max_length=50, unique=True, db_index=True)
+    village_name = models.CharField(max_length=150)
+    is_active = models.BooleanField(default=True)
+    created_by = models.IntegerField(null=True, blank=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_by = models.IntegerField(null=True, blank=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        managed = True
+        db_table = 'village_master'
+
+    def __str__(self):
+        return f"{self.village_name} ({self.village_code})"
+
+
+class ContractorMaster(models.Model):
+    id = models.AutoField(primary_key=True)
+    contractor_code = models.CharField(max_length=50, unique=True, db_index=True)
+    contractor_name = models.CharField(max_length=255)
+    is_active = models.BooleanField(default=True)
+    created_by = models.IntegerField(null=True, blank=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_by = models.IntegerField(null=True, blank=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        managed = True
+        db_table = 'contractor_master'
+
+    def __str__(self):
+        return f"{self.contractor_name} ({self.contractor_code})"
+
+
+
 
 
 

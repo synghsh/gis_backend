@@ -55,3 +55,21 @@ class AuditLog(models.Model):
     class Meta:
         managed = True
         db_table = 'audit_log'
+
+
+class DomainLookup(models.Model):
+    domain_id = models.AutoField(primary_key=True)
+    domain_type = models.CharField(max_length=50, db_index=True)
+    domain_value = models.CharField(max_length=500)
+    domain_code = models.IntegerField(null=True, blank=True)
+    domain_desc = models.TextField(null=True, blank=True)
+    domain_data_type = models.CharField(max_length=50, null=True, blank=True)
+    status = models.SmallIntegerField(default=1)
+
+    class Meta:
+        managed = True
+        db_table = "domain_lookup"
+
+    def __str__(self):
+        return f"{self.domain_type} - {self.domain_value} ({self.domain_code})"
+

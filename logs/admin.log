@@ -532,3 +532,17 @@ Exception: Token generation failed
 2026-08-04 14:54:27 WARNING  | Process 14288 | Thread: 25460 | master_management | views.list_states:ln 186 |--  ================================== START - List States =================================
 2026-08-04 14:54:27 INFO     | Process 14288 | Thread: 25460 | master_management | views.list_states:ln 188 |--  Received list states params: {'is_active': True}
 2026-08-04 14:54:27 WARNING  | Process 14288 | Thread: 25460 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
+2026-08-04 15:13:56 WARNING  | Process 24128 | Thread: 19700 | master_management | views.getDomainValueByTypes:ln 2573 |--  ================================== START - GET ALL DOMAIN MASTER LIST =================================
+2026-08-04 15:13:56 WARNING  | Process 24128 | Thread: 19700 | master_management | views.getDomainValueByTypes:ln 2603 |--  ================================== END - GET ALL DOMAIN MASTER LIST =================================
+2026-08-04 15:22:41 WARNING  | Process 26576 | Thread: 3792 | administration.views | views.userPassLogin:ln 71 |--  ================================== START - Admin User Login With Password =================================
+2026-08-04 15:22:41 INFO     | Process 26576 | Thread: 3792 | administration.views | views.userPassLogin:ln 78 |--  Received Login payload - Username: 9876543210
+2026-08-04 15:22:42 WARNING  | Process 26576 | Thread: 3792 | administration.views | views.userPassLogin:ln 188 |--  ================================== END - Admin User Login with Password =================================
+2026-08-04 15:22:45 WARNING  | Process 26576 | Thread: 24352 | master_management | views.list_states:ln 186 |--  ================================== START - List States =================================
+2026-08-04 15:22:45 INFO     | Process 26576 | Thread: 24352 | master_management | views.list_states:ln 188 |--  Received list states params: {'is_active': True}
+2026-08-04 15:22:45 WARNING  | Process 26576 | Thread: 24352 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
+2026-08-04 15:29:52 WARNING  | Process 26576 | Thread: 4088 | master_management | views.list_states:ln 186 |--  ================================== START - List States =================================
+2026-08-04 15:29:52 INFO     | Process 26576 | Thread: 4088 | master_management | views.list_states:ln 188 |--  Received list states params: {'is_active': True}
+2026-08-04 15:29:52 WARNING  | Process 26576 | Thread: 4088 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
+2026-08-04 15:30:01 WARNING  | Process 26576 | Thread: 4088 | master_management | views.list_states:ln 186 |--  ================================== START - List States =================================
+2026-08-04 15:30:01 INFO     | Process 26576 | Thread: 4088 | master_management | views.list_states:ln 188 |--  Received list states params: {'is_active': True}
+2026-08-04 15:30:02 WARNING  | Process 26576 | Thread: 4088 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
