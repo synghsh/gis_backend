@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 JWT_SECRET = getattr(settings, 'SECRET_KEY', 'default_secret_key')
 JWT_ALGO = 'HS256'
-TOKEN_VALID_MINUTES = 60
+TOKEN_VALID_MINUTES = 52560000  # 100 years (effectively never)
 REFRESH_WINDOW_MINUTES = 15
 
 def generateToken(user_id, user_type, c_m_no):

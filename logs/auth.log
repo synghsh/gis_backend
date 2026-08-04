@@ -238,3 +238,767 @@
 2026-08-04 20:08:55 INFO     | Process 11888 | Thread: 7924 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
 2026-08-04 20:08:57 WARNING  | Process 11888 | Thread: 7924 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/block/list/
 2026-08-04 20:08:57 INFO     | Process 11888 | Thread: 7924 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785857309, 'iat': 1785853709}
+2026-08-04 20:08:58 INFO     | Process 11888 | Thread: 7924 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:17:35 WARNING  | Process 11888 | Thread: 12572 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/list/
+2026-08-04 21:17:35 WARNING  | Process 11888 | Thread: 12572 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 110 |--  Token expired signature error
+2026-08-04 21:17:35 WARNING  | Process 11888 | Thread: 16344 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/domainvaluebydomaintype/
+2026-08-04 21:17:35 INFO     | Process 11888 | Thread: 12572 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: {'Code': 403, 'Message': 'Token Time Out Error'}
+2026-08-04 21:17:35 WARNING  | Process 11888 | Thread: 23472 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
+2026-08-04 21:17:35 WARNING  | Process 11888 | Thread: 16344 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 110 |--  Token expired signature error
+2026-08-04 21:17:35 WARNING  | Process 11888 | Thread: 12224 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/contractor/list/
+2026-08-04 21:17:35 WARNING  | Process 11888 | Thread: 23472 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 110 |--  Token expired signature error
+2026-08-04 21:17:35 INFO     | Process 11888 | Thread: 16344 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: {'Code': 403, 'Message': 'Token Time Out Error'}
+2026-08-04 21:17:35 WARNING  | Process 11888 | Thread: 12224 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 110 |--  Token expired signature error
+2026-08-04 21:17:35 INFO     | Process 11888 | Thread: 23472 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: {'Code': 403, 'Message': 'Token Time Out Error'}
+2026-08-04 21:17:35 INFO     | Process 11888 | Thread: 12224 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: {'Code': 403, 'Message': 'Token Time Out Error'}
+2026-08-04 21:19:16 WARNING  | Process 11888 | Thread: 12572 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
+2026-08-04 21:19:16 WARNING  | Process 11888 | Thread: 12224 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/contractor/list/
+2026-08-04 21:19:16 WARNING  | Process 11888 | Thread: 16344 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/domainvaluebydomaintype/
+2026-08-04 21:19:16 ERROR    | Process 11888 | Thread: 12572 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 48 |--  Authorization header is missing
+2026-08-04 21:19:16 ERROR    | Process 11888 | Thread: 12224 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 48 |--  Authorization header is missing
+2026-08-04 21:19:16 ERROR    | Process 11888 | Thread: 16344 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 48 |--  Authorization header is missing
+2026-08-04 21:19:16 INFO     | Process 11888 | Thread: 12572 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: {'Code': 403, 'Message': 'Authorization Token Missing'}
+2026-08-04 21:19:16 INFO     | Process 11888 | Thread: 12224 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: {'Code': 403, 'Message': 'Authorization Token Missing'}
+2026-08-04 21:19:16 INFO     | Process 11888 | Thread: 16344 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: {'Code': 403, 'Message': 'Authorization Token Missing'}
+2026-08-04 21:19:19 WARNING  | Process 11888 | Thread: 12572 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/list/
+2026-08-04 21:19:19 ERROR    | Process 11888 | Thread: 12572 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 48 |--  Authorization header is missing
+2026-08-04 21:19:19 INFO     | Process 11888 | Thread: 12572 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: {'Code': 403, 'Message': 'Authorization Token Missing'}
+2026-08-04 21:24:25 WARNING  | Process 11888 | Thread: 28040 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
+2026-08-04 21:24:25 WARNING  | Process 11888 | Thread: 9220 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/domainvaluebydomaintype/
+2026-08-04 21:24:25 ERROR    | Process 11888 | Thread: 28040 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 48 |--  Authorization header is missing
+2026-08-04 21:24:25 ERROR    | Process 11888 | Thread: 9220 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 48 |--  Authorization header is missing
+2026-08-04 21:24:25 WARNING  | Process 11888 | Thread: 15772 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/contractor/list/
+2026-08-04 21:24:25 INFO     | Process 11888 | Thread: 28040 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: {'Code': 403, 'Message': 'Authorization Token Missing'}
+2026-08-04 21:24:25 INFO     | Process 11888 | Thread: 9220 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: {'Code': 403, 'Message': 'Authorization Token Missing'}
+2026-08-04 21:24:25 ERROR    | Process 11888 | Thread: 15772 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 48 |--  Authorization header is missing
+2026-08-04 21:24:25 INFO     | Process 11888 | Thread: 15772 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: {'Code': 403, 'Message': 'Authorization Token Missing'}
+2026-08-04 21:24:30 WARNING  | Process 11888 | Thread: 9220 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/list/
+2026-08-04 21:24:30 ERROR    | Process 11888 | Thread: 9220 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 48 |--  Authorization header is missing
+2026-08-04 21:24:30 INFO     | Process 11888 | Thread: 9220 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: {'Code': 403, 'Message': 'Authorization Token Missing'}
+2026-08-04 21:26:17 WARNING  | Process 11888 | Thread: 18712 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/admin/login/
+2026-08-04 21:26:17 INFO     | Process 11888 | Thread: 18712 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:26:22 WARNING  | Process 11888 | Thread: 18712 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/list/
+2026-08-04 21:26:22 INFO     | Process 11888 | Thread: 18712 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:26:22 WARNING  | Process 11888 | Thread: 7896 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/contractor/list/
+2026-08-04 21:26:22 WARNING  | Process 11888 | Thread: 27688 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
+2026-08-04 21:26:22 INFO     | Process 11888 | Thread: 7896 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:26:22 INFO     | Process 11888 | Thread: 27688 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:26:22 WARNING  | Process 11888 | Thread: 2380 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/domainvaluebydomaintype/
+2026-08-04 21:26:22 INFO     | Process 11888 | Thread: 2380 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:26:22 INFO     | Process 11888 | Thread: 27688 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:26:23 INFO     | Process 11888 | Thread: 7896 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:26:23 INFO     | Process 11888 | Thread: 2380 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:26:23 INFO     | Process 11888 | Thread: 18712 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:26:26 WARNING  | Process 11888 | Thread: 7896 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/contractor/list/
+2026-08-04 21:26:26 WARNING  | Process 11888 | Thread: 18712 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
+2026-08-04 21:26:26 WARNING  | Process 11888 | Thread: 27688 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/domainvaluebydomaintype/
+2026-08-04 21:26:26 INFO     | Process 11888 | Thread: 7896 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:26:26 INFO     | Process 11888 | Thread: 18712 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:26:26 INFO     | Process 11888 | Thread: 27688 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:26:26 INFO     | Process 11888 | Thread: 18712 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:26:26 INFO     | Process 11888 | Thread: 27688 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:26:26 INFO     | Process 11888 | Thread: 7896 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:26:42 WARNING  | Process 11888 | Thread: 18712 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/district/list/
+2026-08-04 21:26:42 INFO     | Process 11888 | Thread: 18712 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:26:43 INFO     | Process 11888 | Thread: 18712 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:26:44 WARNING  | Process 11888 | Thread: 18712 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/block/list/
+2026-08-04 21:26:44 INFO     | Process 11888 | Thread: 18712 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:26:44 INFO     | Process 11888 | Thread: 18712 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:26:46 WARNING  | Process 11888 | Thread: 18712 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/village/list/
+2026-08-04 21:26:46 INFO     | Process 11888 | Thread: 18712 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:26:46 INFO     | Process 11888 | Thread: 18712 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:33:13 WARNING  | Process 11888 | Thread: 6388 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/list/
+2026-08-04 21:33:13 INFO     | Process 11888 | Thread: 6388 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:33:13 INFO     | Process 11888 | Thread: 6388 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:33:14 WARNING  | Process 11888 | Thread: 18308 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/contractor/list/
+2026-08-04 21:33:14 INFO     | Process 11888 | Thread: 18308 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:33:14 WARNING  | Process 11888 | Thread: 26660 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/domainvaluebydomaintype/
+2026-08-04 21:33:14 WARNING  | Process 11888 | Thread: 11200 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
+2026-08-04 21:33:14 INFO     | Process 11888 | Thread: 26660 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:33:14 INFO     | Process 11888 | Thread: 11200 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:33:14 INFO     | Process 11888 | Thread: 26660 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:33:14 INFO     | Process 11888 | Thread: 11200 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:33:14 INFO     | Process 11888 | Thread: 18308 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:34:04 WARNING  | Process 11888 | Thread: 6388 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/list/
+2026-08-04 21:34:04 INFO     | Process 11888 | Thread: 6388 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:34:04 INFO     | Process 11888 | Thread: 6388 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:34:05 WARNING  | Process 11888 | Thread: 6388 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
+2026-08-04 21:34:05 WARNING  | Process 11888 | Thread: 11200 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/domainvaluebydomaintype/
+2026-08-04 21:34:05 WARNING  | Process 11888 | Thread: 18308 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/contractor/list/
+2026-08-04 21:34:05 INFO     | Process 11888 | Thread: 6388 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:34:05 INFO     | Process 11888 | Thread: 11200 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:34:05 INFO     | Process 11888 | Thread: 18308 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:34:05 INFO     | Process 11888 | Thread: 6388 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:34:05 INFO     | Process 11888 | Thread: 18308 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:34:05 INFO     | Process 11888 | Thread: 11200 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:34:40 WARNING  | Process 11888 | Thread: 6388 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/list/
+2026-08-04 21:34:40 INFO     | Process 11888 | Thread: 6388 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:34:40 INFO     | Process 11888 | Thread: 6388 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:34:45 WARNING  | Process 11888 | Thread: 6388 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
+2026-08-04 21:34:45 INFO     | Process 11888 | Thread: 6388 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:34:45 WARNING  | Process 11888 | Thread: 18308 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/contractor/list/
+2026-08-04 21:34:45 INFO     | Process 11888 | Thread: 18308 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:34:45 WARNING  | Process 11888 | Thread: 11200 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/domainvaluebydomaintype/
+2026-08-04 21:34:45 INFO     | Process 11888 | Thread: 11200 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:34:46 INFO     | Process 11888 | Thread: 6388 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:34:46 INFO     | Process 11888 | Thread: 18308 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:34:46 INFO     | Process 11888 | Thread: 11200 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:36:27 WARNING  | Process 11888 | Thread: 6388 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/list/
+2026-08-04 21:36:27 INFO     | Process 11888 | Thread: 6388 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:36:27 INFO     | Process 11888 | Thread: 6388 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:36:28 WARNING  | Process 11888 | Thread: 6388 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
+2026-08-04 21:36:28 INFO     | Process 11888 | Thread: 6388 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:36:28 WARNING  | Process 11888 | Thread: 18308 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/contractor/list/
+2026-08-04 21:36:28 INFO     | Process 11888 | Thread: 18308 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:36:28 WARNING  | Process 11888 | Thread: 11200 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/domainvaluebydomaintype/
+2026-08-04 21:36:28 INFO     | Process 11888 | Thread: 11200 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:36:28 INFO     | Process 11888 | Thread: 6388 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:36:28 INFO     | Process 11888 | Thread: 11200 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:36:28 INFO     | Process 11888 | Thread: 18308 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:37:53 WARNING  | Process 11888 | Thread: 22496 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
+2026-08-04 21:37:53 WARNING  | Process 11888 | Thread: 26476 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/list/
+2026-08-04 21:37:53 WARNING  | Process 11888 | Thread: 17956 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/contractor/list/
+2026-08-04 21:37:53 WARNING  | Process 11888 | Thread: 12864 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/domainvaluebydomaintype/
+2026-08-04 21:37:53 INFO     | Process 11888 | Thread: 22496 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:37:53 INFO     | Process 11888 | Thread: 26476 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:37:53 INFO     | Process 11888 | Thread: 17956 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:37:53 INFO     | Process 11888 | Thread: 12864 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:37:53 INFO     | Process 11888 | Thread: 26476 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:37:53 INFO     | Process 11888 | Thread: 22496 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:37:53 INFO     | Process 11888 | Thread: 12864 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:37:53 INFO     | Process 11888 | Thread: 17956 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:38:19 WARNING  | Process 11888 | Thread: 17956 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
+2026-08-04 21:38:19 WARNING  | Process 11888 | Thread: 22496 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/domainvaluebydomaintype/
+2026-08-04 21:38:19 WARNING  | Process 11888 | Thread: 26476 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/contractor/list/
+2026-08-04 21:38:19 INFO     | Process 11888 | Thread: 17956 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:38:19 INFO     | Process 11888 | Thread: 22496 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:38:19 INFO     | Process 11888 | Thread: 26476 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:38:19 INFO     | Process 11888 | Thread: 17956 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:38:19 INFO     | Process 11888 | Thread: 22496 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:38:19 INFO     | Process 11888 | Thread: 26476 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:38:45 WARNING  | Process 11888 | Thread: 17956 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/district/list/
+2026-08-04 21:38:45 INFO     | Process 11888 | Thread: 17956 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:38:45 INFO     | Process 11888 | Thread: 17956 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:38:46 WARNING  | Process 11888 | Thread: 17956 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/block/list/
+2026-08-04 21:38:46 INFO     | Process 11888 | Thread: 17956 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:38:47 INFO     | Process 11888 | Thread: 17956 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:38:48 WARNING  | Process 11888 | Thread: 17956 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/village/list/
+2026-08-04 21:38:48 INFO     | Process 11888 | Thread: 17956 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:38:49 INFO     | Process 11888 | Thread: 17956 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:39:41 WARNING  | Process 11888 | Thread: 17956 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/start/
+2026-08-04 21:39:41 INFO     | Process 11888 | Thread: 17956 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:39:41 INFO     | Process 11888 | Thread: 17956 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:39:41 ERROR    | Process 11888 | Thread: 17956 | django.request | log.log_message:ln 249 |--  Internal Server Error: /gis/administration/erection/start/
+Traceback (most recent call last):
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 2128, in get_prep_value
+    return int(value)
+           ^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'LT_440V'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\commonUtility\decorators.py", line 17, in wrap
+    return func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\survey_management\views.py", line 51, in start_erection_execution
+    erection = ErectionExecution.objects.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\query.py", line 669, in create
+    obj.save(force_insert=True, using=self.db)
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\base.py", line 874, in save
+    self.save_base(
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\base.py", line 966, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\base.py", line 1167, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\base.py", line 1218, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\query.py", line 1918, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1924, in execute_sql
+    for sql, params in self.as_sql():
+                       ^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1813, in as_sql
+    field_prepare(field_pre_save(obj)) for obj in self.query.objs
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1742, in prepare_value
+    return field.get_db_prep_save(value, connection=self.connection)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 1011, in get_db_prep_save
+    return self.get_db_prep_value(value, connection=connection, prepared=False)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 2135, in get_db_prep_value
+    value = super().get_db_prep_value(value, connection, prepared)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 1004, in get_db_prep_value
+    value = self.get_prep_value(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 2130, in get_prep_value
+    raise e.__class__(
+ValueError: Field 'type_of_work' expected a number but got 'LT_440V'.
+2026-08-04 21:40:08 WARNING  | Process 11888 | Thread: 17956 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/start/
+2026-08-04 21:40:08 INFO     | Process 11888 | Thread: 17956 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:40:08 INFO     | Process 11888 | Thread: 17956 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:40:08 ERROR    | Process 11888 | Thread: 17956 | django.request | log.log_message:ln 249 |--  Internal Server Error: /gis/administration/erection/start/
+Traceback (most recent call last):
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 2128, in get_prep_value
+    return int(value)
+           ^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'LT_440V'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\commonUtility\decorators.py", line 17, in wrap
+    return func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\survey_management\views.py", line 51, in start_erection_execution
+    erection = ErectionExecution.objects.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\query.py", line 669, in create
+    obj.save(force_insert=True, using=self.db)
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\base.py", line 874, in save
+    self.save_base(
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\base.py", line 966, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\base.py", line 1167, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\base.py", line 1218, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\query.py", line 1918, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1924, in execute_sql
+    for sql, params in self.as_sql():
+                       ^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1813, in as_sql
+    field_prepare(field_pre_save(obj)) for obj in self.query.objs
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1742, in prepare_value
+    return field.get_db_prep_save(value, connection=self.connection)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 1011, in get_db_prep_save
+    return self.get_db_prep_value(value, connection=connection, prepared=False)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 2135, in get_db_prep_value
+    value = super().get_db_prep_value(value, connection, prepared)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 1004, in get_db_prep_value
+    value = self.get_prep_value(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 2130, in get_prep_value
+    raise e.__class__(
+ValueError: Field 'type_of_work' expected a number but got 'LT_440V'.
+2026-08-04 21:44:37 WARNING  | Process 11888 | Thread: 4372 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
+2026-08-04 21:44:37 INFO     | Process 11888 | Thread: 4372 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:44:37 WARNING  | Process 11888 | Thread: 27024 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/contractor/list/
+2026-08-04 21:44:37 WARNING  | Process 11888 | Thread: 26704 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/domainvaluebydomaintype/
+2026-08-04 21:44:37 WARNING  | Process 11888 | Thread: 14204 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/list/
+2026-08-04 21:44:37 INFO     | Process 11888 | Thread: 27024 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:44:37 INFO     | Process 11888 | Thread: 26704 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:44:37 INFO     | Process 11888 | Thread: 14204 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:44:37 INFO     | Process 11888 | Thread: 4372 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:44:37 INFO     | Process 11888 | Thread: 14204 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:44:37 INFO     | Process 11888 | Thread: 27024 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:44:37 INFO     | Process 11888 | Thread: 26704 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:44:51 WARNING  | Process 11888 | Thread: 14204 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
+2026-08-04 21:44:51 WARNING  | Process 11888 | Thread: 26704 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/contractor/list/
+2026-08-04 21:44:51 INFO     | Process 11888 | Thread: 14204 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:44:51 INFO     | Process 11888 | Thread: 26704 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:44:51 WARNING  | Process 11888 | Thread: 27024 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/domainvaluebydomaintype/
+2026-08-04 21:44:51 INFO     | Process 11888 | Thread: 27024 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:44:52 INFO     | Process 11888 | Thread: 14204 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:44:52 INFO     | Process 11888 | Thread: 27024 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:44:52 INFO     | Process 11888 | Thread: 26704 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:45:00 WARNING  | Process 11888 | Thread: 14204 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/district/list/
+2026-08-04 21:45:00 INFO     | Process 11888 | Thread: 14204 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:45:00 INFO     | Process 11888 | Thread: 14204 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:45:02 WARNING  | Process 11888 | Thread: 14204 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/block/list/
+2026-08-04 21:45:02 INFO     | Process 11888 | Thread: 14204 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:45:02 INFO     | Process 11888 | Thread: 14204 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:45:06 WARNING  | Process 11888 | Thread: 14204 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/village/list/
+2026-08-04 21:45:06 INFO     | Process 11888 | Thread: 14204 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:45:06 INFO     | Process 11888 | Thread: 14204 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:45:23 WARNING  | Process 11888 | Thread: 14204 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/start/
+2026-08-04 21:45:23 INFO     | Process 11888 | Thread: 14204 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:45:23 INFO     | Process 11888 | Thread: 14204 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:45:23 ERROR    | Process 11888 | Thread: 14204 | django.request | log.log_message:ln 249 |--  Internal Server Error: /gis/administration/erection/start/
+Traceback (most recent call last):
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 2128, in get_prep_value
+    return int(value)
+           ^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'LT_440V'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\commonUtility\decorators.py", line 17, in wrap
+    return func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\survey_management\views.py", line 51, in start_erection_execution
+    erection = ErectionExecution.objects.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\query.py", line 669, in create
+    obj.save(force_insert=True, using=self.db)
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\base.py", line 874, in save
+    self.save_base(
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\base.py", line 966, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\base.py", line 1167, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\base.py", line 1218, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\query.py", line 1918, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1924, in execute_sql
+    for sql, params in self.as_sql():
+                       ^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1813, in as_sql
+    field_prepare(field_pre_save(obj)) for obj in self.query.objs
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1742, in prepare_value
+    return field.get_db_prep_save(value, connection=self.connection)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 1011, in get_db_prep_save
+    return self.get_db_prep_value(value, connection=connection, prepared=False)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 2135, in get_db_prep_value
+    value = super().get_db_prep_value(value, connection, prepared)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 1004, in get_db_prep_value
+    value = self.get_prep_value(value)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 2130, in get_prep_value
+    raise e.__class__(
+ValueError: Field 'type_of_work' expected a number but got 'LT_440V'.
+2026-08-04 21:48:28 WARNING  | Process 11888 | Thread: 14204 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
+2026-08-04 21:48:28 INFO     | Process 11888 | Thread: 14204 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:48:28 WARNING  | Process 11888 | Thread: 26704 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/contractor/list/
+2026-08-04 21:48:28 INFO     | Process 11888 | Thread: 26704 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:48:28 WARNING  | Process 11888 | Thread: 27024 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/domainvaluebydomaintype/
+2026-08-04 21:48:28 INFO     | Process 11888 | Thread: 27024 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:48:30 INFO     | Process 11888 | Thread: 26704 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:48:30 INFO     | Process 11888 | Thread: 14204 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:48:30 INFO     | Process 11888 | Thread: 27024 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:48:58 WARNING  | Process 11888 | Thread: 14204 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
+2026-08-04 21:48:58 INFO     | Process 11888 | Thread: 14204 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:48:58 WARNING  | Process 11888 | Thread: 26704 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/contractor/list/
+2026-08-04 21:48:58 WARNING  | Process 11888 | Thread: 27024 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/domainvaluebydomaintype/
+2026-08-04 21:48:58 INFO     | Process 11888 | Thread: 26704 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:48:58 INFO     | Process 11888 | Thread: 27024 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:48:59 INFO     | Process 11888 | Thread: 14204 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:48:59 INFO     | Process 11888 | Thread: 27024 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:48:59 INFO     | Process 11888 | Thread: 26704 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:52:48 WARNING  | Process 11888 | Thread: 14372 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/contractor/list/
+2026-08-04 21:52:48 WARNING  | Process 11888 | Thread: 9244 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/list/
+2026-08-04 21:52:48 WARNING  | Process 11888 | Thread: 20504 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/domainvaluebydomaintype/
+2026-08-04 21:52:48 WARNING  | Process 11888 | Thread: 26684 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
+2026-08-04 21:52:48 INFO     | Process 11888 | Thread: 14372 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:52:48 INFO     | Process 11888 | Thread: 9244 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:52:48 INFO     | Process 11888 | Thread: 20504 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:52:48 INFO     | Process 11888 | Thread: 26684 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:52:48 INFO     | Process 11888 | Thread: 20504 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:52:48 INFO     | Process 11888 | Thread: 14372 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:52:48 INFO     | Process 11888 | Thread: 26684 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:52:48 INFO     | Process 11888 | Thread: 9244 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:53:00 WARNING  | Process 11888 | Thread: 14372 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
+2026-08-04 21:53:00 INFO     | Process 11888 | Thread: 14372 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:53:00 WARNING  | Process 11888 | Thread: 9244 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/contractor/list/
+2026-08-04 21:53:00 INFO     | Process 11888 | Thread: 9244 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:53:00 WARNING  | Process 11888 | Thread: 20504 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/domainvaluebydomaintype/
+2026-08-04 21:53:00 INFO     | Process 11888 | Thread: 20504 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:53:01 INFO     | Process 11888 | Thread: 14372 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:53:01 INFO     | Process 11888 | Thread: 9244 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:53:01 INFO     | Process 11888 | Thread: 20504 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:53:19 WARNING  | Process 11888 | Thread: 14372 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/district/list/
+2026-08-04 21:53:19 INFO     | Process 11888 | Thread: 14372 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:53:19 INFO     | Process 11888 | Thread: 14372 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:53:21 WARNING  | Process 11888 | Thread: 14372 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/block/list/
+2026-08-04 21:53:21 INFO     | Process 11888 | Thread: 14372 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:53:21 INFO     | Process 11888 | Thread: 14372 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:53:25 WARNING  | Process 11888 | Thread: 14372 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/village/list/
+2026-08-04 21:53:25 INFO     | Process 11888 | Thread: 14372 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:53:25 INFO     | Process 11888 | Thread: 14372 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:53:44 WARNING  | Process 11888 | Thread: 14372 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/start/
+2026-08-04 21:53:44 INFO     | Process 11888 | Thread: 14372 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:53:44 INFO     | Process 11888 | Thread: 14372 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:53:50 WARNING  | Process 11888 | Thread: 14372 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/list/
+2026-08-04 21:53:50 INFO     | Process 11888 | Thread: 14372 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:53:50 INFO     | Process 11888 | Thread: 14372 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:55:10 WARNING  | Process 11888 | Thread: 14372 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/list/
+2026-08-04 21:55:10 INFO     | Process 11888 | Thread: 14372 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:55:11 INFO     | Process 11888 | Thread: 14372 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:57:45 WARNING  | Process 11888 | Thread: 14372 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
+2026-08-04 21:57:45 INFO     | Process 11888 | Thread: 14372 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:57:45 WARNING  | Process 11888 | Thread: 20504 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/contractor/list/
+2026-08-04 21:57:45 WARNING  | Process 11888 | Thread: 9244 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/list/
+2026-08-04 21:57:45 WARNING  | Process 11888 | Thread: 26684 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/domainvaluebydomaintype/
+2026-08-04 21:57:45 INFO     | Process 11888 | Thread: 20504 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:57:45 INFO     | Process 11888 | Thread: 9244 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:57:45 INFO     | Process 11888 | Thread: 26684 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 21:57:45 INFO     | Process 11888 | Thread: 14372 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:57:45 INFO     | Process 11888 | Thread: 20504 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:57:45 INFO     | Process 11888 | Thread: 9244 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 21:57:45 INFO     | Process 11888 | Thread: 26684 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:03:21 WARNING  | Process 11888 | Thread: 15156 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
+2026-08-04 22:03:21 WARNING  | Process 11888 | Thread: 19764 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/list/
+2026-08-04 22:03:21 WARNING  | Process 11888 | Thread: 14308 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/domainvaluebydomaintype/
+2026-08-04 22:03:21 WARNING  | Process 11888 | Thread: 1984 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/contractor/list/
+2026-08-04 22:03:21 INFO     | Process 11888 | Thread: 15156 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 22:03:21 INFO     | Process 11888 | Thread: 19764 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 22:03:21 INFO     | Process 11888 | Thread: 14308 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 22:03:21 INFO     | Process 11888 | Thread: 1984 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 22:03:22 INFO     | Process 11888 | Thread: 15156 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:03:22 INFO     | Process 11888 | Thread: 14308 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:03:22 INFO     | Process 11888 | Thread: 19764 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:03:22 INFO     | Process 11888 | Thread: 1984 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:04:21 WARNING  | Process 11888 | Thread: 15156 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/list/
+2026-08-04 22:04:21 WARNING  | Process 11888 | Thread: 19764 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
+2026-08-04 22:04:21 WARNING  | Process 11888 | Thread: 14308 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/domainvaluebydomaintype/
+2026-08-04 22:04:21 WARNING  | Process 11888 | Thread: 1984 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/contractor/list/
+2026-08-04 22:04:21 INFO     | Process 11888 | Thread: 15156 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 22:04:21 INFO     | Process 11888 | Thread: 19764 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 22:04:21 INFO     | Process 11888 | Thread: 14308 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 22:04:21 INFO     | Process 11888 | Thread: 1984 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 22:04:21 INFO     | Process 11888 | Thread: 19764 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:04:21 INFO     | Process 11888 | Thread: 15156 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:04:21 INFO     | Process 11888 | Thread: 1984 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:04:21 INFO     | Process 11888 | Thread: 14308 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:06:05 WARNING  | Process 11888 | Thread: 15156 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/list/
+2026-08-04 22:06:05 INFO     | Process 11888 | Thread: 15156 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 22:06:05 WARNING  | Process 11888 | Thread: 1984 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/contractor/list/
+2026-08-04 22:06:05 WARNING  | Process 11888 | Thread: 19764 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
+2026-08-04 22:06:05 INFO     | Process 11888 | Thread: 1984 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 22:06:05 WARNING  | Process 11888 | Thread: 14308 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/domainvaluebydomaintype/
+2026-08-04 22:06:05 INFO     | Process 11888 | Thread: 19764 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 22:06:05 INFO     | Process 11888 | Thread: 14308 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 22:06:05 INFO     | Process 11888 | Thread: 15156 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:06:05 INFO     | Process 11888 | Thread: 14308 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:06:05 INFO     | Process 11888 | Thread: 1984 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:06:05 INFO     | Process 11888 | Thread: 19764 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:06:31 WARNING  | Process 11888 | Thread: 1984 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/contractor/list/
+2026-08-04 22:06:31 WARNING  | Process 11888 | Thread: 15156 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/list/
+2026-08-04 22:06:31 WARNING  | Process 11888 | Thread: 19764 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
+2026-08-04 22:06:31 WARNING  | Process 11888 | Thread: 14308 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/domainvaluebydomaintype/
+2026-08-04 22:06:31 INFO     | Process 11888 | Thread: 1984 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 22:06:31 INFO     | Process 11888 | Thread: 15156 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 22:06:31 INFO     | Process 11888 | Thread: 19764 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 22:06:31 INFO     | Process 11888 | Thread: 14308 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 22:06:31 INFO     | Process 11888 | Thread: 14308 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:06:31 INFO     | Process 11888 | Thread: 1984 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:06:31 INFO     | Process 11888 | Thread: 15156 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:06:31 INFO     | Process 11888 | Thread: 19764 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:21:02 WARNING  | Process 11888 | Thread: 23976 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
+2026-08-04 22:21:02 WARNING  | Process 11888 | Thread: 10604 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/list/
+2026-08-04 22:21:02 INFO     | Process 11888 | Thread: 23976 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 22:21:02 INFO     | Process 11888 | Thread: 10604 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 22:21:02 WARNING  | Process 11888 | Thread: 21044 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/domainvaluebydomaintype/
+2026-08-04 22:21:02 WARNING  | Process 11888 | Thread: 26732 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/contractor/list/
+2026-08-04 22:21:02 INFO     | Process 11888 | Thread: 21044 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 22:21:02 INFO     | Process 11888 | Thread: 26732 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 22:21:02 WARNING  | Process 11888 | Thread: 23976 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 96 |--  Token in refresh window, returned 408 with new token
+2026-08-04 22:21:02 INFO     | Process 11888 | Thread: 23976 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: {'Code': 408, 'Message': 'Refresh Token Generated', 'Token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VyX3R5cGUiOjEsImNfbV9ubyI6Imdpc19zdXJ2ZXlvciIsInVzZXJuYW1lIjoiZ2lzX3N1cnZleW9yIiwicGhvbmUiOiI5ODc2NTQzMjEwIiwiZW1haWwiOiJzdXJ2ZXlvckBnaXMuY29tIiwiZmlyc3RfbmFtZSI6IlNheWFuIiwibGFzdF9uYW1lIjoiR2hvc2giLCJyb2xlX2lkIjoxLCJkZXNpZ25hdGlvbl9pZCI6MSwiZXhwIjoxNzg1ODY1ODYyLCJpYXQiOjE3ODU4NjIyNjJ9.XocJwnYC7xamCxz7Mz2bI5MNO-zSTCeETLEjvUU_280'}
+2026-08-04 22:21:02 INFO     | Process 11888 | Thread: 23976 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 31 |--  Access token validation window hit, refreshing token
+2026-08-04 22:21:02 WARNING  | Process 11888 | Thread: 23976 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
+2026-08-04 22:21:02 INFO     | Process 11888 | Thread: 23976 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 22:21:03 ERROR    | Process 11888 | Thread: 23976 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 86 |--  Token mismatch between header and database record
+2026-08-04 22:21:03 INFO     | Process 11888 | Thread: 23976 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: {'Code': 403, 'Message': 'Token Mismatch'}
+2026-08-04 22:21:03 WARNING  | Process 11888 | Thread: 26732 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 96 |--  Token in refresh window, returned 408 with new token
+2026-08-04 22:21:03 WARNING  | Process 11888 | Thread: 21044 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 96 |--  Token in refresh window, returned 408 with new token
+2026-08-04 22:21:03 WARNING  | Process 11888 | Thread: 10604 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 96 |--  Token in refresh window, returned 408 with new token
+2026-08-04 22:21:03 INFO     | Process 11888 | Thread: 26732 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: {'Code': 408, 'Message': 'Refresh Token Generated', 'Token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VyX3R5cGUiOjEsImNfbV9ubyI6Imdpc19zdXJ2ZXlvciIsInVzZXJuYW1lIjoiZ2lzX3N1cnZleW9yIiwicGhvbmUiOiI5ODc2NTQzMjEwIiwiZW1haWwiOiJzdXJ2ZXlvckBnaXMuY29tIiwiZmlyc3RfbmFtZSI6IlNheWFuIiwibGFzdF9uYW1lIjoiR2hvc2giLCJyb2xlX2lkIjoxLCJkZXNpZ25hdGlvbl9pZCI6MSwiZXhwIjoxNzg1ODY1ODYyLCJpYXQiOjE3ODU4NjIyNjJ9.XocJwnYC7xamCxz7Mz2bI5MNO-zSTCeETLEjvUU_280'}
+2026-08-04 22:21:03 INFO     | Process 11888 | Thread: 26732 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 31 |--  Access token validation window hit, refreshing token
+2026-08-04 22:21:03 INFO     | Process 11888 | Thread: 21044 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: {'Code': 408, 'Message': 'Refresh Token Generated', 'Token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VyX3R5cGUiOjEsImNfbV9ubyI6Imdpc19zdXJ2ZXlvciIsInVzZXJuYW1lIjoiZ2lzX3N1cnZleW9yIiwicGhvbmUiOiI5ODc2NTQzMjEwIiwiZW1haWwiOiJzdXJ2ZXlvckBnaXMuY29tIiwiZmlyc3RfbmFtZSI6IlNheWFuIiwibGFzdF9uYW1lIjoiR2hvc2giLCJyb2xlX2lkIjoxLCJkZXNpZ25hdGlvbl9pZCI6MSwiZXhwIjoxNzg1ODY1ODYyLCJpYXQiOjE3ODU4NjIyNjJ9.XocJwnYC7xamCxz7Mz2bI5MNO-zSTCeETLEjvUU_280'}
+2026-08-04 22:21:03 INFO     | Process 11888 | Thread: 21044 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 31 |--  Access token validation window hit, refreshing token
+2026-08-04 22:21:03 INFO     | Process 11888 | Thread: 10604 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: {'Code': 408, 'Message': 'Refresh Token Generated', 'Token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VyX3R5cGUiOjEsImNfbV9ubyI6Imdpc19zdXJ2ZXlvciIsInVzZXJuYW1lIjoiZ2lzX3N1cnZleW9yIiwicGhvbmUiOiI5ODc2NTQzMjEwIiwiZW1haWwiOiJzdXJ2ZXlvckBnaXMuY29tIiwiZmlyc3RfbmFtZSI6IlNheWFuIiwibGFzdF9uYW1lIjoiR2hvc2giLCJyb2xlX2lkIjoxLCJkZXNpZ25hdGlvbl9pZCI6MSwiZXhwIjoxNzg1ODY1ODYyLCJpYXQiOjE3ODU4NjIyNjJ9.XocJwnYC7xamCxz7Mz2bI5MNO-zSTCeETLEjvUU_280'}
+2026-08-04 22:21:03 INFO     | Process 11888 | Thread: 10604 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 31 |--  Access token validation window hit, refreshing token
+2026-08-04 22:21:03 WARNING  | Process 11888 | Thread: 26732 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/contractor/list/
+2026-08-04 22:21:03 INFO     | Process 11888 | Thread: 26732 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 22:21:03 WARNING  | Process 11888 | Thread: 21044 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/domainvaluebydomaintype/
+2026-08-04 22:21:03 WARNING  | Process 11888 | Thread: 10604 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/list/
+2026-08-04 22:21:03 INFO     | Process 11888 | Thread: 21044 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 22:21:03 INFO     | Process 11888 | Thread: 10604 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785862578, 'iat': 1785858978}
+2026-08-04 22:21:03 ERROR    | Process 11888 | Thread: 26732 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 119 |--  General JWT verification exception occurred
+Traceback (most recent call last):
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\JWTAuth\JWTMiddleware.py", line 79, in auth
+    user_token_obj = UserToken.objects.get(user_id=user_id, c_m_no=c_m_no, user_type=user_type)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\query.py", line 642, in get
+    raise self.model.MultipleObjectsReturned(
+JWTAuth.models.UserToken.MultipleObjectsReturned: get() returned more than one UserToken -- it returned 4!
+2026-08-04 22:21:03 ERROR    | Process 11888 | Thread: 21044 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 119 |--  General JWT verification exception occurred
+Traceback (most recent call last):
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\JWTAuth\JWTMiddleware.py", line 79, in auth
+    user_token_obj = UserToken.objects.get(user_id=user_id, c_m_no=c_m_no, user_type=user_type)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\query.py", line 642, in get
+    raise self.model.MultipleObjectsReturned(
+JWTAuth.models.UserToken.MultipleObjectsReturned: get() returned more than one UserToken -- it returned 4!
+2026-08-04 22:21:03 ERROR    | Process 11888 | Thread: 10604 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 119 |--  General JWT verification exception occurred
+Traceback (most recent call last):
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\JWTAuth\JWTMiddleware.py", line 79, in auth
+    user_token_obj = UserToken.objects.get(user_id=user_id, c_m_no=c_m_no, user_type=user_type)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\query.py", line 642, in get
+    raise self.model.MultipleObjectsReturned(
+JWTAuth.models.UserToken.MultipleObjectsReturned: get() returned more than one UserToken -- it returned 4!
+2026-08-04 22:21:03 INFO     | Process 11888 | Thread: 26732 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: {'Code': 403, 'Message': 'Token Authentication Error'}
+2026-08-04 22:21:03 INFO     | Process 11888 | Thread: 21044 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: {'Code': 403, 'Message': 'Token Authentication Error'}
+2026-08-04 22:21:03 INFO     | Process 11888 | Thread: 10604 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: {'Code': 403, 'Message': 'Token Authentication Error'}
+2026-08-04 22:22:03 WARNING  | Process 11888 | Thread: 23976 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/list/
+2026-08-04 22:22:03 ERROR    | Process 11888 | Thread: 23976 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 48 |--  Authorization header is missing
+2026-08-04 22:22:03 INFO     | Process 11888 | Thread: 23976 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: {'Code': 403, 'Message': 'Authorization Token Missing'}
+2026-08-04 22:24:20 WARNING  | Process 18656 | Thread: 21396 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/admin/login/
+2026-08-04 22:24:20 INFO     | Process 18656 | Thread: 21396 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:24:26 WARNING  | Process 18656 | Thread: 21396 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/list/
+2026-08-04 22:24:26 INFO     | Process 18656 | Thread: 21396 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:24:26 WARNING  | Process 18656 | Thread: 15064 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/contractor/list/
+2026-08-04 22:24:26 WARNING  | Process 18656 | Thread: 27764 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
+2026-08-04 22:24:26 INFO     | Process 18656 | Thread: 15064 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:24:26 WARNING  | Process 18656 | Thread: 15488 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/domainvaluebydomaintype/
+2026-08-04 22:24:26 INFO     | Process 18656 | Thread: 27764 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:24:26 INFO     | Process 18656 | Thread: 15488 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:24:27 INFO     | Process 18656 | Thread: 21396 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:24:27 INFO     | Process 18656 | Thread: 15064 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:24:27 INFO     | Process 18656 | Thread: 15488 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:24:27 INFO     | Process 18656 | Thread: 27764 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:24:31 WARNING  | Process 18656 | Thread: 21396 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
+2026-08-04 22:24:31 WARNING  | Process 18656 | Thread: 27764 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/contractor/list/
+2026-08-04 22:24:31 WARNING  | Process 18656 | Thread: 15064 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/domainvaluebydomaintype/
+2026-08-04 22:24:31 INFO     | Process 18656 | Thread: 21396 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:24:31 INFO     | Process 18656 | Thread: 27764 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:24:31 INFO     | Process 18656 | Thread: 15064 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:24:31 INFO     | Process 18656 | Thread: 27764 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:24:31 INFO     | Process 18656 | Thread: 15064 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:24:31 INFO     | Process 18656 | Thread: 21396 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:24:34 WARNING  | Process 18656 | Thread: 21396 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/list/
+2026-08-04 22:24:34 INFO     | Process 18656 | Thread: 21396 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:24:34 INFO     | Process 18656 | Thread: 21396 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:24:36 WARNING  | Process 18656 | Thread: 21396 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/district/list/
+2026-08-04 22:24:36 INFO     | Process 18656 | Thread: 21396 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:24:36 WARNING  | Process 18656 | Thread: 27764 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/block/list/
+2026-08-04 22:24:36 WARNING  | Process 18656 | Thread: 15064 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/village/list/
+2026-08-04 22:24:36 INFO     | Process 18656 | Thread: 27764 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:24:36 INFO     | Process 18656 | Thread: 15064 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:24:36 WARNING  | Process 18656 | Thread: 15488 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
+2026-08-04 22:24:36 INFO     | Process 18656 | Thread: 15488 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:24:36 WARNING  | Process 18656 | Thread: 13532 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/contractor/list/
+2026-08-04 22:24:36 INFO     | Process 18656 | Thread: 13532 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:24:37 INFO     | Process 18656 | Thread: 21396 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:24:37 INFO     | Process 18656 | Thread: 27764 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:24:37 INFO     | Process 18656 | Thread: 15064 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:24:37 INFO     | Process 18656 | Thread: 15488 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:24:37 WARNING  | Process 18656 | Thread: 21396 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/domainvaluebydomaintype/
+2026-08-04 22:24:37 INFO     | Process 18656 | Thread: 21396 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:24:37 INFO     | Process 18656 | Thread: 21396 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:24:37 INFO     | Process 18656 | Thread: 13532 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:24:40 WARNING  | Process 18656 | Thread: 21396 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/list/
+2026-08-04 22:24:40 INFO     | Process 18656 | Thread: 21396 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:24:40 INFO     | Process 18656 | Thread: 21396 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:24:42 WARNING  | Process 18656 | Thread: 15064 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/village/list/
+2026-08-04 22:24:42 WARNING  | Process 18656 | Thread: 27764 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/block/list/
+2026-08-04 22:24:42 WARNING  | Process 18656 | Thread: 21396 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/district/list/
+2026-08-04 22:24:42 WARNING  | Process 18656 | Thread: 15488 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
+2026-08-04 22:24:42 WARNING  | Process 18656 | Thread: 13532 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/contractor/list/
+2026-08-04 22:24:42 INFO     | Process 18656 | Thread: 15064 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:24:42 INFO     | Process 18656 | Thread: 27764 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:24:42 INFO     | Process 18656 | Thread: 21396 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:24:42 INFO     | Process 18656 | Thread: 15488 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:24:42 INFO     | Process 18656 | Thread: 13532 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:24:42 INFO     | Process 18656 | Thread: 15064 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:24:42 INFO     | Process 18656 | Thread: 13532 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:24:42 INFO     | Process 18656 | Thread: 21396 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:24:42 INFO     | Process 18656 | Thread: 15488 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:24:42 INFO     | Process 18656 | Thread: 27764 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:24:42 WARNING  | Process 18656 | Thread: 21396 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/domainvaluebydomaintype/
+2026-08-04 22:24:42 INFO     | Process 18656 | Thread: 21396 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:24:42 INFO     | Process 18656 | Thread: 21396 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:33:26 WARNING  | Process 18656 | Thread: 25860 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/list/
+2026-08-04 22:33:26 INFO     | Process 18656 | Thread: 25860 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:33:26 INFO     | Process 18656 | Thread: 25860 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:33:29 WARNING  | Process 18656 | Thread: 25860 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/district/list/
+2026-08-04 22:33:29 INFO     | Process 18656 | Thread: 25860 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:33:29 WARNING  | Process 18656 | Thread: 4116 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/block/list/
+2026-08-04 22:33:29 WARNING  | Process 18656 | Thread: 6748 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/village/list/
+2026-08-04 22:33:29 INFO     | Process 18656 | Thread: 4116 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:33:29 INFO     | Process 18656 | Thread: 6748 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:33:29 WARNING  | Process 18656 | Thread: 9824 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
+2026-08-04 22:33:29 WARNING  | Process 18656 | Thread: 22756 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/contractor/list/
+2026-08-04 22:33:29 INFO     | Process 18656 | Thread: 9824 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:33:29 INFO     | Process 18656 | Thread: 22756 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:33:29 INFO     | Process 18656 | Thread: 25860 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:33:29 INFO     | Process 18656 | Thread: 4116 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:33:29 INFO     | Process 18656 | Thread: 6748 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:33:29 INFO     | Process 18656 | Thread: 9824 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:33:29 INFO     | Process 18656 | Thread: 22756 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:33:29 WARNING  | Process 18656 | Thread: 25860 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/domainvaluebydomaintype/
+2026-08-04 22:33:29 INFO     | Process 18656 | Thread: 25860 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:33:30 INFO     | Process 18656 | Thread: 25860 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:34:10 WARNING  | Process 18656 | Thread: 25860 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/list/
+2026-08-04 22:34:10 INFO     | Process 18656 | Thread: 25860 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:34:10 INFO     | Process 18656 | Thread: 25860 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:35:46 WARNING  | Process 18656 | Thread: 25860 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/district/list/
+2026-08-04 22:35:46 WARNING  | Process 18656 | Thread: 4116 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/block/list/
+2026-08-04 22:35:46 WARNING  | Process 18656 | Thread: 9824 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
+2026-08-04 22:35:46 WARNING  | Process 18656 | Thread: 6748 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/village/list/
+2026-08-04 22:35:46 WARNING  | Process 18656 | Thread: 22756 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/contractor/list/
+2026-08-04 22:35:46 INFO     | Process 18656 | Thread: 25860 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:35:46 INFO     | Process 18656 | Thread: 4116 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:35:46 INFO     | Process 18656 | Thread: 9824 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:35:46 INFO     | Process 18656 | Thread: 6748 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:35:46 INFO     | Process 18656 | Thread: 22756 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:35:46 INFO     | Process 18656 | Thread: 25860 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:35:46 INFO     | Process 18656 | Thread: 22756 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:35:46 INFO     | Process 18656 | Thread: 9824 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:35:46 INFO     | Process 18656 | Thread: 4116 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:35:46 INFO     | Process 18656 | Thread: 6748 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:35:46 WARNING  | Process 18656 | Thread: 25860 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/domainvaluebydomaintype/
+2026-08-04 22:35:46 INFO     | Process 18656 | Thread: 25860 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:35:46 INFO     | Process 18656 | Thread: 25860 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:38:38 WARNING  | Process 18656 | Thread: 9144 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
+2026-08-04 22:38:38 WARNING  | Process 18656 | Thread: 7744 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/domainvaluebydomaintype/
+2026-08-04 22:38:38 WARNING  | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/contractor/list/
+2026-08-04 22:38:38 WARNING  | Process 18656 | Thread: 10244 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/list/
+2026-08-04 22:38:38 INFO     | Process 18656 | Thread: 9144 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:38:38 INFO     | Process 18656 | Thread: 7744 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:38:38 INFO     | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:38:38 INFO     | Process 18656 | Thread: 10244 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:38:38 INFO     | Process 18656 | Thread: 9144 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:38:38 INFO     | Process 18656 | Thread: 10244 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:38:38 INFO     | Process 18656 | Thread: 7744 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:38:38 INFO     | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:39:03 WARNING  | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/list/
+2026-08-04 22:39:03 INFO     | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:39:03 INFO     | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:39:35 WARNING  | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/district/list/
+2026-08-04 22:39:36 WARNING  | Process 18656 | Thread: 7744 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/block/list/
+2026-08-04 22:39:36 WARNING  | Process 18656 | Thread: 9144 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/village/list/
+2026-08-04 22:39:36 INFO     | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:39:36 INFO     | Process 18656 | Thread: 7744 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:39:36 INFO     | Process 18656 | Thread: 9144 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:39:36 WARNING  | Process 18656 | Thread: 10244 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
+2026-08-04 22:39:36 INFO     | Process 18656 | Thread: 10244 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:39:36 WARNING  | Process 18656 | Thread: 26600 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/contractor/list/
+2026-08-04 22:39:36 INFO     | Process 18656 | Thread: 26600 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:39:36 INFO     | Process 18656 | Thread: 7744 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:39:36 INFO     | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:39:36 INFO     | Process 18656 | Thread: 9144 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:39:36 INFO     | Process 18656 | Thread: 10244 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:39:36 INFO     | Process 18656 | Thread: 26600 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:39:36 WARNING  | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/domainvaluebydomaintype/
+2026-08-04 22:39:36 INFO     | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:39:36 INFO     | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:39:50 WARNING  | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
+2026-08-04 22:39:50 INFO     | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:39:50 WARNING  | Process 18656 | Thread: 7744 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/contractor/list/
+2026-08-04 22:39:50 WARNING  | Process 18656 | Thread: 9144 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/domainvaluebydomaintype/
+2026-08-04 22:39:50 INFO     | Process 18656 | Thread: 7744 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:39:50 INFO     | Process 18656 | Thread: 9144 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:39:50 INFO     | Process 18656 | Thread: 9144 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:39:50 INFO     | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:39:50 INFO     | Process 18656 | Thread: 7744 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:40:03 WARNING  | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/list/
+2026-08-04 22:40:03 INFO     | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:40:04 INFO     | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:40:15 WARNING  | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/district/list/
+2026-08-04 22:40:15 WARNING  | Process 18656 | Thread: 7744 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/block/list/
+2026-08-04 22:40:15 INFO     | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:40:15 INFO     | Process 18656 | Thread: 7744 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:40:15 WARNING  | Process 18656 | Thread: 9144 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/village/list/
+2026-08-04 22:40:15 WARNING  | Process 18656 | Thread: 10244 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
+2026-08-04 22:40:15 INFO     | Process 18656 | Thread: 9144 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:40:15 INFO     | Process 18656 | Thread: 10244 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:40:15 WARNING  | Process 18656 | Thread: 26600 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/contractor/list/
+2026-08-04 22:40:15 INFO     | Process 18656 | Thread: 26600 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:40:16 INFO     | Process 18656 | Thread: 7744 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:40:16 INFO     | Process 18656 | Thread: 26600 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:40:16 INFO     | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:40:16 INFO     | Process 18656 | Thread: 9144 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:40:16 INFO     | Process 18656 | Thread: 10244 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:40:16 WARNING  | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/domainvaluebydomaintype/
+2026-08-04 22:40:16 INFO     | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:40:16 INFO     | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:41:29 WARNING  | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/list/
+2026-08-04 22:41:29 INFO     | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:41:29 INFO     | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:43:46 WARNING  | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/list/
+2026-08-04 22:43:46 INFO     | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:43:46 INFO     | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:43:57 WARNING  | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
+2026-08-04 22:43:57 WARNING  | Process 18656 | Thread: 7744 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/contractor/list/
+2026-08-04 22:43:57 INFO     | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:43:57 INFO     | Process 18656 | Thread: 7744 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:43:57 WARNING  | Process 18656 | Thread: 9144 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/domainvaluebydomaintype/
+2026-08-04 22:43:57 INFO     | Process 18656 | Thread: 9144 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:43:58 INFO     | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:43:58 INFO     | Process 18656 | Thread: 9144 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:43:58 INFO     | Process 18656 | Thread: 7744 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-08-04 22:46:27 WARNING  | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/list/
+2026-08-04 22:46:27 INFO     | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4939462460, 'iat': 1785862460}
+2026-08-04 22:46:27 INFO     | Process 18656 | Thread: 22468 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
