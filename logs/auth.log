@@ -153,3 +153,4 @@
 2026-08-04 14:53:43 INFO     | Process 14288 | Thread: 25460 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
 2026-08-04 14:54:27 WARNING  | Process 14288 | Thread: 25460 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/master/state/list/
 2026-08-04 14:54:27 INFO     | Process 14288 | Thread: 25460 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 1785837471, 'iat': 1785833871}
+2026-08-04 14:54:27 INFO     | Process 14288 | Thread: 25460 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True

@@ -49,3 +49,4 @@ Exception: Token generation failed
 2026-08-04 14:53:36 WARNING  | Process 14288 | Thread: 25460 | survey_management.views | views.list_erection_executions:ln 78 |--  ================================== START - Erection Execution List =================================
 2026-08-04 14:53:36 WARNING  | Process 14288 | Thread: 25460 | survey_management.views | views.list_erection_executions:ln 115 |--  ================================== END - Erection Execution List =================================
 2026-08-04 14:53:43 WARNING  | Process 14288 | Thread: 25460 | survey_management.views | views.list_erection_executions:ln 78 |--  ================================== START - Erection Execution List =================================
+2026-08-04 14:53:43 WARNING  | Process 14288 | Thread: 25460 | survey_management.views | views.list_erection_executions:ln 115 |--  ================================== END - Erection Execution List =================================
