@@ -546,3 +546,38 @@ Exception: Token generation failed
 2026-08-04 15:30:01 WARNING  | Process 26576 | Thread: 4088 | master_management | views.list_states:ln 186 |--  ================================== START - List States =================================
 2026-08-04 15:30:01 INFO     | Process 26576 | Thread: 4088 | master_management | views.list_states:ln 188 |--  Received list states params: {'is_active': True}
 2026-08-04 15:30:02 WARNING  | Process 26576 | Thread: 4088 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
+2026-08-04 15:32:14 WARNING  | Process 26576 | Thread: 4088 | master_management | views.list_districts:ln 458 |--  ================================== START - List Districts =================================
+2026-08-04 15:32:14 INFO     | Process 26576 | Thread: 4088 | master_management | views.list_districts:ln 460 |--  Received list districts params: {'is_active': True, 'state_id': 1}
+2026-08-04 15:32:14 WARNING  | Process 26576 | Thread: 17308 | master_management | views.list_blocks:ln 771 |--  ================================== START - List Blocks =================================
+2026-08-04 15:32:14 INFO     | Process 26576 | Thread: 17308 | master_management | views.list_blocks:ln 773 |--  Received list blocks params: {'is_active': True, 'page_size': 10000, 'state_id': 1, 'district_id': 2}
+2026-08-04 15:32:14 WARNING  | Process 26576 | Thread: 4088 | master_management | views.list_districts:ln 501 |--  ================================== END - List Districts =================================
+2026-08-04 15:32:14 WARNING  | Process 26576 | Thread: 17308 | master_management | views.list_blocks:ln 846 |--  ================================== END - List Blocks =================================
+2026-08-04 15:32:15 WARNING  | Process 26576 | Thread: 23436 | master_management | views.list_states:ln 186 |--  ================================== START - List States =================================
+2026-08-04 15:32:15 INFO     | Process 26576 | Thread: 23436 | master_management | views.list_states:ln 188 |--  Received list states params: {'is_active': True}
+2026-08-04 15:32:15 WARNING  | Process 26576 | Thread: 23436 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
+2026-08-04 19:58:29 WARNING  | Process 11888 | Thread: 27284 | administration.views | views.userPassLogin:ln 71 |--  ================================== START - Admin User Login With Password =================================
+2026-08-04 19:58:29 INFO     | Process 11888 | Thread: 27284 | administration.views | views.userPassLogin:ln 78 |--  Received Login payload - Username: 9876543210
+2026-08-04 19:58:30 WARNING  | Process 11888 | Thread: 27284 | administration.views | views.userPassLogin:ln 188 |--  ================================== END - Admin User Login with Password =================================
+2026-08-04 19:58:36 WARNING  | Process 11888 | Thread: 18944 | master_management | views.list_states:ln 186 |--  ================================== START - List States =================================
+2026-08-04 19:58:36 INFO     | Process 11888 | Thread: 18944 | master_management | views.list_states:ln 188 |--  Received list states params: {'is_active': True}
+2026-08-04 19:58:36 WARNING  | Process 11888 | Thread: 7680 | master_management | views.list_contractors:ln 3058 |--  ================================== START - List Contractors =================================
+2026-08-04 19:58:36 INFO     | Process 11888 | Thread: 7680 | master_management | views.list_contractors:ln 3060 |--  Received list contractors params: {'is_active': True, 'page_size': 10000}
+2026-08-04 19:58:36 WARNING  | Process 11888 | Thread: 18944 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
+2026-08-04 19:58:36 WARNING  | Process 11888 | Thread: 7680 | master_management | views.list_contractors:ln 3093 |--  ================================== END - List Contractors =================================
+2026-08-04 19:58:38 WARNING  | Process 11888 | Thread: 27284 | master_management | views.list_states:ln 186 |--  ================================== START - List States =================================
+2026-08-04 19:58:38 INFO     | Process 11888 | Thread: 27284 | master_management | views.list_states:ln 188 |--  Received list states params: {'is_active': True}
+2026-08-04 19:58:38 WARNING  | Process 11888 | Thread: 27284 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
+2026-08-04 19:58:44 WARNING  | Process 11888 | Thread: 27284 | master_management | views.list_districts:ln 458 |--  ================================== START - List Districts =================================
+2026-08-04 19:58:44 INFO     | Process 11888 | Thread: 27284 | master_management | views.list_districts:ln 460 |--  Received list districts params: {'is_active': True, 'state_id': 3}
+2026-08-04 19:58:44 WARNING  | Process 11888 | Thread: 27284 | master_management | views.list_districts:ln 501 |--  ================================== END - List Districts =================================
+2026-08-04 19:58:45 WARNING  | Process 11888 | Thread: 27284 | master_management | views.list_blocks:ln 771 |--  ================================== START - List Blocks =================================
+2026-08-04 19:58:45 INFO     | Process 11888 | Thread: 27284 | master_management | views.list_blocks:ln 773 |--  Received list blocks params: {'is_active': True, 'page_size': 10000, 'state_id': 3, 'district_id': 3}
+2026-08-04 19:58:45 WARNING  | Process 11888 | Thread: 27284 | master_management | views.list_blocks:ln 846 |--  ================================== END - List Blocks =================================
+2026-08-04 20:08:49 WARNING  | Process 11888 | Thread: 7924 | master_management | views.list_states:ln 186 |--  ================================== START - List States =================================
+2026-08-04 20:08:49 INFO     | Process 11888 | Thread: 7924 | master_management | views.list_states:ln 188 |--  Received list states params: {'is_active': True}
+2026-08-04 20:08:49 WARNING  | Process 11888 | Thread: 7924 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
+2026-08-04 20:08:55 WARNING  | Process 11888 | Thread: 7924 | master_management | views.list_districts:ln 458 |--  ================================== START - List Districts =================================
+2026-08-04 20:08:55 INFO     | Process 11888 | Thread: 7924 | master_management | views.list_districts:ln 460 |--  Received list districts params: {'is_active': True, 'state_id': 3}
+2026-08-04 20:08:56 WARNING  | Process 11888 | Thread: 7924 | master_management | views.list_districts:ln 501 |--  ================================== END - List Districts =================================
+2026-08-04 20:08:58 WARNING  | Process 11888 | Thread: 7924 | master_management | views.list_blocks:ln 771 |--  ================================== START - List Blocks =================================
+2026-08-04 20:08:58 INFO     | Process 11888 | Thread: 7924 | master_management | views.list_blocks:ln 773 |--  Received list blocks params: {'is_active': True, 'page_size': 10000, 'state_id': 3, 'district_id': 3}

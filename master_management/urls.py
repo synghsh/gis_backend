@@ -8,6 +8,8 @@ from master_management.views import (
     add_conductor, edit_conductor, list_conductors, get_conductor_detail, delete_conductor,
     add_pole, edit_pole, list_poles, get_pole_detail, delete_pole,
     add_transformer, edit_transformer, list_transformers, get_transformer_detail, delete_transformer,
+    add_village, edit_village, list_villages, get_village_detail,
+    add_contractor, edit_contractor, list_contractors, get_contractor_detail,
     getDomainValueByTypes
 )
 
@@ -65,6 +67,18 @@ urlpatterns = [
     path('transformer/list/', list_transformers),
     path('transformer/detail/', get_transformer_detail),
     path('transformer/delete/', delete_transformer),
+
+    # Village Master
+    path('village/add/', add_village),
+    path('village/edit/', edit_village),
+    path('village/list/', list_villages),
+    path('village/detail/', get_village_detail),
+
+    # Contractor Master
+    path('contractor/add/', add_contractor),
+    path('contractor/edit/', edit_contractor),
+    path('contractor/list/', list_contractors),
+    path('contractor/detail/', get_contractor_detail),
 ]
 
 

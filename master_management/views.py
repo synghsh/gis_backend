@@ -9,7 +9,7 @@ from exception import (
 from commonUtility.decorators import require_post
 from commonUtility.utils import mandatoryInputCheck
 from common.models import AuditLog
-from master_management.models import StateMaster, DistrictMaster, BlockMaster, RoleMaster, DesignationMaster, ConductorMaster, PoleMaster, TransformerMaster
+from master_management.models import StateMaster, DistrictMaster, BlockMaster, RoleMaster, DesignationMaster, ConductorMaster, PoleMaster, TransformerMaster, VillageMaster, ContractorMaster
 
 logger = logging.getLogger('master_management')
 
@@ -2603,3 +2603,535 @@ def getDomainValueByTypes(request):
     logger.warning('================================== END - GET ALL DOMAIN MASTER LIST =================================')
     return JsonResponse(response_data)
 
+
+@csrf_exempt
+@require_post
+def add_village(request):
+    """
+    POST Request:
+    {
+        "block_id": 1,
+        "village_code": "VIL01",
+        "village_name": "Village Name"
+    }
+    """
+    logger.warning('================================== START - Add Village =================================')
+    payload = request.data
+    logger.info(f'Received add village payload: {payload}')
+
+    # Validate Mandatory Inputs
+    required_fields = ["block_id", "village_code", "village_name"]
+    if not mandatoryInputCheck(payload, required_fields):
+        raise MandatoryInputMissingException(f"Mandatory Required Fields: {required_fields}")
+
+    block_id = payload.get('block_id')
+    village_code = str(payload.get('village_code')).strip()
+    village_name = str(payload.get('village_name')).strip()
+
+    if not village_code or not village_name:
+        raise MandatoryInputMissingException("village_code and village_name cannot be empty strings.")
+
+    # Check if Block exists
+    block = BlockMaster.objects.filter(id=block_id).first()
+    if not block:
+        raise UserNotFoundException(f"Block with ID {block_id} not found.")
+
+    # Check for duplicates
+    duplicate = VillageMaster.objects.filter(
+        Q(village_code__iexact=village_code) | Q(village_name__iexact=village_name)
+    ).first()
+
+    if duplicate:
+        if duplicate.village_code.lower() == village_code.lower():
+            raise UserAlreadyExistException(f"Village Code '{village_code}' already exists.")
+        else:
+            raise UserAlreadyExistException(f"Village Name '{village_name}' already exists.")
+
+    # Fetch user ID from authenticated token
+    user_id = None
+    if hasattr(request, 'token_details') and request.token_details:
+        user_id = request.token_details.get('user_id')
+
+    # Create Village
+    village = VillageMaster.objects.create(
+        block=block,
+        village_code=village_code,
+        village_name=village_name,
+        created_by=user_id,
+        updated_by=user_id
+    )
+
+    # Create Audit Log
+    AuditLog.objects.create(
+        table_name='village_master',
+        operation='INSERT',
+        ref_id=village.id,
+        old_data=None,
+        updated_by=user_id,
+        remarks=f"Village created: {village.village_name} ({village.village_code}) under Block: {block.block_name}"
+    )
+
+    logger.warning('================================== END - Add Village =================================')
+    return JsonResponse({
+        "Code": "SUCCESS001",
+        "Message": "Village created successfully.",
+        "village_id": village.id
+    })
+
+
+@csrf_exempt
+@require_post
+def edit_village(request):
+    """
+    POST Request:
+    {
+        "id": 1,
+        "block_id": 2,
+        "village_code": "VIL01-Updated",
+        "village_name": "Village Name Updated",
+        "is_active": true
+    }
+    """
+    logger.warning('================================== START - Edit Village =================================')
+    payload = request.data
+    logger.info(f'Received edit village payload: {payload}')
+
+    # Validate Mandatory Inputs
+    required_fields = ["id"]
+    if not mandatoryInputCheck(payload, required_fields):
+        raise MandatoryInputMissingException(f"Mandatory Required Fields: {required_fields}")
+
+    village_id = payload.get('id')
+    village = VillageMaster.objects.filter(id=village_id).first()
+    if not village:
+        raise UserNotFoundException(f"Village with ID {village_id} not found.")
+
+    # Store original values for Audit log
+    old_data = {
+        "block_id": village.block.id,
+        "village_code": village.village_code,
+        "village_name": village.village_name,
+        "is_active": village.is_active
+    }
+
+    updated = False
+    block_id = payload.get('block_id')
+    village_code = payload.get('village_code')
+    village_name = payload.get('village_name')
+    is_active = payload.get('is_active')
+
+    if block_id is not None:
+        target_block = BlockMaster.objects.filter(id=block_id).first()
+        if not target_block:
+            raise UserNotFoundException(f"Block with ID {block_id} not found.")
+        if village.block.id != target_block.id:
+            village.block = target_block
+            updated = True
+
+    # Update village_code if provided
+    if village_code is not None:
+        village_code = str(village_code).strip()
+        if not village_code:
+            raise MandatoryInputMissingException("village_code cannot be empty.")
+        # Check uniqueness excluding current record
+        if VillageMaster.objects.filter(village_code__iexact=village_code).exclude(id=village.id).exists():
+            raise UserAlreadyExistException(f"Village Code '{village_code}' already exists.")
+        if village.village_code != village_code:
+            village.village_code = village_code
+            updated = True
+
+    # Update village_name if provided
+    if village_name is not None:
+        village_name = str(village_name).strip()
+        if not village_name:
+            raise MandatoryInputMissingException("village_name cannot be empty.")
+        # Check uniqueness excluding current record
+        if VillageMaster.objects.filter(village_name__iexact=village_name).exclude(id=village.id).exists():
+            raise UserAlreadyExistException(f"Village Name '{village_name}' already exists.")
+        if village.village_name != village_name:
+            village.village_name = village_name
+            updated = True
+
+    # Update is_active if provided
+    if is_active is not None:
+        if isinstance(is_active, str):
+            is_active_val = is_active.lower() in ['true', '1', 'yes']
+        else:
+            is_active_val = bool(is_active)
+        if village.is_active != is_active_val:
+            village.is_active = is_active_val
+            updated = True
+
+    # Save changes and log audit trail if updates occurred
+    if updated:
+        user_id = None
+        if hasattr(request, 'token_details') and request.token_details:
+            user_id = request.token_details.get('user_id')
+
+        village.updated_by = user_id
+        village.save()
+
+        AuditLog.objects.create(
+            table_name='village_master',
+            operation='UPDATE',
+            ref_id=village.id,
+            old_data=old_data,
+            updated_by=user_id,
+            remarks=f"Village updated: {village.village_name} ({village.village_code})"
+        )
+
+    logger.warning('================================== END - Edit Village =================================')
+    return JsonResponse({
+        "Code": "SUCCESS001",
+        "Message": "Village updated successfully."
+    })
+
+
+@csrf_exempt
+def list_villages(request):
+    """
+    GET / POST Request:
+    Supports filtering by block_id, search query, and is_active status.
+    """
+    logger.warning('================================== START - List Villages =================================')
+    payload = request.data
+    logger.info(f'Received list villages params: {payload}')
+
+    # Fetch villages, prefetching foreign models
+    queryset = VillageMaster.objects.select_related('block').all()
+
+    # Filter by block_id
+    block_id = payload.get('block_id')
+    if block_id is not None:
+        queryset = queryset.filter(block_id=block_id)
+
+    # Search filter
+    search = payload.get('search')
+    if search:
+        search = str(search).strip()
+        queryset = queryset.filter(Q(village_code__icontains=search) | Q(village_name__icontains=search))
+
+    # Active status filter
+    is_active = payload.get('is_active')
+    if is_active is not None:
+        if isinstance(is_active, str):
+            is_active_val = is_active.lower() in ['true', '1', 'yes', 'active']
+        else:
+            is_active_val = bool(is_active)
+        queryset = queryset.filter(is_active=is_active_val)
+
+    # Order alphabetically by village name
+    queryset = queryset.order_by('village_name')
+
+    villages_list = []
+    for village in queryset:
+        villages_list.append({
+            "id": village.id,
+            "block_id": village.block.id,
+            "block_name": village.block.block_name,
+            "village_code": village.village_code,
+            "village_name": village.village_name,
+            "is_active": village.is_active,
+            "created_on": village.created_on.strftime('%Y-%m-%d %H:%M:%S') if village.created_on else None,
+            "updated_on": village.updated_on.strftime('%Y-%m-%d %H:%M:%S') if village.updated_on else None,
+        })
+
+    logger.warning('================================== END - List Villages =================================')
+    return JsonResponse({
+        "Code": "SUCCESS001",
+        "Message": "Villages retrieved successfully.",
+        "villages": villages_list
+    })
+
+
+@csrf_exempt
+def get_village_detail(request):
+    """
+    GET / POST Request:
+    {
+        "id": 1
+    }
+    """
+    logger.warning('================================== START - Get Village Detail =================================')
+    payload = request.data
+    logger.info(f'Received get village detail params: {payload}')
+
+    # Validate Mandatory Inputs
+    required_fields = ["id"]
+    if not mandatoryInputCheck(payload, required_fields):
+        raise MandatoryInputMissingException(f"Mandatory Required Fields: {required_fields}")
+
+    village_id = payload.get('id')
+    village = VillageMaster.objects.select_related('block').filter(id=village_id).first()
+    if not village:
+        raise UserNotFoundException(f"Village with ID {village_id} not found.")
+
+    logger.warning('================================== END - Get Village Detail =================================')
+    return JsonResponse({
+        "Code": "SUCCESS001",
+        "Message": "Village detail retrieved successfully.",
+        "village": {
+            "id": village.id,
+            "block_id": village.block.id,
+            "block_name": village.block.block_name,
+            "village_code": village.village_code,
+            "village_name": village.village_name,
+            "is_active": village.is_active,
+            "created_by": village.created_by,
+            "created_on": village.created_on.strftime('%Y-%m-%d %H:%M:%S') if village.created_on else None,
+            "updated_by": village.updated_by,
+            "updated_on": village.updated_on.strftime('%Y-%m-%d %H:%M:%S') if village.updated_on else None,
+        }
+    })
+
+
+@csrf_exempt
+@require_post
+def add_contractor(request):
+    """
+    POST Request:
+    {
+        "contractor_code": "CON01",
+        "contractor_name": "Contractor Name"
+    }
+    """
+    logger.warning('================================== START - Add Contractor =================================')
+    payload = request.data
+    logger.info(f'Received add contractor payload: {payload}')
+
+    # Validate Mandatory Inputs
+    required_fields = ["contractor_code", "contractor_name"]
+    if not mandatoryInputCheck(payload, required_fields):
+        raise MandatoryInputMissingException(f"Mandatory Required Fields: {required_fields}")
+
+    contractor_code = str(payload.get('contractor_code')).strip()
+    contractor_name = str(payload.get('contractor_name')).strip()
+
+    if not contractor_code or not contractor_name:
+        raise MandatoryInputMissingException("contractor_code and contractor_name cannot be empty strings.")
+
+    # Check for duplicate contractor_code or contractor_name
+    duplicate = ContractorMaster.objects.filter(
+        Q(contractor_code__iexact=contractor_code) | Q(contractor_name__iexact=contractor_name)
+    ).first()
+
+    if duplicate:
+        if duplicate.contractor_code.lower() == contractor_code.lower():
+            raise UserAlreadyExistException(f"Contractor Code '{contractor_code}' already exists.")
+        else:
+            raise UserAlreadyExistException(f"Contractor Name '{contractor_name}' already exists.")
+
+    # Fetch user ID from authenticated token
+    user_id = None
+    if hasattr(request, 'token_details') and request.token_details:
+        user_id = request.token_details.get('user_id')
+
+    # Create Contractor
+    contractor = ContractorMaster.objects.create(
+        contractor_code=contractor_code,
+        contractor_name=contractor_name,
+        created_by=user_id,
+        updated_by=user_id
+    )
+
+    # Create Audit Log
+    AuditLog.objects.create(
+        table_name='contractor_master',
+        operation='INSERT',
+        ref_id=contractor.id,
+        old_data=None,
+        updated_by=user_id,
+        remarks=f"Contractor created: {contractor.contractor_name} ({contractor.contractor_code})"
+    )
+
+    logger.warning('================================== END - Add Contractor =================================')
+    return JsonResponse({
+        "Code": "SUCCESS001",
+        "Message": "Contractor created successfully.",
+        "contractor_id": contractor.id
+    })
+
+
+@csrf_exempt
+@require_post
+def edit_contractor(request):
+    """
+    POST Request:
+    {
+        "id": 1,
+        "contractor_code": "CON01-Updated",
+        "contractor_name": "Contractor Name Updated",
+        "is_active": true
+    }
+    """
+    logger.warning('================================== START - Edit Contractor =================================')
+    payload = request.data
+    logger.info(f'Received edit contractor payload: {payload}')
+
+    # Validate Mandatory Inputs
+    required_fields = ["id"]
+    if not mandatoryInputCheck(payload, required_fields):
+        raise MandatoryInputMissingException(f"Mandatory Required Fields: {required_fields}")
+
+    contractor_id = payload.get('id')
+    contractor = ContractorMaster.objects.filter(id=contractor_id).first()
+    if not contractor:
+        raise UserNotFoundException(f"Contractor with ID {contractor_id} not found.")
+
+    # Store original values for Audit log
+    old_data = {
+        "contractor_code": contractor.contractor_code,
+        "contractor_name": contractor.contractor_name,
+        "is_active": contractor.is_active
+    }
+
+    updated = False
+    contractor_code = payload.get('contractor_code')
+    contractor_name = payload.get('contractor_name')
+    is_active = payload.get('is_active')
+
+    # Update contractor_code if provided
+    if contractor_code is not None:
+        contractor_code = str(contractor_code).strip()
+        if not contractor_code:
+            raise MandatoryInputMissingException("contractor_code cannot be empty.")
+        # Check uniqueness excluding current record
+        if ContractorMaster.objects.filter(contractor_code__iexact=contractor_code).exclude(id=contractor.id).exists():
+            raise UserAlreadyExistException(f"Contractor Code '{contractor_code}' already exists.")
+        if contractor.contractor_code != contractor_code:
+            contractor.contractor_code = contractor_code
+            updated = True
+
+    # Update contractor_name if provided
+    if contractor_name is not None:
+        contractor_name = str(contractor_name).strip()
+        if not contractor_name:
+            raise MandatoryInputMissingException("contractor_name cannot be empty.")
+        # Check uniqueness excluding current record
+        if ContractorMaster.objects.filter(contractor_name__iexact=contractor_name).exclude(id=contractor.id).exists():
+            raise UserAlreadyExistException(f"Contractor Name '{contractor_name}' already exists.")
+        if contractor.contractor_name != contractor_name:
+            contractor.contractor_name = contractor_name
+            updated = True
+
+    # Update is_active if provided
+    if is_active is not None:
+        if isinstance(is_active, str):
+            is_active_val = is_active.lower() in ['true', '1', 'yes']
+        else:
+            is_active_val = bool(is_active)
+        if contractor.is_active != is_active_val:
+            contractor.is_active = is_active_val
+            updated = True
+
+    # Save changes and log audit trail if any updates occurred
+    if updated:
+        user_id = None
+        if hasattr(request, 'token_details') and request.token_details:
+            user_id = request.token_details.get('user_id')
+
+        contractor.updated_by = user_id
+        contractor.save()
+
+        AuditLog.objects.create(
+            table_name='contractor_master',
+            operation='UPDATE',
+            ref_id=contractor.id,
+            old_data=old_data,
+            updated_by=user_id,
+            remarks=f"Contractor updated: {contractor.contractor_name} ({contractor.contractor_code})"
+        )
+
+    logger.warning('================================== END - Edit Contractor =================================')
+    return JsonResponse({
+        "Code": "SUCCESS001",
+        "Message": "Contractor updated successfully."
+    })
+
+
+@csrf_exempt
+def list_contractors(request):
+    """
+    GET / POST Request:
+    Supports filtering by search query and is_active status.
+    """
+    logger.warning('================================== START - List Contractors =================================')
+    payload = request.data
+    logger.info(f'Received list contractors params: {payload}')
+
+    queryset = ContractorMaster.objects.all()
+
+    # Search filter (matches contractor_code or contractor_name)
+    search = payload.get('search')
+    if search:
+        search = str(search).strip()
+        queryset = queryset.filter(Q(contractor_code__icontains=search) | Q(contractor_name__icontains=search))
+
+    # Active status filter
+    is_active = payload.get('is_active')
+    if is_active is not None:
+        if isinstance(is_active, str):
+            is_active_val = is_active.lower() in ['true', '1', 'yes', 'active']
+        else:
+            is_active_val = bool(is_active)
+        queryset = queryset.filter(is_active=is_active_val)
+
+    # Order alphabetically by contractor name
+    queryset = queryset.order_by('contractor_name')
+
+    contractors_list = []
+    for contractor in queryset:
+        contractors_list.append({
+            "id": contractor.id,
+            "contractor_code": contractor.contractor_code,
+            "contractor_name": contractor.contractor_name,
+            "is_active": contractor.is_active,
+            "created_on": contractor.created_on.strftime('%Y-%m-%d %H:%M:%S') if contractor.created_on else None,
+            "updated_on": contractor.updated_on.strftime('%Y-%m-%d %H:%M:%S') if contractor.updated_on else None,
+        })
+
+    logger.warning('================================== END - List Contractors =================================')
+    return JsonResponse({
+        "Code": "SUCCESS001",
+        "Message": "Contractors retrieved successfully.",
+        "contractors": contractors_list
+    })
+
+
+@csrf_exempt
+def get_contractor_detail(request):
+    """
+    GET / POST Request:
+    {
+        "id": 1
+    }
+    """
+    logger.warning('================================== START - Get Contractor Detail =================================')
+    payload = request.data
+    logger.info(f'Received get contractor detail params: {payload}')
+
+    # Validate Mandatory Inputs
+    required_fields = ["id"]
+    if not mandatoryInputCheck(payload, required_fields):
+        raise MandatoryInputMissingException(f"Mandatory Required Fields: {required_fields}")
+
+    contractor_id = payload.get('id')
+    contractor = ContractorMaster.objects.filter(id=contractor_id).first()
+    if not contractor:
+        raise UserNotFoundException(f"Contractor with ID {contractor_id} not found.")
+
+    logger.warning('================================== END - Get Contractor Detail =================================')
+    return JsonResponse({
+        "Code": "SUCCESS001",
+        "Message": "Contractor detail retrieved successfully.",
+        "contractor": {
+            "id": contractor.id,
+            "contractor_code": contractor.contractor_code,
+            "contractor_name": contractor.contractor_name,
+            "is_active": contractor.is_active,
+            "created_by": contractor.created_by,
+            "created_on": contractor.created_on.strftime('%Y-%m-%d %H:%M:%S') if contractor.created_on else None,
+            "updated_by": contractor.updated_by,
+            "updated_on": contractor.updated_on.strftime('%Y-%m-%d %H:%M:%S') if contractor.updated_on else None,
+        }
+    })
