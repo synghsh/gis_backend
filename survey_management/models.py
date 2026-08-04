@@ -62,3 +62,35 @@ class SurveyNode(models.Model):
 
     def __str__(self):
         return f"{self.name_label} ({self.node_type}) - Seq: {self.sequence_number}"
+
+
+class ErectionExecution(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    feeder_name = models.CharField(max_length=255, null=True, blank=True)
+    dtr_code = models.CharField(max_length=50, null=True, blank=True)
+    drawing_no = models.CharField(max_length=150)
+    state_name = models.CharField(max_length=150, null=True, blank=True)
+    district = models.CharField(max_length=150, null=True, blank=True)
+    block = models.CharField(max_length=150, null=True, blank=True)
+    village = models.CharField(max_length=150, null=True, blank=True)
+    state_id = models.IntegerField(null=True, blank=True)
+    district_id = models.IntegerField(null=True, blank=True)
+    block_id = models.IntegerField(null=True, blank=True)
+    village_id = models.IntegerField(null=True, blank=True)
+    contractor_name = models.CharField(max_length=255)
+    type_of_work = models.CharField(max_length=50)
+    lt_starting_point = models.CharField(max_length=100, null=True, blank=True)
+    remarks = models.TextField(null=True, blank=True)
+    surveyor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='erections', null=True)
+    status = models.SmallIntegerField(default=1)  # 1 = Active/Pending, 2 = Completed
+    
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        managed = True
+        db_table = 'erection_execution'
+
+    def __str__(self):
+        return f"Erection - {self.drawing_no} ({self.village})"
+
