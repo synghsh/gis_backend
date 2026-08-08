@@ -137,7 +137,24 @@ def list_erection_executions(request):
             
             "remarks": item.remarks,
             "status": item.status,
-            "updated_on": item.updated_on.strftime('%Y-%m-%d %H:%M:%S') if item.updated_on else None
+            "created_on": item.created_on.strftime('%Y-%m-%d %H:%M:%S') if item.created_on else None,
+            "updated_on": item.updated_on.strftime('%Y-%m-%d %H:%M:%S') if item.updated_on else None,
+            "has_nodes": item.nodes.exists(),
+            "nodes": [
+                {
+                    "id": node.id,
+                    "nodeType": node.node_type,
+                    "sequenceNumber": node.sequence_number,
+                    "nameLabel": node.name_label,
+                    "latitude": float(node.latitude),
+                    "longitude": float(node.longitude),
+                    "attributes": node.attributes,
+                    "imageUri": node.image_path,
+                    "capturedAt": node.captured_at.isoformat() if node.captured_at else None,
+                    "parentLabel": node.parent_label,
+                }
+                for node in item.nodes.all().order_by('sequence_number')
+            ]
         })
         
     response_data = {
