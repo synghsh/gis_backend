@@ -331,3 +331,69 @@ ValueError: Field 'type_of_work' expected a number but got 'LT_440V'.
 2026-08-04 22:43:47 WARNING  | Process 18656 | Thread: 22468 | survey_management.views | views.list_erection_executions:ln 148 |--  ================================== END - Erection Execution List =================================
 2026-08-04 22:46:27 WARNING  | Process 18656 | Thread: 22468 | survey_management.views | views.list_erection_executions:ln 80 |--  ================================== START - Erection Execution List =================================
 2026-08-04 22:46:28 WARNING  | Process 18656 | Thread: 22468 | survey_management.views | views.list_erection_executions:ln 148 |--  ================================== END - Erection Execution List =================================
+2026-08-08 22:13:12 WARNING  | Process 24216 | Thread: 25672 | survey_management.views | views.list_erection_executions:ln 80 |--  ================================== START - Erection Execution List =================================
+2026-08-08 22:13:12 WARNING  | Process 24216 | Thread: 25672 | survey_management.views | views.list_erection_executions:ln 148 |--  ================================== END - Erection Execution List =================================
+2026-08-08 22:13:17 WARNING  | Process 24216 | Thread: 25672 | survey_management.views | views.list_erection_executions:ln 80 |--  ================================== START - Erection Execution List =================================
+2026-08-08 22:13:17 WARNING  | Process 24216 | Thread: 25672 | survey_management.views | views.list_erection_executions:ln 148 |--  ================================== END - Erection Execution List =================================
+2026-08-08 22:29:33 WARNING  | Process 24216 | Thread: 13384 | survey_management.views | views.list_erection_executions:ln 80 |--  ================================== START - Erection Execution List =================================
+2026-08-08 22:29:33 WARNING  | Process 24216 | Thread: 13384 | survey_management.views | views.list_erection_executions:ln 148 |--  ================================== END - Erection Execution List =================================
+2026-08-08 22:46:45 WARNING  | Process 24216 | Thread: 6024 | survey_management.views | views.list_erection_executions:ln 80 |--  ================================== START - Erection Execution List =================================
+2026-08-08 22:46:46 WARNING  | Process 24216 | Thread: 6024 | survey_management.views | views.list_erection_executions:ln 148 |--  ================================== END - Erection Execution List =================================
+2026-08-08 22:47:13 WARNING  | Process 24216 | Thread: 20424 | survey_management.views | views.list_erection_executions:ln 80 |--  ================================== START - Erection Execution List =================================
+2026-08-08 22:47:13 WARNING  | Process 24216 | Thread: 20424 | survey_management.views | views.list_erection_executions:ln 148 |--  ================================== END - Erection Execution List =================================
+2026-08-08 22:48:00 WARNING  | Process 24216 | Thread: 20424 | survey_management.views | views.list_erection_executions:ln 80 |--  ================================== START - Erection Execution List =================================
+2026-08-08 22:48:00 WARNING  | Process 24216 | Thread: 20424 | survey_management.views | views.list_erection_executions:ln 148 |--  ================================== END - Erection Execution List =================================
+2026-08-08 22:48:36 WARNING  | Process 24216 | Thread: 20424 | survey_management.views | views.list_erection_executions:ln 80 |--  ================================== START - Erection Execution List =================================
+2026-08-08 22:48:37 WARNING  | Process 24216 | Thread: 20424 | survey_management.views | views.list_erection_executions:ln 148 |--  ================================== END - Erection Execution List =================================
+2026-08-08 22:52:54 WARNING  | Process 24216 | Thread: 22852 | survey_management.views | views.list_erection_executions:ln 80 |--  ================================== START - Erection Execution List =================================
+2026-08-08 22:52:55 WARNING  | Process 24216 | Thread: 22852 | survey_management.views | views.list_erection_executions:ln 148 |--  ================================== END - Erection Execution List =================================
+2026-08-08 22:54:01 WARNING  | Process 24216 | Thread: 22852 | survey_management.views | views.list_erection_executions:ln 80 |--  ================================== START - Erection Execution List =================================
+2026-08-08 22:54:01 WARNING  | Process 24216 | Thread: 22852 | survey_management.views | views.list_erection_executions:ln 148 |--  ================================== END - Erection Execution List =================================
+2026-08-08 22:57:26 WARNING  | Process 24216 | Thread: 22852 | survey_management.views | views.list_erection_executions:ln 80 |--  ================================== START - Erection Execution List =================================
+2026-08-08 22:57:27 WARNING  | Process 24216 | Thread: 22852 | survey_management.views | views.list_erection_executions:ln 148 |--  ================================== END - Erection Execution List =================================
+2026-08-08 22:57:43 WARNING  | Process 24216 | Thread: 23500 | survey_management.views | views.list_erection_executions:ln 80 |--  ================================== START - Erection Execution List =================================
+2026-08-08 22:57:43 WARNING  | Process 24216 | Thread: 23500 | survey_management.views | views.list_erection_executions:ln 148 |--  ================================== END - Erection Execution List =================================
+2026-08-08 23:11:35 WARNING  | Process 24216 | Thread: 24276 | survey_management.views | views.list_erection_executions:ln 80 |--  ================================== START - Erection Execution List =================================
+2026-08-08 23:11:36 WARNING  | Process 24216 | Thread: 24276 | survey_management.views | views.list_erection_executions:ln 148 |--  ================================== END - Erection Execution List =================================
+2026-08-08 23:20:37 WARNING  | Process 24216 | Thread: 24440 | survey_management.views | views.list_erection_executions:ln 80 |--  ================================== START - Erection Execution List =================================
+2026-08-08 23:20:38 WARNING  | Process 24216 | Thread: 24440 | survey_management.views | views.list_erection_executions:ln 148 |--  ================================== END - Erection Execution List =================================
+2026-08-08 23:21:01 WARNING  | Process 24216 | Thread: 22400 | survey_management.views | views.list_erection_executions:ln 80 |--  ================================== START - Erection Execution List =================================
+2026-08-08 23:21:02 WARNING  | Process 24216 | Thread: 22400 | survey_management.views | views.list_erection_executions:ln 148 |--  ================================== END - Erection Execution List =================================
+2026-08-08 23:40:50 WARNING  | Process 24216 | Thread: 29620 | survey_management.views | views.list_erection_executions:ln 80 |--  ================================== START - Erection Execution List =================================
+2026-08-08 23:40:51 WARNING  | Process 24216 | Thread: 29620 | survey_management.views | views.list_erection_executions:ln 148 |--  ================================== END - Erection Execution List =================================
+2026-08-08 23:41:06 WARNING  | Process 24216 | Thread: 29620 | survey_management.views | views.list_erection_executions:ln 80 |--  ================================== START - Erection Execution List =================================
+2026-08-08 23:41:07 WARNING  | Process 24216 | Thread: 29620 | survey_management.views | views.list_erection_executions:ln 148 |--  ================================== END - Erection Execution List =================================
+2026-08-08 23:59:41 WARNING  | Process 12320 | Thread: 20292 | survey_management.views | views.list_erection_executions:ln 80 |--  ================================== START - Erection Execution List =================================
+2026-08-08 23:59:42 WARNING  | Process 12320 | Thread: 20292 | survey_management.views | views.list_erection_executions:ln 148 |--  ================================== END - Erection Execution List =================================
+2026-08-09 00:01:32 WARNING  | Process 12320 | Thread: 22920 | survey_management.views | views.save_erection_node:ln 239 |--  ================================== START - Save Erection Node =================================
+2026-08-09 00:01:32 WARNING  | Process 12320 | Thread: 22920 | survey_management.views | views.save_erection_node:ln 305 |--  ================================== END - Save Erection Node =================================
+2026-08-09 00:05:23 WARNING  | Process 12320 | Thread: 22920 | survey_management.views | views.list_erection_executions:ln 80 |--  ================================== START - Erection Execution List =================================
+2026-08-09 00:05:24 WARNING  | Process 12320 | Thread: 22920 | survey_management.views | views.list_erection_executions:ln 148 |--  ================================== END - Erection Execution List =================================
+2026-08-09 00:05:50 WARNING  | Process 12320 | Thread: 23544 | survey_management.views | views.list_erection_executions:ln 80 |--  ================================== START - Erection Execution List =================================
+2026-08-09 00:05:50 WARNING  | Process 12320 | Thread: 23544 | survey_management.views | views.list_erection_executions:ln 148 |--  ================================== END - Erection Execution List =================================
+2026-08-09 00:08:34 WARNING  | Process 12320 | Thread: 23544 | survey_management.views | views.save_erection_node:ln 239 |--  ================================== START - Save Erection Node =================================
+2026-08-09 00:08:34 WARNING  | Process 12320 | Thread: 23544 | survey_management.views | views.save_erection_node:ln 305 |--  ================================== END - Save Erection Node =================================
+2026-08-09 00:17:12 WARNING  | Process 22944 | Thread: 11640 | survey_management.views | views.list_erection_executions:ln 80 |--  ================================== START - Erection Execution List =================================
+2026-08-09 00:17:12 WARNING  | Process 22944 | Thread: 11640 | survey_management.views | views.list_erection_executions:ln 148 |--  ================================== END - Erection Execution List =================================
+2026-08-09 00:18:29 WARNING  | Process 22944 | Thread: 11640 | survey_management.views | views.save_erection_node:ln 239 |--  ================================== START - Save Erection Node =================================
+2026-08-09 00:18:29 ERROR    | Process 22944 | Thread: 11640 | django.request | log.log_message:ln 249 |--  Internal Server Error: /gis/administration/erection/node/save/
+Traceback (most recent call last):
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\commonUtility\decorators.py", line 17, in wrap
+    return func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\survey_management\views.py", line 278, in save_erection_node
+    dtr_capacity_obj = TransformerMaster.objects.filter(id=dtr_capacity_id).first() if dtr_capacity_id else None
+                       ^^^^^^^^^^^^^^^^^
+NameError: name 'TransformerMaster' is not defined
+2026-08-09 00:19:51 WARNING  | Process 30344 | Thread: 12760 | survey_management.views | views.save_erection_node:ln 239 |--  ================================== START - Save Erection Node =================================
+2026-08-09 00:19:52 WARNING  | Process 30344 | Thread: 12760 | survey_management.views | views.save_erection_node:ln 388 |--  ================================== END - Save Erection Node =================================
+2026-08-09 00:21:34 WARNING  | Process 30344 | Thread: 12760 | survey_management.views | views.save_erection_node:ln 239 |--  ================================== START - Save Erection Node =================================

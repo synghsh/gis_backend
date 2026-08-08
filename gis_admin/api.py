@@ -5,6 +5,7 @@ from survey_management.views import (
     list_erection_executions,
     update_erection_execution,
     complete_erection_execution,
+    save_erection_node,
 )
 
 urls = [
@@ -20,5 +21,6 @@ urls = [
     path('erection/list/', list_erection_executions),
     path('erection/update/', update_erection_execution),
     path('erection/complete/', complete_erection_execution),
+    path('erection/node/save/', save_erection_node),
 ]
 
