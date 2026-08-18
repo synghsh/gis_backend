@@ -1529,3 +1529,12 @@ NameError: name 'TransformerMaster' is not defined
 2026-08-09 00:33:07 INFO     | Process 28240 | Thread: 22852 | master_management | views.list_contractors:ln 3060 |--  Received list contractors params: {'is_active': True, 'page_size': 10000}
 2026-08-09 00:33:07 WARNING  | Process 28240 | Thread: 22212 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
 2026-08-09 00:33:07 WARNING  | Process 28240 | Thread: 25712 | master_management | views.getDomainValueByTypes:ln 2603 |--  ================================== END - GET ALL DOMAIN MASTER LIST =================================
+2026-08-09 00:33:07 WARNING  | Process 28240 | Thread: 22852 | master_management | views.list_contractors:ln 3093 |--  ================================== END - List Contractors =================================
+2026-08-09 00:45:39 WARNING  | Process 28240 | Thread: 30216 | master_management | views.list_contractors:ln 3058 |--  ================================== START - List Contractors =================================
+2026-08-09 00:45:39 INFO     | Process 28240 | Thread: 30216 | master_management | views.list_contractors:ln 3060 |--  Received list contractors params: {'is_active': True, 'page_size': 10000}
+2026-08-09 00:45:39 WARNING  | Process 28240 | Thread: 19504 | master_management | views.getDomainValueByTypes:ln 2573 |--  ================================== START - GET ALL DOMAIN MASTER LIST =================================
+2026-08-09 00:45:39 WARNING  | Process 28240 | Thread: 28760 | master_management | views.list_states:ln 186 |--  ================================== START - List States =================================
+2026-08-09 00:45:39 INFO     | Process 28240 | Thread: 28760 | master_management | views.list_states:ln 188 |--  Received list states params: {'is_active': True}
+2026-08-09 00:45:39 WARNING  | Process 28240 | Thread: 19504 | master_management | views.getDomainValueByTypes:ln 2603 |--  ================================== END - GET ALL DOMAIN MASTER LIST =================================
+2026-08-09 00:45:39 WARNING  | Process 28240 | Thread: 30216 | master_management | views.list_contractors:ln 3093 |--  ================================== END - List Contractors =================================
+2026-08-09 00:45:39 WARNING  | Process 28240 | Thread: 28760 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================

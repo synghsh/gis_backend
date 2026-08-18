@@ -194,7 +194,10 @@ else:
 
 
 # Logging Configuration
-LOG_DIR = BASE_DIR / 'logs'
+if 'VERCEL' in os.environ:
+    LOG_DIR = Path('/tmp') / 'logs'
+else:
+    LOG_DIR = BASE_DIR / 'logs'
 os.makedirs(LOG_DIR, exist_ok=True)
 
 # File size in bytes (from MB settings)
