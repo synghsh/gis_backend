@@ -6,7 +6,7 @@ from commonUtility.utils import mandatoryInputCheck
 from exception import MandatoryInputMissingException
 from common.models import User, DomainLookup
 from master_management.models import StateMaster, DistrictMaster, BlockMaster, VillageMaster, ContractorMaster, TransformerMaster, ConductorMaster, PoleMaster
-from .models import ErectionExecution, ErectionNode
+from .models import ErectionExecution, ErectionNode, ErectionNodeImage
 
 logger = logging.getLogger(__name__)
 
@@ -150,6 +150,7 @@ def list_erection_executions(request):
                     "longitude": float(node.longitude),
                     "attributes": node.attributes,
                     "imageUri": node.image_path,
+                    "imageUris": [img.image_path for img in node.node_images.all()],
                     "capturedAt": node.captured_at.isoformat() if node.captured_at else None,
                     "parentLabel": node.parent_label,
                 }
@@ -297,8 +298,8 @@ def save_erection_node(request):
     conductor_id = clean_int(attrs.get('conductor'))
     conductor_obj = ConductorMaster.objects.filter(id=conductor_id).first() if conductor_id else None
     
-    pole_type_id = clean_int(attrs.get('poleType'))
-    pole_obj = PoleMaster.objects.filter(id=pole_type_id).first() if pole_type_id else None
+    pole_master_id = clean_int(attrs.get('poleMaster')) or clean_int(attrs.get('poleType'))
+    pole_obj = PoleMaster.objects.filter(id=pole_master_id).first() if pole_master_id else None
     
     # Deserialize JSON fields
     pole_db_type_codes = []
@@ -391,6 +392,28 @@ def save_erection_node(request):
             pole_qty=clean_int(attrs.get('poleQty'))
         )
         message = "Erection Node saved successfully"
+
+    # Images saving block
+    images_raw = payload.get('images') or attrs.get('images') or payload.get('image_uris') or attrs.get('image_uris')
+    images_list = []
+    if images_raw:
+        if isinstance(images_raw, str):
+            try:
+                images_list = json.loads(images_raw)
+            except Exception:
+                images_list = [img.strip() for img in images_raw.split(',') if img.strip()]
+        elif isinstance(images_raw, list):
+            images_list = images_raw
+
+    # Save primary image path on node
+    node.image_path = images_list[0] if images_list else None
+    node.save()
+
+    # Update ErectionNodeImage table
+    ErectionNodeImage.objects.filter(node=node).delete()
+    for img_path in images_list:
+        if img_path:
+            ErectionNodeImage.objects.create(node=node, image_path=img_path)
         
     response_data = {
         "Code": "SUCCESS001",

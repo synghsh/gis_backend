@@ -151,4 +151,18 @@ class ErectionNode(models.Model):
         return f"Erection Node: {self.name_label} ({self.node_type}) - Seq: {self.sequence_number}"
 
 
+class ErectionNodeImage(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    node = models.ForeignKey(ErectionNode, on_delete=models.CASCADE, related_name='node_images')
+    image_path = models.CharField(max_length=500)
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        managed = True
+        db_table = 'erection_node_image'
+
+    def __str__(self):
+        return f"Image for Node {self.node.name_label} ({self.id})"
+
+
 
