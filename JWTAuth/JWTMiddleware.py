@@ -39,7 +39,7 @@ class AuthMiddleware(BaseBackend):
         logger.warning(f"Evaluating JWT for path: {path}")
 
         # Check path exclusions
-        if path in JWT_EXCLUSION_LIST:
+        if path in JWT_EXCLUSION_LIST or path.startswith('/gis/administration/s3/download/'):
             request.token_details = {"user_id": None, "user_type": None, "c_m_no": None}
             return True
 

@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 
 class User(models.Model):
@@ -72,4 +73,23 @@ class DomainLookup(models.Model):
 
     def __str__(self):
         return f"{self.domain_type} - {self.domain_value} ({self.domain_code})"
+
+
+class S3LikeObject(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    bucket = models.CharField(max_length=100)
+    key = models.CharField(max_length=255)
+    content_type = models.CharField(max_length=100)
+    size = models.IntegerField()
+    # Binary field to store compressed image data locally
+    data = models.BinaryField(null=True, blank=True)
+    storage_type = models.CharField(max_length=10, default='database')  # 'database' or 's3'
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        managed = True
+        db_table = 's3_like_object'
+        unique_together = ('bucket', 'key')
+
 

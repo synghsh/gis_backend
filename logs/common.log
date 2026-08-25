@@ -240,3 +240,4 @@ Traceback (most recent call last):
     dtr_capacity_obj = TransformerMaster.objects.filter(id=dtr_capacity_id).first() if dtr_capacity_id else None
                        ^^^^^^^^^^^^^^^^^
 NameError: name 'TransformerMaster' is not defined
+2026-08-23 15:53:46 INFO     | Process 1416 | Thread: 26192 | common.views | views.upload_document:ln 20 |--  Starting document upload API

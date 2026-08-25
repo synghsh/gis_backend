@@ -7,6 +7,7 @@ from survey_management.views import (
     complete_erection_execution,
     save_erection_node,
 )
+from common.views import upload_document, get_signed_url, download_document
 
 urls = [
     # Health check
@@ -22,5 +23,10 @@ urls = [
     path('erection/update/', update_erection_execution),
     path('erection/complete/', complete_erection_execution),
     path('erection/node/save/', save_erection_node),
+    
+    # S3 Document Storage APIs
+    path('s3/upload/', upload_document),
+    path('s3/sign/', get_signed_url),
+    path('s3/download/<uuid:doc_id>/', download_document, name='s3-download'),
 ]
 
