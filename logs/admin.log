@@ -1538,3 +1538,357 @@ NameError: name 'TransformerMaster' is not defined
 2026-08-09 00:45:39 WARNING  | Process 28240 | Thread: 19504 | master_management | views.getDomainValueByTypes:ln 2603 |--  ================================== END - GET ALL DOMAIN MASTER LIST =================================
 2026-08-09 00:45:39 WARNING  | Process 28240 | Thread: 30216 | master_management | views.list_contractors:ln 3093 |--  ================================== END - List Contractors =================================
 2026-08-09 00:45:39 WARNING  | Process 28240 | Thread: 28760 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
+2026-08-25 19:02:52 WARNING  | Process 20604 | Thread: 21700 | master_management | views.list_states:ln 186 |--  ================================== START - List States =================================
+2026-08-25 19:02:52 INFO     | Process 20604 | Thread: 21700 | master_management | views.list_states:ln 188 |--  Received list states params: {'is_active': True}
+2026-08-25 19:02:52 WARNING  | Process 20604 | Thread: 21700 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
+2026-08-25 19:02:53 WARNING  | Process 20604 | Thread: 9556 | master_management | views.list_contractors:ln 3058 |--  ================================== START - List Contractors =================================
+2026-08-25 19:02:53 INFO     | Process 20604 | Thread: 9556 | master_management | views.list_contractors:ln 3060 |--  Received list contractors params: {'is_active': True, 'page_size': 10000}
+2026-08-25 19:02:53 WARNING  | Process 20604 | Thread: 29536 | master_management | views.getDomainValueByTypes:ln 2573 |--  ================================== START - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 19:02:53 WARNING  | Process 20604 | Thread: 9556 | master_management | views.list_contractors:ln 3093 |--  ================================== END - List Contractors =================================
+2026-08-25 19:02:53 WARNING  | Process 20604 | Thread: 29536 | master_management | views.getDomainValueByTypes:ln 2603 |--  ================================== END - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 19:03:01 WARNING  | Process 20604 | Thread: 9556 | master_management | views.getDomainValueByTypes:ln 2573 |--  ================================== START - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 19:03:01 WARNING  | Process 20604 | Thread: 25460 | master_management | views.list_contractors:ln 3058 |--  ================================== START - List Contractors =================================
+2026-08-25 19:03:01 INFO     | Process 20604 | Thread: 25460 | master_management | views.list_contractors:ln 3060 |--  Received list contractors params: {'is_active': True, 'page_size': 10000}
+2026-08-25 19:03:01 WARNING  | Process 20604 | Thread: 21700 | master_management | views.list_states:ln 186 |--  ================================== START - List States =================================
+2026-08-25 19:03:01 INFO     | Process 20604 | Thread: 21700 | master_management | views.list_states:ln 188 |--  Received list states params: {'is_active': True}
+2026-08-25 19:03:01 WARNING  | Process 20604 | Thread: 25460 | master_management | views.list_contractors:ln 3093 |--  ================================== END - List Contractors =================================
+2026-08-25 19:03:01 WARNING  | Process 20604 | Thread: 21700 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
+2026-08-25 19:03:01 WARNING  | Process 20604 | Thread: 9556 | master_management | views.getDomainValueByTypes:ln 2603 |--  ================================== END - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 19:03:12 WARNING  | Process 20604 | Thread: 21700 | master_management | views.list_districts:ln 458 |--  ================================== START - List Districts =================================
+2026-08-25 19:03:12 INFO     | Process 20604 | Thread: 21700 | master_management | views.list_districts:ln 460 |--  Received list districts params: {'is_active': True, 'state_id': 3}
+2026-08-25 19:03:12 WARNING  | Process 20604 | Thread: 21700 | master_management | views.list_districts:ln 501 |--  ================================== END - List Districts =================================
+2026-08-25 19:03:14 WARNING  | Process 20604 | Thread: 21700 | master_management | views.list_blocks:ln 771 |--  ================================== START - List Blocks =================================
+2026-08-25 19:03:14 INFO     | Process 20604 | Thread: 21700 | master_management | views.list_blocks:ln 773 |--  Received list blocks params: {'is_active': True, 'page_size': 10000, 'state_id': 3, 'district_id': 3}
+2026-08-25 19:03:14 WARNING  | Process 20604 | Thread: 21700 | master_management | views.list_blocks:ln 846 |--  ================================== END - List Blocks =================================
+2026-08-25 19:03:16 WARNING  | Process 20604 | Thread: 21700 | master_management | views.list_villages:ln 2796 |--  ================================== START - List Villages =================================
+2026-08-25 19:03:16 INFO     | Process 20604 | Thread: 21700 | master_management | views.list_villages:ln 2798 |--  Received list villages params: {'is_active': True, 'page_size': 10000, 'state_id': 3, 'district_id': 3, 'block_id': 4}
+2026-08-25 19:03:16 WARNING  | Process 20604 | Thread: 21700 | master_management | views.list_villages:ln 2839 |--  ================================== END - List Villages =================================
+2026-08-25 19:03:32 WARNING  | Process 20604 | Thread: 21700 | master_management | views.list_transformers:ln 2407 |--  ================================== START - List Transformers =================================
+2026-08-25 19:03:32 INFO     | Process 20604 | Thread: 21700 | master_management | views.list_transformers:ln 2409 |--  Received list transformers params: {'is_active': True, 'page_size': 10000}
+2026-08-25 19:03:32 WARNING  | Process 20604 | Thread: 25460 | master_management | views.list_poles:ln 2059 |--  ================================== START - List Poles =================================
+2026-08-25 19:03:32 INFO     | Process 20604 | Thread: 25460 | master_management | views.list_poles:ln 2061 |--  Received list poles params: {'is_active': True, 'page_size': 10000}
+2026-08-25 19:03:32 WARNING  | Process 20604 | Thread: 29536 | master_management | views.getDomainValueByTypes:ln 2573 |--  ================================== START - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 19:03:32 WARNING  | Process 20604 | Thread: 9556 | master_management | views.list_conductors:ln 1711 |--  ================================== START - List Conductors =================================
+2026-08-25 19:03:32 INFO     | Process 20604 | Thread: 9556 | master_management | views.list_conductors:ln 1713 |--  Received list conductors params: {'is_active': True, 'page_size': 10000}
+2026-08-25 19:03:32 WARNING  | Process 20604 | Thread: 29536 | master_management | views.getDomainValueByTypes:ln 2603 |--  ================================== END - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 19:03:32 WARNING  | Process 20604 | Thread: 21700 | master_management | views.list_transformers:ln 2465 |--  ================================== END - List Transformers =================================
+2026-08-25 19:03:32 WARNING  | Process 20604 | Thread: 25460 | master_management | views.list_poles:ln 2117 |--  ================================== END - List Poles =================================
+2026-08-25 19:03:32 WARNING  | Process 20604 | Thread: 9556 | master_management | views.list_conductors:ln 1769 |--  ================================== END - List Conductors =================================
+2026-08-25 19:05:47 ERROR    | Process 20604 | Thread: 21700 | django.request | log.log_message:ln 249 |--  Internal Server Error: /gis/administration/erection/node/save/
+Traceback (most recent call last):
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 2128, in get_prep_value
+    return int(value)
+           ^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'mt8ph05b'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\commonUtility\decorators.py", line 17, in wrap
+    return func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\survey_management\views.py", line 264, in save_erection_node
+    erection = ErectionExecution.objects.filter(id=erection_id).first()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\query.py", line 1542, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\query.py", line 1560, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\query.py", line 1570, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\sql\query.py", line 1671, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\sql\query.py", line 1703, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\sql\query.py", line 1613, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\sql\query.py", line 1440, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\lookups.py", line 35, in __init__
+    self.rhs = self.get_prep_lookup()
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\lookups.py", line 391, in get_prep_lookup
+    return super().get_prep_lookup()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\lookups.py", line 93, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 2130, in get_prep_value
+    raise e.__class__(
+ValueError: Field 'id' expected a number but got 'mt8ph05b'.
+2026-08-25 19:09:47 WARNING  | Process 20604 | Thread: 21700 | master_management | views.list_states:ln 186 |--  ================================== START - List States =================================
+2026-08-25 19:09:47 INFO     | Process 20604 | Thread: 21700 | master_management | views.list_states:ln 188 |--  Received list states params: {'is_active': True}
+2026-08-25 19:09:47 WARNING  | Process 20604 | Thread: 13744 | master_management | views.list_contractors:ln 3058 |--  ================================== START - List Contractors =================================
+2026-08-25 19:09:47 INFO     | Process 20604 | Thread: 13744 | master_management | views.list_contractors:ln 3060 |--  Received list contractors params: {'is_active': True, 'page_size': 10000}
+2026-08-25 19:09:47 WARNING  | Process 20604 | Thread: 5528 | master_management | views.getDomainValueByTypes:ln 2573 |--  ================================== START - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 19:09:47 WARNING  | Process 20604 | Thread: 13744 | master_management | views.list_contractors:ln 3093 |--  ================================== END - List Contractors =================================
+2026-08-25 19:09:47 WARNING  | Process 20604 | Thread: 5528 | master_management | views.getDomainValueByTypes:ln 2603 |--  ================================== END - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 19:09:47 WARNING  | Process 20604 | Thread: 21700 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
+2026-08-25 19:10:43 ERROR    | Process 20604 | Thread: 21700 | django.request | log.log_message:ln 249 |--  Internal Server Error: /gis/administration/erection/node/save/
+Traceback (most recent call last):
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 2128, in get_prep_value
+    return int(value)
+           ^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'mt8ph05b'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\commonUtility\decorators.py", line 17, in wrap
+    return func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\survey_management\views.py", line 264, in save_erection_node
+    erection = ErectionExecution.objects.filter(id=erection_id).first()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\query.py", line 1542, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\query.py", line 1560, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\query.py", line 1570, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\sql\query.py", line 1671, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\sql\query.py", line 1703, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\sql\query.py", line 1613, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\sql\query.py", line 1440, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\lookups.py", line 35, in __init__
+    self.rhs = self.get_prep_lookup()
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\lookups.py", line 391, in get_prep_lookup
+    return super().get_prep_lookup()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\lookups.py", line 93, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 2130, in get_prep_value
+    raise e.__class__(
+ValueError: Field 'id' expected a number but got 'mt8ph05b'.
+2026-08-25 19:14:16 WARNING  | Process 20604 | Thread: 15508 | master_management | views.list_states:ln 186 |--  ================================== START - List States =================================
+2026-08-25 19:14:16 INFO     | Process 20604 | Thread: 15508 | master_management | views.list_states:ln 188 |--  Received list states params: {'is_active': True}
+2026-08-25 19:14:16 WARNING  | Process 20604 | Thread: 2816 | master_management | views.getDomainValueByTypes:ln 2573 |--  ================================== START - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 19:14:16 WARNING  | Process 20604 | Thread: 17460 | master_management | views.list_contractors:ln 3058 |--  ================================== START - List Contractors =================================
+2026-08-25 19:14:16 INFO     | Process 20604 | Thread: 17460 | master_management | views.list_contractors:ln 3060 |--  Received list contractors params: {'is_active': True, 'page_size': 10000}
+2026-08-25 19:14:16 WARNING  | Process 20604 | Thread: 2816 | master_management | views.getDomainValueByTypes:ln 2603 |--  ================================== END - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 19:14:16 WARNING  | Process 20604 | Thread: 15508 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
+2026-08-25 19:14:16 WARNING  | Process 20604 | Thread: 17460 | master_management | views.list_contractors:ln 3093 |--  ================================== END - List Contractors =================================
+2026-08-25 19:14:17 WARNING  | Process 20604 | Thread: 17460 | master_management | views.list_contractors:ln 3058 |--  ================================== START - List Contractors =================================
+2026-08-25 19:14:17 INFO     | Process 20604 | Thread: 17460 | master_management | views.list_contractors:ln 3060 |--  Received list contractors params: {'is_active': True, 'page_size': 10000}
+2026-08-25 19:14:17 WARNING  | Process 20604 | Thread: 15508 | master_management | views.list_states:ln 186 |--  ================================== START - List States =================================
+2026-08-25 19:14:17 INFO     | Process 20604 | Thread: 15508 | master_management | views.list_states:ln 188 |--  Received list states params: {'is_active': True}
+2026-08-25 19:14:17 WARNING  | Process 20604 | Thread: 2816 | master_management | views.getDomainValueByTypes:ln 2573 |--  ================================== START - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 19:14:17 WARNING  | Process 20604 | Thread: 17460 | master_management | views.list_contractors:ln 3093 |--  ================================== END - List Contractors =================================
+2026-08-25 19:14:17 WARNING  | Process 20604 | Thread: 15508 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
+2026-08-25 19:14:17 WARNING  | Process 20604 | Thread: 2816 | master_management | views.getDomainValueByTypes:ln 2603 |--  ================================== END - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 19:14:27 WARNING  | Process 20604 | Thread: 8992 | master_management | views.list_districts:ln 458 |--  ================================== START - List Districts =================================
+2026-08-25 19:14:27 INFO     | Process 20604 | Thread: 8992 | master_management | views.list_districts:ln 460 |--  Received list districts params: {'is_active': True, 'state_id': 3}
+2026-08-25 19:14:27 WARNING  | Process 20604 | Thread: 8992 | master_management | views.list_districts:ln 501 |--  ================================== END - List Districts =================================
+2026-08-25 19:14:29 WARNING  | Process 20604 | Thread: 8992 | master_management | views.list_blocks:ln 771 |--  ================================== START - List Blocks =================================
+2026-08-25 19:14:29 INFO     | Process 20604 | Thread: 8992 | master_management | views.list_blocks:ln 773 |--  Received list blocks params: {'is_active': True, 'page_size': 10000, 'state_id': 3, 'district_id': 3}
+2026-08-25 19:14:29 WARNING  | Process 20604 | Thread: 8992 | master_management | views.list_blocks:ln 846 |--  ================================== END - List Blocks =================================
+2026-08-25 19:14:31 WARNING  | Process 20604 | Thread: 8992 | master_management | views.list_villages:ln 2796 |--  ================================== START - List Villages =================================
+2026-08-25 19:14:31 INFO     | Process 20604 | Thread: 8992 | master_management | views.list_villages:ln 2798 |--  Received list villages params: {'is_active': True, 'page_size': 10000, 'state_id': 3, 'district_id': 3, 'block_id': 4}
+2026-08-25 19:14:31 WARNING  | Process 20604 | Thread: 8992 | master_management | views.list_villages:ln 2839 |--  ================================== END - List Villages =================================
+2026-08-25 19:14:43 WARNING  | Process 20604 | Thread: 8992 | master_management | views.list_transformers:ln 2407 |--  ================================== START - List Transformers =================================
+2026-08-25 19:14:43 INFO     | Process 20604 | Thread: 8992 | master_management | views.list_transformers:ln 2409 |--  Received list transformers params: {'is_active': True, 'page_size': 10000}
+2026-08-25 19:14:43 WARNING  | Process 20604 | Thread: 15508 | master_management | views.list_conductors:ln 1711 |--  ================================== START - List Conductors =================================
+2026-08-25 19:14:43 INFO     | Process 20604 | Thread: 15508 | master_management | views.list_conductors:ln 1713 |--  Received list conductors params: {'is_active': True, 'page_size': 10000}
+2026-08-25 19:14:43 WARNING  | Process 20604 | Thread: 2816 | master_management | views.getDomainValueByTypes:ln 2573 |--  ================================== START - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 19:14:43 WARNING  | Process 20604 | Thread: 17460 | master_management | views.list_poles:ln 2059 |--  ================================== START - List Poles =================================
+2026-08-25 19:14:43 INFO     | Process 20604 | Thread: 17460 | master_management | views.list_poles:ln 2061 |--  Received list poles params: {'is_active': True, 'page_size': 10000}
+2026-08-25 19:14:43 WARNING  | Process 20604 | Thread: 2816 | master_management | views.getDomainValueByTypes:ln 2603 |--  ================================== END - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 19:14:43 WARNING  | Process 20604 | Thread: 8992 | master_management | views.list_transformers:ln 2465 |--  ================================== END - List Transformers =================================
+2026-08-25 19:14:43 WARNING  | Process 20604 | Thread: 17460 | master_management | views.list_poles:ln 2117 |--  ================================== END - List Poles =================================
+2026-08-25 19:14:43 WARNING  | Process 20604 | Thread: 15508 | master_management | views.list_conductors:ln 1769 |--  ================================== END - List Conductors =================================
+2026-08-25 19:18:23 WARNING  | Process 20604 | Thread: 8992 | master_management | views.list_states:ln 186 |--  ================================== START - List States =================================
+2026-08-25 19:18:23 INFO     | Process 20604 | Thread: 8992 | master_management | views.list_states:ln 188 |--  Received list states params: {'is_active': True}
+2026-08-25 19:18:23 WARNING  | Process 20604 | Thread: 15508 | master_management | views.list_contractors:ln 3058 |--  ================================== START - List Contractors =================================
+2026-08-25 19:18:23 INFO     | Process 20604 | Thread: 15508 | master_management | views.list_contractors:ln 3060 |--  Received list contractors params: {'is_active': True, 'page_size': 10000}
+2026-08-25 19:18:23 WARNING  | Process 20604 | Thread: 17460 | master_management | views.getDomainValueByTypes:ln 2573 |--  ================================== START - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 19:18:23 WARNING  | Process 20604 | Thread: 8992 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
+2026-08-25 19:18:23 WARNING  | Process 20604 | Thread: 15508 | master_management | views.list_contractors:ln 3093 |--  ================================== END - List Contractors =================================
+2026-08-25 19:18:23 WARNING  | Process 20604 | Thread: 17460 | master_management | views.getDomainValueByTypes:ln 2603 |--  ================================== END - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 19:48:56 WARNING  | Process 20604 | Thread: 20884 | master_management | views.getDomainValueByTypes:ln 2573 |--  ================================== START - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 19:48:56 WARNING  | Process 20604 | Thread: 28108 | master_management | views.list_contractors:ln 3058 |--  ================================== START - List Contractors =================================
+2026-08-25 19:48:56 INFO     | Process 20604 | Thread: 28108 | master_management | views.list_contractors:ln 3060 |--  Received list contractors params: {'is_active': True, 'page_size': 10000}
+2026-08-25 19:48:56 WARNING  | Process 20604 | Thread: 5528 | master_management | views.list_states:ln 186 |--  ================================== START - List States =================================
+2026-08-25 19:48:56 INFO     | Process 20604 | Thread: 5528 | master_management | views.list_states:ln 188 |--  Received list states params: {'is_active': True}
+2026-08-25 19:48:56 WARNING  | Process 20604 | Thread: 20884 | master_management | views.getDomainValueByTypes:ln 2603 |--  ================================== END - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 19:48:56 WARNING  | Process 20604 | Thread: 28108 | master_management | views.list_contractors:ln 3093 |--  ================================== END - List Contractors =================================
+2026-08-25 19:48:56 WARNING  | Process 20604 | Thread: 5528 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
+2026-08-25 19:48:59 WARNING  | Process 20604 | Thread: 26832 | master_management | views.list_states:ln 186 |--  ================================== START - List States =================================
+2026-08-25 19:48:59 INFO     | Process 20604 | Thread: 26832 | master_management | views.list_states:ln 188 |--  Received list states params: {'is_active': True}
+2026-08-25 19:48:59 WARNING  | Process 20604 | Thread: 28108 | master_management | views.list_contractors:ln 3058 |--  ================================== START - List Contractors =================================
+2026-08-25 19:48:59 WARNING  | Process 20604 | Thread: 5528 | master_management | views.getDomainValueByTypes:ln 2573 |--  ================================== START - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 19:48:59 INFO     | Process 20604 | Thread: 28108 | master_management | views.list_contractors:ln 3060 |--  Received list contractors params: {'is_active': True, 'page_size': 10000}
+2026-08-25 19:48:59 WARNING  | Process 20604 | Thread: 26832 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
+2026-08-25 19:48:59 WARNING  | Process 20604 | Thread: 28108 | master_management | views.list_contractors:ln 3093 |--  ================================== END - List Contractors =================================
+2026-08-25 19:48:59 WARNING  | Process 20604 | Thread: 5528 | master_management | views.getDomainValueByTypes:ln 2603 |--  ================================== END - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 19:49:08 WARNING  | Process 20604 | Thread: 26832 | master_management | views.list_districts:ln 458 |--  ================================== START - List Districts =================================
+2026-08-25 19:49:08 INFO     | Process 20604 | Thread: 26832 | master_management | views.list_districts:ln 460 |--  Received list districts params: {'is_active': True, 'state_id': 3}
+2026-08-25 19:49:08 WARNING  | Process 20604 | Thread: 26832 | master_management | views.list_districts:ln 501 |--  ================================== END - List Districts =================================
+2026-08-25 19:49:11 WARNING  | Process 20604 | Thread: 26832 | master_management | views.list_blocks:ln 771 |--  ================================== START - List Blocks =================================
+2026-08-25 19:49:11 INFO     | Process 20604 | Thread: 26832 | master_management | views.list_blocks:ln 773 |--  Received list blocks params: {'is_active': True, 'page_size': 10000, 'state_id': 3, 'district_id': 3}
+2026-08-25 19:49:11 WARNING  | Process 20604 | Thread: 26832 | master_management | views.list_blocks:ln 846 |--  ================================== END - List Blocks =================================
+2026-08-25 19:49:13 WARNING  | Process 20604 | Thread: 26832 | master_management | views.list_villages:ln 2796 |--  ================================== START - List Villages =================================
+2026-08-25 19:49:13 INFO     | Process 20604 | Thread: 26832 | master_management | views.list_villages:ln 2798 |--  Received list villages params: {'is_active': True, 'page_size': 10000, 'state_id': 3, 'district_id': 3, 'block_id': 4}
+2026-08-25 19:49:13 WARNING  | Process 20604 | Thread: 26832 | master_management | views.list_villages:ln 2839 |--  ================================== END - List Villages =================================
+2026-08-25 19:49:28 WARNING  | Process 20604 | Thread: 26832 | master_management | views.list_transformers:ln 2407 |--  ================================== START - List Transformers =================================
+2026-08-25 19:49:28 INFO     | Process 20604 | Thread: 26832 | master_management | views.list_transformers:ln 2409 |--  Received list transformers params: {'is_active': True, 'page_size': 10000}
+2026-08-25 19:49:28 WARNING  | Process 20604 | Thread: 28108 | master_management | views.list_conductors:ln 1711 |--  ================================== START - List Conductors =================================
+2026-08-25 19:49:28 INFO     | Process 20604 | Thread: 28108 | master_management | views.list_conductors:ln 1713 |--  Received list conductors params: {'is_active': True, 'page_size': 10000}
+2026-08-25 19:49:28 WARNING  | Process 20604 | Thread: 5528 | master_management | views.list_poles:ln 2059 |--  ================================== START - List Poles =================================
+2026-08-25 19:49:28 INFO     | Process 20604 | Thread: 5528 | master_management | views.list_poles:ln 2061 |--  Received list poles params: {'is_active': True, 'page_size': 10000}
+2026-08-25 19:49:28 WARNING  | Process 20604 | Thread: 20884 | master_management | views.getDomainValueByTypes:ln 2573 |--  ================================== START - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 19:49:29 WARNING  | Process 20604 | Thread: 20884 | master_management | views.getDomainValueByTypes:ln 2603 |--  ================================== END - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 19:49:29 WARNING  | Process 20604 | Thread: 26832 | master_management | views.list_transformers:ln 2465 |--  ================================== END - List Transformers =================================
+2026-08-25 19:49:29 WARNING  | Process 20604 | Thread: 28108 | master_management | views.list_conductors:ln 1769 |--  ================================== END - List Conductors =================================
+2026-08-25 19:49:29 WARNING  | Process 20604 | Thread: 5528 | master_management | views.list_poles:ln 2117 |--  ================================== END - List Poles =================================
+2026-08-25 19:56:22 WARNING  | Process 20604 | Thread: 13988 | master_management | views.list_states:ln 186 |--  ================================== START - List States =================================
+2026-08-25 19:56:22 INFO     | Process 20604 | Thread: 13988 | master_management | views.list_states:ln 188 |--  Received list states params: {'is_active': True}
+2026-08-25 19:56:22 WARNING  | Process 20604 | Thread: 16960 | master_management | views.list_contractors:ln 3058 |--  ================================== START - List Contractors =================================
+2026-08-25 19:56:22 INFO     | Process 20604 | Thread: 16960 | master_management | views.list_contractors:ln 3060 |--  Received list contractors params: {'is_active': True, 'page_size': 10000}
+2026-08-25 19:56:22 WARNING  | Process 20604 | Thread: 25792 | master_management | views.getDomainValueByTypes:ln 2573 |--  ================================== START - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 19:56:22 WARNING  | Process 20604 | Thread: 13988 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
+2026-08-25 19:56:22 WARNING  | Process 20604 | Thread: 16960 | master_management | views.list_contractors:ln 3093 |--  ================================== END - List Contractors =================================
+2026-08-25 19:56:22 WARNING  | Process 20604 | Thread: 25792 | master_management | views.getDomainValueByTypes:ln 2603 |--  ================================== END - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 19:56:31 WARNING  | Process 20604 | Thread: 7592 | master_management | views.list_districts:ln 458 |--  ================================== START - List Districts =================================
+2026-08-25 19:56:31 INFO     | Process 20604 | Thread: 7592 | master_management | views.list_districts:ln 460 |--  Received list districts params: {'is_active': True, 'state_id': 3}
+2026-08-25 19:56:31 WARNING  | Process 20604 | Thread: 7592 | master_management | views.list_districts:ln 501 |--  ================================== END - List Districts =================================
+2026-08-25 19:56:34 WARNING  | Process 20604 | Thread: 7592 | master_management | views.list_blocks:ln 771 |--  ================================== START - List Blocks =================================
+2026-08-25 19:56:34 INFO     | Process 20604 | Thread: 7592 | master_management | views.list_blocks:ln 773 |--  Received list blocks params: {'is_active': True, 'page_size': 10000, 'state_id': 3, 'district_id': 3}
+2026-08-25 19:56:35 WARNING  | Process 20604 | Thread: 7592 | master_management | views.list_blocks:ln 846 |--  ================================== END - List Blocks =================================
+2026-08-25 19:56:36 WARNING  | Process 20604 | Thread: 7592 | master_management | views.list_villages:ln 2796 |--  ================================== START - List Villages =================================
+2026-08-25 19:56:36 INFO     | Process 20604 | Thread: 7592 | master_management | views.list_villages:ln 2798 |--  Received list villages params: {'is_active': True, 'page_size': 10000, 'state_id': 3, 'district_id': 3, 'block_id': 4}
+2026-08-25 19:56:36 WARNING  | Process 20604 | Thread: 7592 | master_management | views.list_villages:ln 2839 |--  ================================== END - List Villages =================================
+2026-08-25 19:56:48 WARNING  | Process 20604 | Thread: 13988 | master_management | views.list_conductors:ln 1711 |--  ================================== START - List Conductors =================================
+2026-08-25 19:56:48 INFO     | Process 20604 | Thread: 13988 | master_management | views.list_conductors:ln 1713 |--  Received list conductors params: {'is_active': True, 'page_size': 10000}
+2026-08-25 19:56:48 WARNING  | Process 20604 | Thread: 7592 | master_management | views.list_transformers:ln 2407 |--  ================================== START - List Transformers =================================
+2026-08-25 19:56:48 INFO     | Process 20604 | Thread: 7592 | master_management | views.list_transformers:ln 2409 |--  Received list transformers params: {'is_active': True, 'page_size': 10000}
+2026-08-25 19:56:48 WARNING  | Process 20604 | Thread: 16960 | master_management | views.getDomainValueByTypes:ln 2573 |--  ================================== START - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 19:56:48 WARNING  | Process 20604 | Thread: 25792 | master_management | views.list_poles:ln 2059 |--  ================================== START - List Poles =================================
+2026-08-25 19:56:48 INFO     | Process 20604 | Thread: 25792 | master_management | views.list_poles:ln 2061 |--  Received list poles params: {'is_active': True, 'page_size': 10000}
+2026-08-25 19:56:49 WARNING  | Process 20604 | Thread: 16960 | master_management | views.getDomainValueByTypes:ln 2603 |--  ================================== END - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 19:56:49 WARNING  | Process 20604 | Thread: 13988 | master_management | views.list_conductors:ln 1769 |--  ================================== END - List Conductors =================================
+2026-08-25 19:56:49 WARNING  | Process 20604 | Thread: 7592 | master_management | views.list_transformers:ln 2465 |--  ================================== END - List Transformers =================================
+2026-08-25 19:56:49 WARNING  | Process 20604 | Thread: 25792 | master_management | views.list_poles:ln 2117 |--  ================================== END - List Poles =================================
+2026-08-25 19:59:00 WARNING  | Process 20604 | Thread: 7592 | master_management | views.list_states:ln 186 |--  ================================== START - List States =================================
+2026-08-25 19:59:00 INFO     | Process 20604 | Thread: 7592 | master_management | views.list_states:ln 188 |--  Received list states params: {'is_active': True}
+2026-08-25 19:59:00 WARNING  | Process 20604 | Thread: 13988 | master_management | views.list_contractors:ln 3058 |--  ================================== START - List Contractors =================================
+2026-08-25 19:59:00 INFO     | Process 20604 | Thread: 13988 | master_management | views.list_contractors:ln 3060 |--  Received list contractors params: {'is_active': True, 'page_size': 10000}
+2026-08-25 19:59:00 WARNING  | Process 20604 | Thread: 25792 | master_management | views.getDomainValueByTypes:ln 2573 |--  ================================== START - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 19:59:00 WARNING  | Process 20604 | Thread: 7592 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
+2026-08-25 19:59:00 WARNING  | Process 20604 | Thread: 25792 | master_management | views.getDomainValueByTypes:ln 2603 |--  ================================== END - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 19:59:00 WARNING  | Process 20604 | Thread: 13988 | master_management | views.list_contractors:ln 3093 |--  ================================== END - List Contractors =================================
+2026-08-25 19:59:08 WARNING  | Process 20604 | Thread: 7592 | master_management | views.list_districts:ln 458 |--  ================================== START - List Districts =================================
+2026-08-25 19:59:08 INFO     | Process 20604 | Thread: 7592 | master_management | views.list_districts:ln 460 |--  Received list districts params: {'is_active': True, 'state_id': 3}
+2026-08-25 19:59:08 WARNING  | Process 20604 | Thread: 7592 | master_management | views.list_districts:ln 501 |--  ================================== END - List Districts =================================
+2026-08-25 19:59:10 WARNING  | Process 20604 | Thread: 7592 | master_management | views.list_blocks:ln 771 |--  ================================== START - List Blocks =================================
+2026-08-25 19:59:10 INFO     | Process 20604 | Thread: 7592 | master_management | views.list_blocks:ln 773 |--  Received list blocks params: {'is_active': True, 'page_size': 10000, 'state_id': 3, 'district_id': 3}
+2026-08-25 19:59:11 WARNING  | Process 20604 | Thread: 7592 | master_management | views.list_blocks:ln 846 |--  ================================== END - List Blocks =================================
+2026-08-25 19:59:12 WARNING  | Process 20604 | Thread: 7592 | master_management | views.list_villages:ln 2796 |--  ================================== START - List Villages =================================
+2026-08-25 19:59:12 INFO     | Process 20604 | Thread: 7592 | master_management | views.list_villages:ln 2798 |--  Received list villages params: {'is_active': True, 'page_size': 10000, 'state_id': 3, 'district_id': 3, 'block_id': 4}
+2026-08-25 19:59:12 WARNING  | Process 20604 | Thread: 7592 | master_management | views.list_villages:ln 2839 |--  ================================== END - List Villages =================================
+2026-08-25 19:59:30 WARNING  | Process 20604 | Thread: 25792 | master_management | views.list_poles:ln 2059 |--  ================================== START - List Poles =================================
+2026-08-25 19:59:30 WARNING  | Process 20604 | Thread: 13988 | master_management | views.list_conductors:ln 1711 |--  ================================== START - List Conductors =================================
+2026-08-25 19:59:30 INFO     | Process 20604 | Thread: 25792 | master_management | views.list_poles:ln 2061 |--  Received list poles params: {'is_active': True, 'page_size': 10000}
+2026-08-25 19:59:30 WARNING  | Process 20604 | Thread: 7592 | master_management | views.list_transformers:ln 2407 |--  ================================== START - List Transformers =================================
+2026-08-25 19:59:30 INFO     | Process 20604 | Thread: 13988 | master_management | views.list_conductors:ln 1713 |--  Received list conductors params: {'is_active': True, 'page_size': 10000}
+2026-08-25 19:59:30 WARNING  | Process 20604 | Thread: 16960 | master_management | views.getDomainValueByTypes:ln 2573 |--  ================================== START - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 19:59:30 INFO     | Process 20604 | Thread: 7592 | master_management | views.list_transformers:ln 2409 |--  Received list transformers params: {'is_active': True, 'page_size': 10000}
+2026-08-25 19:59:31 WARNING  | Process 20604 | Thread: 16960 | master_management | views.getDomainValueByTypes:ln 2603 |--  ================================== END - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 19:59:31 WARNING  | Process 20604 | Thread: 25792 | master_management | views.list_poles:ln 2117 |--  ================================== END - List Poles =================================
+2026-08-25 19:59:31 WARNING  | Process 20604 | Thread: 7592 | master_management | views.list_transformers:ln 2465 |--  ================================== END - List Transformers =================================
+2026-08-25 19:59:31 WARNING  | Process 20604 | Thread: 13988 | master_management | views.list_conductors:ln 1769 |--  ================================== END - List Conductors =================================
+2026-08-25 20:05:35 WARNING  | Process 20604 | Thread: 28552 | master_management | views.list_states:ln 186 |--  ================================== START - List States =================================
+2026-08-25 20:05:35 INFO     | Process 20604 | Thread: 28552 | master_management | views.list_states:ln 188 |--  Received list states params: {'is_active': True}
+2026-08-25 20:05:35 WARNING  | Process 20604 | Thread: 29556 | master_management | views.getDomainValueByTypes:ln 2573 |--  ================================== START - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 20:05:35 WARNING  | Process 20604 | Thread: 9888 | master_management | views.list_contractors:ln 3058 |--  ================================== START - List Contractors =================================
+2026-08-25 20:05:35 INFO     | Process 20604 | Thread: 9888 | master_management | views.list_contractors:ln 3060 |--  Received list contractors params: {'is_active': True, 'page_size': 10000}
+2026-08-25 20:05:35 WARNING  | Process 20604 | Thread: 28552 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
+2026-08-25 20:05:35 WARNING  | Process 20604 | Thread: 9888 | master_management | views.list_contractors:ln 3093 |--  ================================== END - List Contractors =================================
+2026-08-25 20:05:35 WARNING  | Process 20604 | Thread: 29556 | master_management | views.getDomainValueByTypes:ln 2603 |--  ================================== END - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 20:06:47 WARNING  | Process 20604 | Thread: 2656 | master_management | views.list_districts:ln 458 |--  ================================== START - List Districts =================================
+2026-08-25 20:06:47 INFO     | Process 20604 | Thread: 2656 | master_management | views.list_districts:ln 460 |--  Received list districts params: {'is_active': True, 'state_id': 3}
+2026-08-25 20:06:47 WARNING  | Process 20604 | Thread: 2656 | master_management | views.list_districts:ln 501 |--  ================================== END - List Districts =================================
+2026-08-25 20:06:49 WARNING  | Process 20604 | Thread: 2656 | master_management | views.list_blocks:ln 771 |--  ================================== START - List Blocks =================================
+2026-08-25 20:06:49 INFO     | Process 20604 | Thread: 2656 | master_management | views.list_blocks:ln 773 |--  Received list blocks params: {'is_active': True, 'page_size': 10000, 'state_id': 3, 'district_id': 3}
+2026-08-25 20:06:50 WARNING  | Process 20604 | Thread: 2656 | master_management | views.list_blocks:ln 846 |--  ================================== END - List Blocks =================================
+2026-08-25 20:06:51 WARNING  | Process 20604 | Thread: 2656 | master_management | views.list_villages:ln 2796 |--  ================================== START - List Villages =================================
+2026-08-25 20:06:51 INFO     | Process 20604 | Thread: 2656 | master_management | views.list_villages:ln 2798 |--  Received list villages params: {'is_active': True, 'page_size': 10000, 'state_id': 3, 'district_id': 3, 'block_id': 4}
+2026-08-25 20:06:51 WARNING  | Process 20604 | Thread: 2656 | master_management | views.list_villages:ln 2839 |--  ================================== END - List Villages =================================
+2026-08-25 20:07:04 WARNING  | Process 20604 | Thread: 2656 | master_management | views.list_transformers:ln 2407 |--  ================================== START - List Transformers =================================
+2026-08-25 20:07:04 INFO     | Process 20604 | Thread: 2656 | master_management | views.list_transformers:ln 2409 |--  Received list transformers params: {'is_active': True, 'page_size': 10000}
+2026-08-25 20:07:04 WARNING  | Process 20604 | Thread: 9888 | master_management | views.list_conductors:ln 1711 |--  ================================== START - List Conductors =================================
+2026-08-25 20:07:04 INFO     | Process 20604 | Thread: 9888 | master_management | views.list_conductors:ln 1713 |--  Received list conductors params: {'is_active': True, 'page_size': 10000}
+2026-08-25 20:07:04 WARNING  | Process 20604 | Thread: 28552 | master_management | views.list_poles:ln 2059 |--  ================================== START - List Poles =================================
+2026-08-25 20:07:04 WARNING  | Process 20604 | Thread: 29556 | master_management | views.getDomainValueByTypes:ln 2573 |--  ================================== START - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 20:07:04 INFO     | Process 20604 | Thread: 28552 | master_management | views.list_poles:ln 2061 |--  Received list poles params: {'is_active': True, 'page_size': 10000}
+2026-08-25 20:07:04 WARNING  | Process 20604 | Thread: 29556 | master_management | views.getDomainValueByTypes:ln 2603 |--  ================================== END - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 20:07:04 WARNING  | Process 20604 | Thread: 2656 | master_management | views.list_transformers:ln 2465 |--  ================================== END - List Transformers =================================
+2026-08-25 20:07:04 WARNING  | Process 20604 | Thread: 9888 | master_management | views.list_conductors:ln 1769 |--  ================================== END - List Conductors =================================
+2026-08-25 20:07:04 WARNING  | Process 20604 | Thread: 28552 | master_management | views.list_poles:ln 2117 |--  ================================== END - List Poles =================================
+2026-08-25 20:13:13 WARNING  | Process 20604 | Thread: 3064 | master_management | views.list_states:ln 186 |--  ================================== START - List States =================================
+2026-08-25 20:13:13 INFO     | Process 20604 | Thread: 3064 | master_management | views.list_states:ln 188 |--  Received list states params: {'is_active': True}
+2026-08-25 20:13:13 WARNING  | Process 20604 | Thread: 11884 | master_management | views.list_contractors:ln 3058 |--  ================================== START - List Contractors =================================
+2026-08-25 20:13:13 INFO     | Process 20604 | Thread: 11884 | master_management | views.list_contractors:ln 3060 |--  Received list contractors params: {'is_active': True, 'page_size': 10000}
+2026-08-25 20:13:13 WARNING  | Process 20604 | Thread: 5208 | master_management | views.getDomainValueByTypes:ln 2573 |--  ================================== START - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 20:13:13 WARNING  | Process 20604 | Thread: 3064 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
+2026-08-25 20:13:13 WARNING  | Process 20604 | Thread: 11884 | master_management | views.list_contractors:ln 3093 |--  ================================== END - List Contractors =================================
+2026-08-25 20:13:13 WARNING  | Process 20604 | Thread: 5208 | master_management | views.getDomainValueByTypes:ln 2603 |--  ================================== END - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 20:14:12 WARNING  | Process 20604 | Thread: 3064 | master_management | views.list_districts:ln 458 |--  ================================== START - List Districts =================================
+2026-08-25 20:14:12 INFO     | Process 20604 | Thread: 3064 | master_management | views.list_districts:ln 460 |--  Received list districts params: {'is_active': True, 'state_id': 3}
+2026-08-25 20:14:12 WARNING  | Process 20604 | Thread: 3064 | master_management | views.list_districts:ln 501 |--  ================================== END - List Districts =================================
+2026-08-25 20:14:14 WARNING  | Process 20604 | Thread: 3064 | master_management | views.list_blocks:ln 771 |--  ================================== START - List Blocks =================================
+2026-08-25 20:14:14 INFO     | Process 20604 | Thread: 3064 | master_management | views.list_blocks:ln 773 |--  Received list blocks params: {'is_active': True, 'page_size': 10000, 'state_id': 3, 'district_id': 3}
+2026-08-25 20:14:14 WARNING  | Process 20604 | Thread: 3064 | master_management | views.list_blocks:ln 846 |--  ================================== END - List Blocks =================================
+2026-08-25 20:14:15 WARNING  | Process 20604 | Thread: 3064 | master_management | views.list_villages:ln 2796 |--  ================================== START - List Villages =================================
+2026-08-25 20:14:15 INFO     | Process 20604 | Thread: 3064 | master_management | views.list_villages:ln 2798 |--  Received list villages params: {'is_active': True, 'page_size': 10000, 'state_id': 3, 'district_id': 3, 'block_id': 4}
+2026-08-25 20:14:16 WARNING  | Process 20604 | Thread: 3064 | master_management | views.list_villages:ln 2839 |--  ================================== END - List Villages =================================
+2026-08-25 20:14:27 WARNING  | Process 20604 | Thread: 3064 | master_management | views.list_transformers:ln 2407 |--  ================================== START - List Transformers =================================
+2026-08-25 20:14:27 INFO     | Process 20604 | Thread: 3064 | master_management | views.list_transformers:ln 2409 |--  Received list transformers params: {'is_active': True, 'page_size': 10000}
+2026-08-25 20:14:27 WARNING  | Process 20604 | Thread: 11884 | master_management | views.list_conductors:ln 1711 |--  ================================== START - List Conductors =================================
+2026-08-25 20:14:27 INFO     | Process 20604 | Thread: 11884 | master_management | views.list_conductors:ln 1713 |--  Received list conductors params: {'is_active': True, 'page_size': 10000}
+2026-08-25 20:14:27 WARNING  | Process 20604 | Thread: 5208 | master_management | views.list_poles:ln 2059 |--  ================================== START - List Poles =================================
+2026-08-25 20:14:27 INFO     | Process 20604 | Thread: 5208 | master_management | views.list_poles:ln 2061 |--  Received list poles params: {'is_active': True, 'page_size': 10000}
+2026-08-25 20:14:27 WARNING  | Process 20604 | Thread: 26700 | master_management | views.getDomainValueByTypes:ln 2573 |--  ================================== START - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 20:14:27 WARNING  | Process 20604 | Thread: 26700 | master_management | views.getDomainValueByTypes:ln 2603 |--  ================================== END - GET ALL DOMAIN MASTER LIST =================================
+2026-08-25 20:14:27 WARNING  | Process 20604 | Thread: 11884 | master_management | views.list_conductors:ln 1769 |--  ================================== END - List Conductors =================================
+2026-08-25 20:14:27 WARNING  | Process 20604 | Thread: 3064 | master_management | views.list_transformers:ln 2465 |--  ================================== END - List Transformers =================================
+2026-08-25 20:14:27 WARNING  | Process 20604 | Thread: 5208 | master_management | views.list_poles:ln 2117 |--  ================================== END - List Poles =================================

@@ -6,6 +6,7 @@ from survey_management.views import (
     update_erection_execution,
     complete_erection_execution,
     save_erection_node,
+    get_erection_pole_details,
 )
 from common.views import upload_document, get_signed_url, download_document
 
@@ -23,6 +24,11 @@ urls = [
     path('erection/update/', update_erection_execution),
     path('erection/complete/', complete_erection_execution),
     path('erection/node/save/', save_erection_node),
+    path('erection/node/patch/', save_erection_node),
+    path('erection/node/update/', save_erection_node),
+    path('erection/pole/update/', save_erection_node),
+    path('erection/pole/patch/', save_erection_node),
+    path('erection/pole/details/', get_erection_pole_details),
     
     # S3 Document Storage APIs
     path('s3/upload/', upload_document),

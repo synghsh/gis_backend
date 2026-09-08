@@ -254,16 +254,38 @@ def complete_erection_execution(request):
 @csrf_exempt
 @require_post
 def save_erection_node(request):
+    """
+    Saves or patches an erection node. Supports both POST and PATCH methods.
+    Locates erection by erection_execution_id (numeric or 'erect-X') or drawing_no fallback.
+    Locates existing node by node_id, sequence_number, or name_label to update/patch.
+    Extracts structure fields from both root payload and attributes dictionary (supporting camelCase & snake_case).
+    """
     logger.warning('================================== START - Save Erection Node =================================')
     payload = request.data
     
-    erection_id = payload.get('erection_execution_id')
-    if not erection_id:
-        return JsonResponse({"Exception": True, "Message": "Erection Execution ID is required"}, status=400)
+    # Helper to parse integers safely from ints, floats, or strings
+    def clean_int(val):
+        if val is None:
+            return None
+        if isinstance(val, int):
+            return val
+        s = str(val).strip().replace('erect-', '').replace('srv-', '')
+        return int(s) if s.isdigit() else None
+
+    raw_erection_id = payload.get('erection_execution_id') or payload.get('erection_id')
+    drawing_no = payload.get('drawing_no') or (payload.get('attributes') or {}).get('drawingNo')
+    
+    erection = None
+    clean_eid = clean_int(raw_erection_id)
+    if clean_eid:
+        erection = ErectionExecution.objects.filter(id=clean_eid).first()
+    if not erection and drawing_no:
+        erection = ErectionExecution.objects.filter(drawing_no=str(drawing_no).strip()).order_by('-updated_on').first()
         
-    erection = ErectionExecution.objects.filter(id=erection_id).first()
     if not erection:
-        return JsonResponse({"Exception": True, "Message": "Erection Execution not found"}, status=404)
+        if not raw_erection_id and not drawing_no:
+            return JsonResponse({"Exception": True, "Message": "Either erection_execution_id or drawing_no is required"}, status=400)
+        return JsonResponse({"Exception": True, "Message": f"Erection Execution not found for id '{raw_erection_id}' / drawing '{drawing_no}'"}, status=404)
         
     token_details = getattr(request, 'token_details', None)
     user_id = token_details.get('user_id') if token_details else payload.get('user_id')
@@ -272,7 +294,7 @@ def save_erection_node(request):
     import datetime
     import json
     
-    captured_at_str = payload.get('captured_at')
+    captured_at_str = payload.get('captured_at') or payload.get('capturedAt')
     if captured_at_str:
         try:
             captured_at = datetime.datetime.fromisoformat(captured_at_str)
@@ -281,92 +303,185 @@ def save_erection_node(request):
     else:
         captured_at = timezone.now()
         
-    attrs = payload.get('attributes', {})
-    node_type = payload.get('node_type')
-    
-    # Helper to parse integers safely
-    def clean_int(val):
+    attrs = payload.get('attributes') or {}
+    if isinstance(attrs, str):
         try:
-            return int(val) if val is not None and str(val).strip() != '' else None
-        except ValueError:
-            return None
+            attrs = json.loads(attrs)
+        except Exception:
+            attrs = {}
+            
+    node_type = payload.get('node_type') or payload.get('nodeType') or attrs.get('nodeType')
 
-    # Load ForeignKey relations or set to None
-    dtr_capacity_id = clean_int(attrs.get('dtrCapacity'))
+    # Load ForeignKey relations or set to None (checking both attrs and root payload)
+    dtr_capacity_id = (
+        clean_int(attrs.get('dtrCapacity')) or 
+        clean_int(attrs.get('dtr_capacity')) or 
+        clean_int(attrs.get('transformer')) or 
+        clean_int(payload.get('dtrCapacity')) or 
+        clean_int(payload.get('dtr_capacity')) or 
+        clean_int(payload.get('transformer'))
+    )
     dtr_capacity_obj = TransformerMaster.objects.filter(id=dtr_capacity_id).first() if dtr_capacity_id else None
     
-    conductor_id = clean_int(attrs.get('conductor'))
+    conductor_id = (
+        clean_int(attrs.get('conductor')) or 
+        clean_int(attrs.get('conductor_type')) or 
+        clean_int(payload.get('conductor')) or 
+        clean_int(payload.get('conductor_type')) or 
+        clean_int(payload.get('conductor_id'))
+    )
     conductor_obj = ConductorMaster.objects.filter(id=conductor_id).first() if conductor_id else None
     
-    pole_master_id = clean_int(attrs.get('poleMaster')) or clean_int(attrs.get('poleType'))
+    pole_master_id = (
+        clean_int(attrs.get('poleMaster')) or 
+        clean_int(attrs.get('pole_master')) or 
+        clean_int(attrs.get('poleType')) or 
+        clean_int(attrs.get('pole_type')) or 
+        clean_int(payload.get('poleMaster')) or 
+        clean_int(payload.get('pole_master')) or 
+        clean_int(payload.get('poleType')) or 
+        clean_int(payload.get('pole_type'))
+    )
     pole_obj = PoleMaster.objects.filter(id=pole_master_id).first() if pole_master_id else None
     
     # Deserialize JSON fields
     pole_db_type_codes = []
-    p_types_raw = attrs.get('poleDbTypes')
+    p_types_raw = attrs.get('poleDbTypes') or attrs.get('pole_db') or payload.get('poleDbTypes') or payload.get('pole_db')
     if p_types_raw:
         try:
             pole_db_type_codes = json.loads(p_types_raw) if isinstance(p_types_raw, str) else p_types_raw
         except Exception:
-            pole_db_type_codes = []
+            pole_db_type_codes = [p_types_raw] if isinstance(p_types_raw, (str, int)) else []
             
     pole_db_quantities = {}
-    p_qtys_raw = attrs.get('poleDbQuantities')
+    p_qtys_raw = attrs.get('poleDbQuantities') or attrs.get('pole_db_quantity') or payload.get('poleDbQuantities') or payload.get('pole_db_quantity')
     if p_qtys_raw:
         try:
             pole_db_quantities = json.loads(p_qtys_raw) if isinstance(p_qtys_raw, str) else p_qtys_raw
         except Exception:
             pole_db_quantities = {}
 
-    dtr_serial_no = attrs.get('dtrSerialNo') or attrs.get('nameLabel') or payload.get('name_label')
-    if node_type == 'DTR':
-        dtr_serial_no = payload.get('name_label')
+    name_label_val = payload.get('name_label') or payload.get('nameLabel') or attrs.get('nameLabel') or attrs.get('name_label')
+    dtr_serial_no = attrs.get('dtrSerialNo') or attrs.get('dtr_serial_no') or name_label_val
+    if node_type == 'DTR' and name_label_val:
+        dtr_serial_no = name_label_val
+
+    structure_condition = (
+        attrs.get('assetStatus') or 
+        attrs.get('asset_status') or 
+        attrs.get('structureCondition') or 
+        attrs.get('structure_condition') or 
+        payload.get('assetStatus') or 
+        payload.get('asset_status') or 
+        payload.get('structure_condition')
+    )
+    
+    earthing_used = attrs.get('earthingUsed') or attrs.get('earthing') or payload.get('earthingUsed') or payload.get('earthing')
+    earthing_quantity = clean_int(attrs.get('earthingQuantity') or attrs.get('earthing_quantity') or payload.get('earthingQuantity') or payload.get('earthing_quantity'))
+    
+    stay_set_used = attrs.get('staySetUsed') or attrs.get('stay_set') or payload.get('staySetUsed') or payload.get('stay_set')
+    stay_set_quantity = clean_int(attrs.get('staySetQuantity') or attrs.get('stay_set_quantity') or payload.get('staySetQuantity') or payload.get('stay_set_quantity'))
+    
+    dead_end_clamp_qty = clean_int(attrs.get('deadEndClampQty') or attrs.get('dead_end_clamp_qty') or attrs.get('dead_end_clamp_quantity') or payload.get('deadEndClampQty'))
+    suspension_clamp_qty = clean_int(attrs.get('suspensionClampQty') or attrs.get('suspension_clamp_qty') or attrs.get('suspension_clamp_quantity') or payload.get('suspensionClampQty'))
+    pole_clamp_qty = clean_int(attrs.get('poleClampQty') or attrs.get('pole_clamp_qty') or attrs.get('pole_clamp_quantity') or payload.get('poleClampQty'))
+    ipc_qty = clean_int(attrs.get('ipcQty') or attrs.get('ipc_qty') or attrs.get('ipc_quantity') or payload.get('ipcQty'))
+    service_connection_qty = clean_int(attrs.get('serviceConnectionQty') or attrs.get('service_connection_qty') or attrs.get('service_connection_quantity') or payload.get('serviceConnectionQty'))
+    extra_consumption = clean_int(attrs.get('extraConsumption') or attrs.get('extra_consumption') or payload.get('extraConsumption'))
+    pole_qty = clean_int(attrs.get('poleQty') or attrs.get('pole_qty') or attrs.get('pole_quantity') or payload.get('poleQty') or payload.get('pole_qty'))
+    if pole_qty is None and node_type != 'DTR':
+        pole_qty = 1
+
+    latitude = payload.get('latitude') or attrs.get('latitude')
+    longitude = payload.get('longitude') or attrs.get('longitude')
+    parent_label = payload.get('parent_label') or payload.get('parentLabel') or attrs.get('parentLabel')
+
+    # Query if node exists for this erection:
+    # 1. By primary key node_id / id
+    node = None
+    node_id_val = clean_int(payload.get('node_id') or payload.get('id') or attrs.get('node_id') or attrs.get('id'))
+    if node_id_val:
+        node = ErectionNode.objects.filter(erection_execution=erection, id=node_id_val).first()
         
-    # Query if node exists for this erection at this sequence
-    node = ErectionNode.objects.filter(
-        erection_execution=erection,
-        sequence_number=payload.get('sequence_number')
-    ).first()
+    # 2. By sequence_number
+    seq_num = clean_int(payload.get('sequence_number') or payload.get('sequenceNumber'))
+    if not node and seq_num is not None:
+        node = ErectionNode.objects.filter(erection_execution=erection, sequence_number=seq_num).first()
+        
+    # 3. By name_label
+    if not node and name_label_val:
+        node = ErectionNode.objects.filter(erection_execution=erection, name_label__iexact=str(name_label_val).strip()).first()
     
     if node:
+        # Patch/Update existing node
         node.node_type = node_type or node.node_type
-        node.name_label = payload.get('name_label', node.name_label)
-        node.latitude = payload.get('latitude', node.latitude)
-        node.longitude = payload.get('longitude', node.longitude)
-        node.attributes = attrs
+        if name_label_val:
+            node.name_label = str(name_label_val).strip()
+        if latitude is not None:
+            node.latitude = latitude
+        if longitude is not None:
+            node.longitude = longitude
+        if parent_label is not None:
+            node.parent_label = parent_label
+            
+        # Merge existing attributes with new attributes
+        merged_attrs = dict(node.attributes or {})
+        merged_attrs.update(attrs)
+        node.attributes = merged_attrs
         node.captured_at = captured_at
-        node.user_id = user_id
+        node.user_id = user_id or node.user_id
         
-        # Explicit fields
-        node.dtr_capacity = dtr_capacity_obj
-        node.dtr_serial_no = dtr_serial_no
-        node.conductor = conductor_obj
-        node.structure_condition = attrs.get('assetStatus') or payload.get('assetStatus')
-        node.earthing_used = attrs.get('earthingUsed')
-        node.earthing_quantity = clean_int(attrs.get('earthingQuantity'))
-        node.stay_set_used = attrs.get('staySetUsed')
-        node.stay_set_quantity = clean_int(attrs.get('staySetQuantity'))
-        node.pole_db_type_codes = pole_db_type_codes
-        node.pole_db_quantities = pole_db_quantities
-        node.dead_end_clamp_qty = clean_int(attrs.get('deadEndClampQty'))
-        node.suspension_clamp_qty = clean_int(attrs.get('suspensionClampQty'))
-        node.pole_clamp_qty = clean_int(attrs.get('poleClampQty'))
-        node.ipc_qty = clean_int(attrs.get('ipcQty'))
-        node.service_connection_qty = clean_int(attrs.get('serviceConnectionQty'))
-        node.extra_consumption = clean_int(attrs.get('extraConsumption'))
-        node.pole_type = pole_obj
-        node.pole_qty = clean_int(attrs.get('poleQty'))
+        # Explicit structure fields
+        if dtr_capacity_obj or 'dtrCapacity' in attrs or 'dtr_capacity' in payload:
+            node.dtr_capacity = dtr_capacity_obj
+        if dtr_serial_no is not None:
+            node.dtr_serial_no = dtr_serial_no
+        if conductor_obj or 'conductor' in attrs or 'conductor' in payload:
+            node.conductor = conductor_obj
+        if structure_condition is not None:
+            node.structure_condition = structure_condition
+        if earthing_used is not None:
+            node.earthing_used = earthing_used
+        if earthing_quantity is not None:
+            node.earthing_quantity = earthing_quantity
+        if stay_set_used is not None:
+            node.stay_set_used = stay_set_used
+        if stay_set_quantity is not None:
+            node.stay_set_quantity = stay_set_quantity
+        if pole_db_type_codes:
+            node.pole_db_type_codes = pole_db_type_codes
+        if pole_db_quantities:
+            node.pole_db_quantities = pole_db_quantities
+        if dead_end_clamp_qty is not None:
+            node.dead_end_clamp_qty = dead_end_clamp_qty
+        if suspension_clamp_qty is not None:
+            node.suspension_clamp_qty = suspension_clamp_qty
+        if pole_clamp_qty is not None:
+            node.pole_clamp_qty = pole_clamp_qty
+        if ipc_qty is not None:
+            node.ipc_qty = ipc_qty
+        if service_connection_qty is not None:
+            node.service_connection_qty = service_connection_qty
+        if extra_consumption is not None:
+            node.extra_consumption = extra_consumption
+        if pole_obj or 'poleMaster' in attrs or 'poleType' in attrs or 'poleType' in payload:
+            node.pole_type = pole_obj
+        if pole_qty is not None:
+            node.pole_qty = pole_qty
         
         node.save()
         message = "Erection Node updated successfully"
     else:
+        # Create new node
+        target_seq = seq_num if seq_num is not None else (erection.nodes.count() + 1)
         node = ErectionNode.objects.create(
             erection_execution=erection,
-            node_type=node_type,
-            sequence_number=payload.get('sequence_number'),
-            name_label=payload.get('name_label'),
-            latitude=payload.get('latitude'),
-            longitude=payload.get('longitude'),
+            node_type=node_type or 'POLE',
+            sequence_number=target_seq,
+            name_label=name_label_val or f"P-{target_seq}",
+            latitude=latitude or 0.0,
+            longitude=longitude or 0.0,
+            parent_label=parent_label,
             attributes=attrs,
             captured_at=captured_at,
             user_id=user_id,
@@ -375,26 +490,26 @@ def save_erection_node(request):
             dtr_capacity=dtr_capacity_obj,
             dtr_serial_no=dtr_serial_no,
             conductor=conductor_obj,
-            structure_condition=attrs.get('assetStatus') or payload.get('assetStatus'),
-            earthing_used=attrs.get('earthingUsed'),
-            earthing_quantity=clean_int(attrs.get('earthingQuantity')),
-            stay_set_used=attrs.get('staySetUsed'),
-            stay_set_quantity=clean_int(attrs.get('staySetQuantity')),
+            structure_condition=structure_condition,
+            earthing_used=earthing_used,
+            earthing_quantity=earthing_quantity,
+            stay_set_used=stay_set_used,
+            stay_set_quantity=stay_set_quantity,
             pole_db_type_codes=pole_db_type_codes,
             pole_db_quantities=pole_db_quantities,
-            dead_end_clamp_qty=clean_int(attrs.get('deadEndClampQty')),
-            suspension_clamp_qty=clean_int(attrs.get('suspensionClampQty')),
-            pole_clamp_qty=clean_int(attrs.get('poleClampQty')),
-            ipc_qty=clean_int(attrs.get('ipcQty')),
-            service_connection_qty=clean_int(attrs.get('serviceConnectionQty')),
-            extra_consumption=clean_int(attrs.get('extraConsumption')),
+            dead_end_clamp_qty=dead_end_clamp_qty,
+            suspension_clamp_qty=suspension_clamp_qty,
+            pole_clamp_qty=pole_clamp_qty,
+            ipc_qty=ipc_qty,
+            service_connection_qty=service_connection_qty,
+            extra_consumption=extra_consumption,
             pole_type=pole_obj,
-            pole_qty=clean_int(attrs.get('poleQty'))
+            pole_qty=pole_qty
         )
         message = "Erection Node saved successfully"
 
     # Images saving block
-    images_raw = payload.get('images') or attrs.get('images') or payload.get('image_uris') or attrs.get('image_uris')
+    images_raw = payload.get('images') or attrs.get('images') or payload.get('image_uris') or attrs.get('image_uris') or attrs.get('polePhotos')
     images_list = []
     if images_raw:
         if isinstance(images_raw, str):
@@ -403,17 +518,25 @@ def save_erection_node(request):
             except Exception:
                 images_list = [img.strip() for img in images_raw.split(',') if img.strip()]
         elif isinstance(images_raw, list):
-            images_list = images_raw
+            images_list = [img for img in images_raw if isinstance(img, str) and img.strip()]
 
-    # Save primary image path on node
-    node.image_path = images_list[0] if images_list else None
-    node.save()
+    # Also check other photo categories in attrs if images_list is empty
+    if not images_list:
+        combined_photos = []
+        for cat in ['polePhotos', 'earthingPhotos', 'staySetPhotos', 'poleDbPhotos']:
+            p_arr = attrs.get(cat)
+            if isinstance(p_arr, list):
+                combined_photos.extend([p for p in p_arr if isinstance(p, str) and p.strip()])
+        if combined_photos:
+            images_list = combined_photos
 
-    # Update ErectionNodeImage table
-    ErectionNodeImage.objects.filter(node=node).delete()
-    for img_path in images_list:
-        if img_path:
-            ErectionNodeImage.objects.create(node=node, image_path=img_path)
+    if images_list:
+        node.image_path = images_list[0]
+        node.save()
+        ErectionNodeImage.objects.filter(node=node).delete()
+        for img_path in images_list:
+            if img_path:
+                ErectionNodeImage.objects.create(node=node, image_path=img_path)
         
     response_data = {
         "Code": "SUCCESS001",
@@ -422,9 +545,202 @@ def save_erection_node(request):
             "id": node.id,
             "erection_execution_id": erection.id,
             "sequence_number": node.sequence_number,
+            "name_label": node.name_label,
             "updated_at": node.updated_on.strftime('%Y-%m-%d %H:%M:%S') if node.updated_on else None
         }
     }
     logger.warning('================================== END - Save Erection Node =================================')
     return JsonResponse(response_data)
 
+
+@csrf_exempt
+@require_post
+def get_erection_pole_details(request):
+    """
+    Fetch pole details for a given drawing number (DWG) / erection and pole identifier.
+    Supports both POST and PATCH methods.
+    Returns complete data with both camelCase and snake_case properties and structured photo arrays.
+    """
+    logger.warning('================================== START - Get Erection Pole Details =================================')
+    payload = request.data
+    
+    def clean_int(val):
+        if val is None:
+            return None
+        if isinstance(val, int):
+            return val
+        s = str(val).strip().replace('erect-', '').replace('srv-', '')
+        return int(s) if s.isdigit() else None
+
+    drawing_no = payload.get('drawing_no')
+    raw_erection_id = payload.get('erection_id') or payload.get('erection_execution_id')
+    pole_no = str(payload.get('pole_no') or payload.get('name_label') or '').strip()
+    raw_node_id = payload.get('node_id') or payload.get('id')
+
+    clean_eid = clean_int(raw_erection_id)
+    clean_nid = clean_int(raw_node_id)
+
+    if not drawing_no and not clean_eid:
+        return JsonResponse({"Exception": True, "Message": "Either drawing_no or erection_id is required"}, status=400)
+
+    erection = None
+    if clean_eid:
+        erection = ErectionExecution.objects.filter(id=clean_eid).first()
+    if not erection and drawing_no:
+        erection = ErectionExecution.objects.filter(drawing_no=str(drawing_no).strip()).order_by('-updated_on').first()
+
+    if not erection:
+        return JsonResponse({"Exception": True, "Message": f"Erection not found for id '{raw_erection_id}' / drawing '{drawing_no}'"}, status=404)
+
+    nodes_qs = erection.nodes.all().order_by('sequence_number')
+    all_poles = [
+        {
+            "id": n.id,
+            "sequenceNumber": n.sequence_number,
+            "sequence_number": n.sequence_number,
+            "nameLabel": n.name_label,
+            "name_label": n.name_label,
+            "nodeType": n.node_type,
+            "node_type": n.node_type,
+            "latitude": float(n.latitude),
+            "longitude": float(n.longitude),
+            "parentLabel": n.parent_label,
+            "parent_label": n.parent_label,
+        }
+        for n in nodes_qs
+    ]
+
+    selected_node = None
+    if clean_nid:
+        selected_node = nodes_qs.filter(id=clean_nid).first()
+    if not selected_node and pole_no:
+        selected_node = nodes_qs.filter(name_label__iexact=pole_no).first()
+        if not selected_node and pole_no.isdigit():
+            selected_node = nodes_qs.filter(sequence_number=int(pole_no)).first()
+
+    node_data = None
+    if selected_node:
+        all_imgs = [img.image_path for img in selected_node.node_images.all()]
+        if not all_imgs and selected_node.image_path:
+            all_imgs = [selected_node.image_path]
+
+        attrs = selected_node.attributes or {}
+        pole_imgs = attrs.get('polePhotos') or ([selected_node.image_path] if selected_node.image_path else [])
+        earthing_imgs = attrs.get('earthingPhotos') or []
+        stay_set_imgs = attrs.get('staySetPhotos') or []
+        pole_db_imgs = attrs.get('poleDbPhotos') or []
+
+        node_data = {
+            "id": selected_node.id,
+            "node_id": selected_node.id,
+            "erection_execution_id": erection.id,
+            "erection_id": erection.id,
+            "drawing_no": erection.drawing_no,
+            "drawingNo": erection.drawing_no,
+            "nodeType": selected_node.node_type,
+            "node_type": selected_node.node_type,
+            "sequenceNumber": selected_node.sequence_number,
+            "sequence_number": selected_node.sequence_number,
+            "nameLabel": selected_node.name_label,
+            "name_label": selected_node.name_label,
+            "latitude": float(selected_node.latitude),
+            "longitude": float(selected_node.longitude),
+            "parentLabel": selected_node.parent_label,
+            "parent_label": selected_node.parent_label,
+            "capturedAt": selected_node.captured_at.isoformat() if selected_node.captured_at else None,
+            "captured_at": selected_node.captured_at.isoformat() if selected_node.captured_at else None,
+            
+            # Transformer / DTR
+            "dtrCapacity": selected_node.dtr_capacity_id,
+            "dtr_capacity": selected_node.dtr_capacity_id,
+            "transformer": selected_node.dtr_capacity_id,
+            "dtrCapacityName": selected_node.dtr_capacity.transformer_name if selected_node.dtr_capacity else None,
+            "dtrSerialNo": selected_node.dtr_serial_no,
+            "dtr_serial_no": selected_node.dtr_serial_no,
+            
+            # Conductor
+            "conductor": selected_node.conductor_id,
+            "conductor_type": selected_node.conductor_id,
+            "conductorName": selected_node.conductor.conductor_name if selected_node.conductor else None,
+            
+            # Pole
+            "poleType": selected_node.pole_type_id,
+            "pole_type": selected_node.pole_type_id,
+            "poleMaster": selected_node.pole_type_id,
+            "pole_master": selected_node.pole_type_id,
+            "poleTypeName": selected_node.pole_type.pole_name if selected_node.pole_type else None,
+            "poleQty": selected_node.pole_qty,
+            "pole_quantity": selected_node.pole_qty,
+            
+            # Condition / Status
+            "assetStatus": selected_node.structure_condition or attrs.get('assetStatus'),
+            "asset_status": selected_node.structure_condition or attrs.get('assetStatus'),
+            "structureCondition": selected_node.structure_condition,
+            "structure_condition": selected_node.structure_condition,
+            
+            # Earthing
+            "earthingUsed": selected_node.earthing_used,
+            "earthing": selected_node.earthing_used,
+            "earthingQuantity": selected_node.earthing_quantity,
+            "earthing_quantity": selected_node.earthing_quantity,
+            
+            # Stay Set
+            "staySetUsed": selected_node.stay_set_used,
+            "stay_set": selected_node.stay_set_used,
+            "staySetQuantity": selected_node.stay_set_quantity,
+            "stay_set_quantity": selected_node.stay_set_quantity,
+            
+            # Pole DB
+            "poleDbTypes": selected_node.pole_db_type_codes or [],
+            "pole_db": selected_node.pole_db_type_codes or [],
+            "poleDbQuantities": selected_node.pole_db_quantities or {},
+            "pole_db_quantity": selected_node.pole_db_quantities or {},
+            
+            # Clamps & Accessories
+            "deadEndClampQty": selected_node.dead_end_clamp_qty,
+            "dead_end_clamp_qty": selected_node.dead_end_clamp_qty,
+            "dead_end_clamp_quantity": selected_node.dead_end_clamp_qty,
+            "suspensionClampQty": selected_node.suspension_clamp_qty,
+            "suspension_clamp_qty": selected_node.suspension_clamp_qty,
+            "suspension_clamp_quantity": selected_node.suspension_clamp_qty,
+            "poleClampQty": selected_node.pole_clamp_qty,
+            "pole_clamp_qty": selected_node.pole_clamp_qty,
+            "pole_clamp_quantity": selected_node.pole_clamp_qty,
+            "ipcQty": selected_node.ipc_qty,
+            "ipc_qty": selected_node.ipc_qty,
+            "ipc_quantity": selected_node.ipc_qty,
+            "serviceConnectionQty": selected_node.service_connection_qty,
+            "service_connection_qty": selected_node.service_connection_qty,
+            "service_connection_quantity": selected_node.service_connection_qty,
+            "extraConsumption": selected_node.extra_consumption,
+            "extra_consumption": selected_node.extra_consumption,
+            
+            # Photos & Attributes
+            "attributes": attrs,
+            "imageUri": selected_node.image_path,
+            "imageUris": all_imgs,
+            "images": all_imgs,
+            "photo_url": selected_node.image_path,
+            "polePhotos": pole_imgs,
+            "pole_photo_urls": pole_imgs,
+            "earthingPhotos": earthing_imgs,
+            "earthing_photo_urls": earthing_imgs,
+            "staySetPhotos": stay_set_imgs,
+            "stay_set_photo_urls": stay_set_imgs,
+            "poleDbPhotos": pole_db_imgs,
+            "pole_db_photo_urls": pole_db_imgs,
+        }
+
+    response_data = {
+        "Code": "SUCCESS001",
+        "Message": "Pole details fetched successfully",
+        "Data": {
+            "drawing_no": erection.drawing_no,
+            "drawingNo": erection.drawing_no,
+            "erection_id": erection.id,
+            "selected_node": node_data,
+            "all_poles": all_poles,
+        }
+    }
+    logger.warning('================================== END - Get Erection Pole Details =================================')
+    return JsonResponse(response_data)

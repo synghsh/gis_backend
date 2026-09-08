@@ -6,14 +6,14 @@ from commonUtility.utils import get_client_ip
 
 def require_post(func):
     """
-    A decorator to ensure that the view only handles POST requests.
-    If the request method is not POST, it returns a 400 Bad Request response.
+    A decorator to ensure that the view handles POST and PATCH requests.
+    If the request method is neither POST nor PATCH, it returns a 400 Bad Request response.
     """
     @wraps(func)
     def wrap(request, *args, **kwargs):
-        if request.method != 'POST':
+        if request.method not in ['POST', 'PATCH']:
             request.error_code = METHOD_NOT_ALLOWED
-            return HttpResponseBadRequest("Invalid Request Method. POST Method Required.")
+            return HttpResponseBadRequest("Invalid Request Method. POST or PATCH Method Required.")
         return func(request, *args, **kwargs)
     return wrap
 
