@@ -597,17 +597,30 @@ def get_erection_pole_details(request):
     clean_eid = clean_int(raw_erection_id)
     clean_nid = clean_int(raw_node_id)
 
-    if not drawing_no and not clean_eid:
-        return JsonResponse({"Exception": True, "Message": "Either drawing_no or erection_id is required"}, status=400)
-
     erection = None
-    if clean_eid:
+    if clean_nid:
+        node_direct = ErectionNode.objects.filter(id=clean_nid).first()
+        if node_direct:
+            erection = node_direct.erection_execution
+    if not erection and clean_eid:
         erection = ErectionExecution.objects.filter(id=clean_eid).first()
     if not erection and drawing_no:
-        erection = ErectionExecution.objects.filter(drawing_no=str(drawing_no).strip()).order_by('-updated_on').first()
+        clean_drawing = str(drawing_no).strip()
+        erection = ErectionExecution.objects.filter(drawing_no__iexact=clean_drawing).order_by('-updated_on').first()
 
     if not erection:
-        return JsonResponse({"Exception": True, "Message": f"Erection not found for id '{raw_erection_id}' / drawing '{drawing_no}'"}, status=404)
+        logger.warning(f"Erection not found on server for id '{raw_erection_id}' / drawing '{drawing_no}' / node '{raw_node_id}'. Returning graceful fallback.")
+        return JsonResponse({
+            "Code": "SUCCESS001",
+            "Message": "Node details not found on server, fallback to local cache",
+            "Data": {
+                "drawing_no": drawing_no,
+                "drawingNo": drawing_no,
+                "erection_id": clean_eid,
+                "selected_node": None,
+                "all_poles": [],
+            }
+        }, status=200)
 
     nodes_qs = erection.nodes.all().order_by('sequence_number')
     all_poles = [
@@ -631,9 +644,14 @@ def get_erection_pole_details(request):
     if clean_nid:
         selected_node = nodes_qs.filter(id=clean_nid).first()
     if not selected_node and pole_no:
-        selected_node = nodes_qs.filter(name_label__iexact=pole_no).first()
-        if not selected_node and pole_no.isdigit():
-            selected_node = nodes_qs.filter(sequence_number=int(pole_no)).first()
+        clean_pno = str(pole_no).strip()
+        selected_node = nodes_qs.filter(name_label__iexact=clean_pno).first()
+        if not selected_node and clean_pno.isdigit():
+            selected_node = nodes_qs.filter(sequence_number=int(clean_pno)).first()
+        if not selected_node:
+            prefix_match = clean_pno.replace('P-', '').replace('P', '').strip()
+            if prefix_match.isdigit():
+                selected_node = nodes_qs.filter(sequence_number=int(prefix_match)).first()
 
     node_data = None
     if selected_node:
@@ -752,7 +770,7 @@ def get_erection_pole_details(request):
 
     response_data = {
         "Code": "SUCCESS001",
-        "Message": "Pole details fetched successfully",
+        "Message": "Pole details fetched successfully" if node_data else "Pole not found on server, fallback to local cache",
         "Data": {
             "drawing_no": erection.drawing_no,
             "drawingNo": erection.drawing_no,
