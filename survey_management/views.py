@@ -263,17 +263,37 @@ def save_erection_node(request):
     logger.warning('================================== START - Save Erection Node =================================')
     payload = request.data
     
-    # Helper to parse integers safely from ints, floats, or strings
+    # Helpers to parse fields safely from payload and attributes
     def clean_int(val):
-        if val is None:
+        if val is None or val == '':
             return None
         if isinstance(val, int):
             return val
         s = str(val).strip().replace('erect-', '').replace('srv-', '')
         return int(s) if s.isdigit() else None
 
-    raw_erection_id = payload.get('erection_execution_id') or payload.get('erection_id')
-    drawing_no = payload.get('drawing_no') or (payload.get('attributes') or {}).get('drawingNo')
+    def get_field_val(sources, *keys, default=None):
+        for src in sources:
+            if not isinstance(src, dict):
+                continue
+            for k in keys:
+                if k in src and src[k] is not None and src[k] != '':
+                    return src[k]
+        return default
+
+    def get_int_field_val(sources, *keys, default=None):
+        for src in sources:
+            if not isinstance(src, dict):
+                continue
+            for k in keys:
+                if k in src and src[k] is not None and src[k] != '':
+                    val = clean_int(src[k])
+                    if val is not None:
+                        return val
+        return default
+
+    raw_erection_id = get_field_val([payload], 'erection_execution_id', 'erection_id')
+    drawing_no = get_field_val([payload, payload.get('attributes') or {}], 'drawing_no', 'drawingNo')
     
     erection = None
     clean_eid = clean_int(raw_erection_id)
@@ -294,7 +314,7 @@ def save_erection_node(request):
     import datetime
     import json
     
-    captured_at_str = payload.get('captured_at') or payload.get('capturedAt')
+    captured_at_str = get_field_val([payload], 'captured_at', 'capturedAt')
     if captured_at_str:
         try:
             captured_at = datetime.datetime.fromisoformat(captured_at_str)
@@ -310,43 +330,36 @@ def save_erection_node(request):
         except Exception:
             attrs = {}
             
-    node_type = payload.get('node_type') or payload.get('nodeType') or attrs.get('nodeType')
+    node_type = get_field_val([payload, attrs], 'node_type', 'nodeType')
 
     # Load ForeignKey relations or set to None (checking both attrs and root payload)
-    dtr_capacity_id = (
-        clean_int(attrs.get('dtrCapacity')) or 
-        clean_int(attrs.get('dtr_capacity')) or 
-        clean_int(attrs.get('transformer')) or 
-        clean_int(payload.get('dtrCapacity')) or 
-        clean_int(payload.get('dtr_capacity')) or 
-        clean_int(payload.get('transformer'))
+    dtr_capacity_id = get_int_field_val(
+        [payload, attrs],
+        'dtr_capacity_id', 'dtrCapacityId',
+        'dtr_capacity', 'dtrCapacity',
+        'transformer', 'transformer_id'
     )
     dtr_capacity_obj = TransformerMaster.objects.filter(id=dtr_capacity_id).first() if dtr_capacity_id else None
     
-    conductor_id = (
-        clean_int(attrs.get('conductor')) or 
-        clean_int(attrs.get('conductor_type')) or 
-        clean_int(payload.get('conductor')) or 
-        clean_int(payload.get('conductor_type')) or 
-        clean_int(payload.get('conductor_id'))
+    conductor_id = get_int_field_val(
+        [payload, attrs],
+        'conductor_id', 'conductorId',
+        'conductor', 'conductor_type', 'conductorType'
     )
     conductor_obj = ConductorMaster.objects.filter(id=conductor_id).first() if conductor_id else None
     
-    pole_master_id = (
-        clean_int(attrs.get('poleMaster')) or 
-        clean_int(attrs.get('pole_master')) or 
-        clean_int(attrs.get('poleType')) or 
-        clean_int(attrs.get('pole_type')) or 
-        clean_int(payload.get('poleMaster')) or 
-        clean_int(payload.get('pole_master')) or 
-        clean_int(payload.get('poleType')) or 
-        clean_int(payload.get('pole_type'))
+    pole_master_id = get_int_field_val(
+        [payload, attrs],
+        'pole_type_id', 'poleTypeId',
+        'pole_master_id', 'poleMasterId',
+        'pole_master', 'poleMaster',
+        'pole_type', 'poleType'
     )
     pole_obj = PoleMaster.objects.filter(id=pole_master_id).first() if pole_master_id else None
     
     # Deserialize JSON fields
     pole_db_type_codes = []
-    p_types_raw = attrs.get('poleDbTypes') or attrs.get('pole_db') or payload.get('poleDbTypes') or payload.get('pole_db')
+    p_types_raw = get_field_val([payload, attrs], 'poleDbTypes', 'pole_db')
     if p_types_raw:
         try:
             pole_db_type_codes = json.loads(p_types_raw) if isinstance(p_types_raw, str) else p_types_raw
@@ -354,41 +367,37 @@ def save_erection_node(request):
             pole_db_type_codes = [p_types_raw] if isinstance(p_types_raw, (str, int)) else []
             
     pole_db_quantities = {}
-    p_qtys_raw = attrs.get('poleDbQuantities') or attrs.get('pole_db_quantity') or payload.get('poleDbQuantities') or payload.get('pole_db_quantity')
+    p_qtys_raw = get_field_val([payload, attrs], 'poleDbQuantities', 'pole_db_quantity')
     if p_qtys_raw:
         try:
             pole_db_quantities = json.loads(p_qtys_raw) if isinstance(p_qtys_raw, str) else p_qtys_raw
         except Exception:
             pole_db_quantities = {}
 
-    name_label_val = payload.get('name_label') or payload.get('nameLabel') or attrs.get('nameLabel') or attrs.get('name_label')
-    dtr_serial_no = attrs.get('dtrSerialNo') or attrs.get('dtr_serial_no') or name_label_val
+    name_label_val = get_field_val([payload, attrs], 'name_label', 'nameLabel')
+    dtr_serial_no = get_field_val([attrs, payload], 'dtrSerialNo', 'dtr_serial_no') or name_label_val
     if node_type == 'DTR' and name_label_val:
         dtr_serial_no = name_label_val
 
-    structure_condition = (
-        attrs.get('assetStatus') or 
-        attrs.get('asset_status') or 
-        attrs.get('structureCondition') or 
-        attrs.get('structure_condition') or 
-        payload.get('assetStatus') or 
-        payload.get('asset_status') or 
-        payload.get('structure_condition')
+    structure_condition = get_field_val(
+        [payload, attrs],
+        'structure_condition', 'structureCondition',
+        'asset_status', 'assetStatus'
     )
     
-    earthing_used = attrs.get('earthingUsed') or attrs.get('earthing') or payload.get('earthingUsed') or payload.get('earthing')
-    earthing_quantity = clean_int(attrs.get('earthingQuantity') or attrs.get('earthing_quantity') or payload.get('earthingQuantity') or payload.get('earthing_quantity'))
+    earthing_used = get_field_val([payload, attrs], 'earthing_used', 'earthingUsed', 'earthing')
+    earthing_quantity = get_int_field_val([payload, attrs], 'earthing_quantity', 'earthingQuantity')
     
-    stay_set_used = attrs.get('staySetUsed') or attrs.get('stay_set') or payload.get('staySetUsed') or payload.get('stay_set')
-    stay_set_quantity = clean_int(attrs.get('staySetQuantity') or attrs.get('stay_set_quantity') or payload.get('staySetQuantity') or payload.get('stay_set_quantity'))
+    stay_set_used = get_field_val([payload, attrs], 'stay_set_used', 'staySetUsed', 'stay_set')
+    stay_set_quantity = get_int_field_val([payload, attrs], 'stay_set_quantity', 'staySetQuantity')
     
-    dead_end_clamp_qty = clean_int(attrs.get('deadEndClampQty') or attrs.get('dead_end_clamp_qty') or attrs.get('dead_end_clamp_quantity') or payload.get('deadEndClampQty'))
-    suspension_clamp_qty = clean_int(attrs.get('suspensionClampQty') or attrs.get('suspension_clamp_qty') or attrs.get('suspension_clamp_quantity') or payload.get('suspensionClampQty'))
-    pole_clamp_qty = clean_int(attrs.get('poleClampQty') or attrs.get('pole_clamp_qty') or attrs.get('pole_clamp_quantity') or payload.get('poleClampQty'))
-    ipc_qty = clean_int(attrs.get('ipcQty') or attrs.get('ipc_qty') or attrs.get('ipc_quantity') or payload.get('ipcQty'))
-    service_connection_qty = clean_int(attrs.get('serviceConnectionQty') or attrs.get('service_connection_qty') or attrs.get('service_connection_quantity') or payload.get('serviceConnectionQty'))
-    extra_consumption = clean_int(attrs.get('extraConsumption') or attrs.get('extra_consumption') or payload.get('extraConsumption'))
-    pole_qty = clean_int(attrs.get('poleQty') or attrs.get('pole_qty') or attrs.get('pole_quantity') or payload.get('poleQty') or payload.get('pole_qty'))
+    dead_end_clamp_qty = get_int_field_val([payload, attrs], 'dead_end_clamp_qty', 'deadEndClampQty', 'dead_end_clamp_quantity')
+    suspension_clamp_qty = get_int_field_val([payload, attrs], 'suspension_clamp_qty', 'suspensionClampQty', 'suspension_clamp_quantity')
+    pole_clamp_qty = get_int_field_val([payload, attrs], 'pole_clamp_qty', 'poleClampQty', 'pole_clamp_quantity')
+    ipc_qty = get_int_field_val([payload, attrs], 'ipc_qty', 'ipcQty', 'ipc_quantity')
+    service_connection_qty = get_int_field_val([payload, attrs], 'service_connection_qty', 'serviceConnectionQty', 'service_connection_quantity', 'serviceConnectionQuantity', 'service_connection', 'serviceConnection')
+    extra_consumption = get_int_field_val([payload, attrs], 'extra_consumption', 'extraConsumption')
+    pole_qty = get_int_field_val([payload, attrs], 'pole_qty', 'poleQty', 'pole_quantity')
     if pole_qty is None and node_type != 'DTR':
         pole_qty = 1
 
@@ -462,10 +471,16 @@ def save_erection_node(request):
             node.ipc_qty = ipc_qty
         if service_connection_qty is not None:
             node.service_connection_qty = service_connection_qty
+        elif any(k in payload for k in ['service_connection_qty', 'serviceConnectionQty', 'service_connection_quantity']) or \
+             any(k in attrs for k in ['service_connection_qty', 'serviceConnectionQty', 'service_connection_quantity']):
+            node.service_connection_qty = None
+
         if extra_consumption is not None:
             node.extra_consumption = extra_consumption
-        if pole_obj or 'poleMaster' in attrs or 'poleType' in attrs or 'poleType' in payload:
+        if pole_obj is not None:
             node.pole_type = pole_obj
+        elif any((k in payload and payload[k] in (None, '', 0)) or (k in attrs and attrs[k] in (None, '', 0)) for k in ['pole_type_id', 'poleTypeId', 'pole_master_id', 'poleMasterId', 'pole_master', 'poleMaster']):
+            node.pole_type = None
         if pole_qty is not None:
             node.pole_qty = pole_qty
         
@@ -546,6 +561,8 @@ def save_erection_node(request):
             "erection_execution_id": erection.id,
             "sequence_number": node.sequence_number,
             "name_label": node.name_label,
+            "pole_type_id": node.pole_type_id,
+            "service_connection_qty": node.service_connection_qty,
             "updated_at": node.updated_on.strftime('%Y-%m-%d %H:%M:%S') if node.updated_on else None
         }
     }
@@ -668,6 +685,8 @@ def get_erection_pole_details(request):
             "pole_type": selected_node.pole_type_id,
             "poleMaster": selected_node.pole_type_id,
             "pole_master": selected_node.pole_type_id,
+            "pole_type_id": selected_node.pole_type_id,
+            "pole_master_id": selected_node.pole_type_id,
             "poleTypeName": selected_node.pole_type.pole_name if selected_node.pole_type else None,
             "poleQty": selected_node.pole_qty,
             "pole_quantity": selected_node.pole_qty,
