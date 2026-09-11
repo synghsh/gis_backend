@@ -17,6 +17,11 @@ class SurveyLine(models.Model):
     is_synced = models.BooleanField(default=False)
     status = models.SmallIntegerField(default=1)  # 1 = Active, 2 = Archived
     
+    state_id = models.IntegerField(null=True, blank=True)
+    district_id = models.IntegerField(null=True, blank=True)
+    block_id = models.IntegerField(null=True, blank=True)
+    feeder_name = models.CharField(max_length=255, null=True, blank=True)
+    
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 

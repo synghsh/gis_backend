@@ -3,10 +3,13 @@ from administration.views import HealthCheck, userPassLogin, userLogout
 from survey_management.views import (
     start_erection_execution,
     list_erection_executions,
+    get_erection_detail,
     update_erection_execution,
     complete_erection_execution,
     save_erection_node,
     get_erection_pole_details,
+    list_survey_lines,
+    get_survey_line_detail,
 )
 from common.views import upload_document, get_signed_url, download_document
 
@@ -29,6 +32,11 @@ urls = [
     path('erection/pole/update/', save_erection_node),
     path('erection/pole/patch/', save_erection_node),
     path('erection/pole/details/', get_erection_pole_details),
+    path('erection/detail/', get_erection_detail),
+    
+    # Survey APIs
+    path('survey/list/', list_survey_lines),
+    path('survey/detail/', get_survey_line_detail),
     
     # S3 Document Storage APIs
     path('s3/upload/', upload_document),

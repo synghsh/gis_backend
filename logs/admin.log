@@ -1892,3 +1892,43 @@ ValueError: Field 'id' expected a number but got 'mt8ph05b'.
 2026-08-25 20:14:27 WARNING  | Process 20604 | Thread: 11884 | master_management | views.list_conductors:ln 1769 |--  ================================== END - List Conductors =================================
 2026-08-25 20:14:27 WARNING  | Process 20604 | Thread: 3064 | master_management | views.list_transformers:ln 2465 |--  ================================== END - List Transformers =================================
 2026-08-25 20:14:27 WARNING  | Process 20604 | Thread: 5208 | master_management | views.list_poles:ln 2117 |--  ================================== END - List Poles =================================
+2026-09-12 00:10:22 WARNING  | Process 20540 | Thread: 24520 | administration.views | views.HealthCheck:ln 31 |--  ================================== START - Application Health =================================
+2026-09-12 00:10:22 INFO     | Process 20540 | Thread: 24520 | administration.views | views.HealthCheck:ln 33 |--  backendsvc Health Check API - System Local Time : >>>> 12-09-2026, 12:10:22.199416 AM
+2026-09-12 00:10:22 INFO     | Process 20540 | Thread: 24520 | administration.views | views.HealthCheck:ln 51 |--  Database connection check successful.
+2026-09-12 00:10:22 WARNING  | Process 20540 | Thread: 24520 | administration.views | views.HealthCheck:ln 56 |--  =================================== END - Application Health =================================
+2026-09-12 00:29:25 WARNING  | Process 23572 | Thread: 13368 | master_management | views.list_states:ln 186 |--  ================================== START - List States =================================
+2026-09-12 00:29:25 INFO     | Process 23572 | Thread: 13368 | master_management | views.list_states:ln 188 |--  Received list states params: {'is_active': True, 'page_size': 1000}
+2026-09-12 00:29:25 WARNING  | Process 23572 | Thread: 13368 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
+2026-09-12 00:29:25 WARNING  | Process 23572 | Thread: 24052 | master_management | views.list_states:ln 186 |--  ================================== START - List States =================================
+2026-09-12 00:29:25 INFO     | Process 23572 | Thread: 24052 | master_management | views.list_states:ln 188 |--  Received list states params: {'is_active': True, 'page_size': 1000}
+2026-09-12 00:29:25 WARNING  | Process 23572 | Thread: 24688 | master_management | views.list_contractors:ln 3058 |--  ================================== START - List Contractors =================================
+2026-09-12 00:29:25 INFO     | Process 23572 | Thread: 24688 | master_management | views.list_contractors:ln 3060 |--  Received list contractors params: {'is_active': True, 'page_size': 1000}
+2026-09-12 00:29:25 WARNING  | Process 23572 | Thread: 24052 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
+2026-09-12 00:29:25 WARNING  | Process 23572 | Thread: 13504 | master_management | views.list_contractors:ln 3058 |--  ================================== START - List Contractors =================================
+2026-09-12 00:29:25 INFO     | Process 23572 | Thread: 13504 | master_management | views.list_contractors:ln 3060 |--  Received list contractors params: {'is_active': True, 'page_size': 1000}
+2026-09-12 00:29:25 WARNING  | Process 23572 | Thread: 24688 | master_management | views.list_contractors:ln 3093 |--  ================================== END - List Contractors =================================
+2026-09-12 00:29:25 WARNING  | Process 23572 | Thread: 13504 | master_management | views.list_contractors:ln 3093 |--  ================================== END - List Contractors =================================
+2026-09-12 00:31:39 WARNING  | Process 23572 | Thread: 25580 | administration.views | views.userPassLogin:ln 71 |--  ================================== START - Admin User Login With Password =================================
+2026-09-12 00:31:39 INFO     | Process 23572 | Thread: 25580 | administration.views | views.userPassLogin:ln 78 |--  Received Login payload - Username: sayan@msqube.com
+2026-09-12 00:31:40 ERROR    | Process 23572 | Thread: 25580 | django.request | log.log_message:ln 249 |--  Internal Server Error: /gis/administration/admin/login/
+Traceback (most recent call last):
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\commonUtility\decorators.py", line 31, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\commonUtility\decorators.py", line 17, in wrap
+    return func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\administration\views.py", line 115, in userPassLogin
+    raise InvalidPasswordFormatException('Password does not match strength criteria.')
+exception.InvalidPasswordFormatException: Password does not match strength criteria.
+2026-09-12 00:32:14 WARNING  | Process 23572 | Thread: 144 | master_management | views.list_districts:ln 458 |--  ================================== START - List Districts =================================
+2026-09-12 00:32:14 INFO     | Process 23572 | Thread: 144 | master_management | views.list_districts:ln 460 |--  Received list districts params: {'state_id': 3, 'is_active': True, 'page_size': 1000}

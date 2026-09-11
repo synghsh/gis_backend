@@ -570,3 +570,71 @@ ValueError: Field 'id' expected a number but got 'mt8ph05b'.
 2026-08-25 20:12:30 WARNING  | Process 20604 | Thread: 3064 | survey_management.views | views.list_erection_executions:ln 166 |--  ================================== END - Erection Execution List =================================
 2026-08-25 20:14:26 WARNING  | Process 20604 | Thread: 3064 | survey_management.views | views.start_erection_execution:ln 32 |--  ================================== START - Erection Execution Start =================================
 2026-08-25 20:14:27 WARNING  | Process 20604 | Thread: 3064 | survey_management.views | views.start_erection_execution:ln 72 |--  ================================== END - Erection Execution Start =================================
+2026-09-11 23:29:43 WARNING  | Process 21212 | Thread: 24328 | survey_management.views | views.list_erection_executions:ln 81 |--  ================================== START - Erection Execution List =================================
+2026-09-11 23:29:45 WARNING  | Process 21212 | Thread: 24328 | survey_management.views | views.list_erection_executions:ln 230 |--  ================================== END - Erection Execution List =================================
+2026-09-11 23:29:45 WARNING  | Process 21212 | Thread: 24328 | survey_management.views | views.get_erection_detail:ln 853 |--  ================================== START - Get Erection Detail =================================
+2026-09-11 23:30:24 WARNING  | Process 24748 | Thread: 14516 | survey_management.views | views.list_erection_executions:ln 81 |--  ================================== START - Erection Execution List =================================
+2026-09-11 23:30:27 WARNING  | Process 24748 | Thread: 14516 | survey_management.views | views.list_erection_executions:ln 230 |--  ================================== END - Erection Execution List =================================
+2026-09-11 23:30:27 WARNING  | Process 24748 | Thread: 14516 | survey_management.views | views.get_erection_detail:ln 853 |--  ================================== START - Get Erection Detail =================================
+2026-09-11 23:30:28 WARNING  | Process 24748 | Thread: 14516 | survey_management.views | views.get_erection_detail:ln 959 |--  ================================== END - Get Erection Detail =================================
+2026-09-11 23:30:28 WARNING  | Process 24748 | Thread: 14516 | survey_management.views | views.list_survey_lines:ln 966 |--  ================================== START - Survey Line List =================================
+2026-09-11 23:30:28 WARNING  | Process 24748 | Thread: 14516 | survey_management.views | views.list_survey_lines:ln 1064 |--  ================================== END - Survey Line List =================================
+2026-09-11 23:31:45 WARNING  | Process 16688 | Thread: 20900 | survey_management.views | views.list_survey_lines:ln 966 |--  ================================== START - Survey Line List =================================
+2026-09-11 23:31:47 WARNING  | Process 16688 | Thread: 20900 | survey_management.views | views.list_survey_lines:ln 1064 |--  ================================== END - Survey Line List =================================
+2026-09-11 23:31:47 WARNING  | Process 16688 | Thread: 20900 | survey_management.views | views.get_survey_line_detail:ln 1071 |--  ================================== START - Get Survey Line Detail =================================
+2026-09-11 23:31:47 WARNING  | Process 16688 | Thread: 20900 | survey_management.views | views.get_survey_line_detail:ln 1122 |--  ================================== END - Get Survey Line Detail =================================
+2026-09-12 00:10:38 WARNING  | Process 20540 | Thread: 14832 | survey_management.views | views.list_erection_executions:ln 81 |--  ================================== START - Erection Execution List =================================
+2026-09-12 00:10:42 WARNING  | Process 20540 | Thread: 14832 | survey_management.views | views.list_erection_executions:ln 230 |--  ================================== END - Erection Execution List =================================
+2026-09-12 00:11:11 WARNING  | Process 20540 | Thread: 21668 | survey_management.views | views.list_survey_lines:ln 966 |--  ================================== START - Survey Line List =================================
+2026-09-12 00:11:12 WARNING  | Process 20540 | Thread: 21668 | survey_management.views | views.list_survey_lines:ln 1064 |--  ================================== END - Survey Line List =================================
+2026-09-12 00:12:17 WARNING  | Process 20540 | Thread: 4584 | survey_management.views | views.list_survey_lines:ln 966 |--  ================================== START - Survey Line List =================================
+2026-09-12 00:12:18 WARNING  | Process 20540 | Thread: 20896 | survey_management.views | views.list_survey_lines:ln 966 |--  ================================== START - Survey Line List =================================
+2026-09-12 00:12:18 WARNING  | Process 20540 | Thread: 4584 | survey_management.views | views.list_survey_lines:ln 1064 |--  ================================== END - Survey Line List =================================
+2026-09-12 00:12:19 WARNING  | Process 20540 | Thread: 20896 | survey_management.views | views.list_survey_lines:ln 1064 |--  ================================== END - Survey Line List =================================
+2026-09-12 00:12:33 WARNING  | Process 20540 | Thread: 4584 | survey_management.views | views.list_erection_executions:ln 81 |--  ================================== START - Erection Execution List =================================
+2026-09-12 00:12:33 WARNING  | Process 20540 | Thread: 20896 | survey_management.views | views.list_erection_executions:ln 81 |--  ================================== START - Erection Execution List =================================
+2026-09-12 00:12:37 WARNING  | Process 20540 | Thread: 4584 | survey_management.views | views.list_erection_executions:ln 230 |--  ================================== END - Erection Execution List =================================
+2026-09-12 00:12:37 WARNING  | Process 20540 | Thread: 20896 | survey_management.views | views.list_erection_executions:ln 230 |--  ================================== END - Erection Execution List =================================
+2026-09-12 00:25:38 WARNING  | Process 23572 | Thread: 19976 | survey_management.views | views.list_erection_executions:ln 81 |--  ================================== START - Erection Execution List =================================
+2026-09-12 00:25:42 WARNING  | Process 23572 | Thread: 19976 | survey_management.views | views.list_erection_executions:ln 340 |--  ================================== END - Erection Execution List =================================
+2026-09-12 00:25:42 WARNING  | Process 23572 | Thread: 19488 | survey_management.views | views.list_erection_executions:ln 81 |--  ================================== START - Erection Execution List =================================
+2026-09-12 00:25:44 WARNING  | Process 23572 | Thread: 19488 | survey_management.views | views.list_erection_executions:ln 340 |--  ================================== END - Erection Execution List =================================
+2026-09-12 00:25:44 WARNING  | Process 23572 | Thread: 11260 | survey_management.views | views.list_erection_executions:ln 81 |--  ================================== START - Erection Execution List =================================
+2026-09-12 00:25:46 WARNING  | Process 23572 | Thread: 11260 | survey_management.views | views.list_erection_executions:ln 340 |--  ================================== END - Erection Execution List =================================
+2026-09-12 00:25:46 WARNING  | Process 23572 | Thread: 21364 | survey_management.views | views.list_survey_lines:ln 1076 |--  ================================== START - Survey Line List =================================
+2026-09-12 00:25:47 WARNING  | Process 23572 | Thread: 21364 | survey_management.views | views.list_survey_lines:ln 1283 |--  ================================== END - Survey Line List =================================
+2026-09-12 00:25:48 WARNING  | Process 23572 | Thread: 21464 | survey_management.views | views.list_survey_lines:ln 1076 |--  ================================== START - Survey Line List =================================
+2026-09-12 00:25:48 WARNING  | Process 23572 | Thread: 21464 | survey_management.views | views.list_survey_lines:ln 1283 |--  ================================== END - Survey Line List =================================
+2026-09-12 00:25:48 WARNING  | Process 23572 | Thread: 12536 | survey_management.views | views.list_survey_lines:ln 1076 |--  ================================== START - Survey Line List =================================
+2026-09-12 00:25:49 WARNING  | Process 23572 | Thread: 12536 | survey_management.views | views.list_survey_lines:ln 1283 |--  ================================== END - Survey Line List =================================
+2026-09-12 00:29:25 WARNING  | Process 23572 | Thread: 17108 | survey_management.views | views.list_erection_executions:ln 81 |--  ================================== START - Erection Execution List =================================
+2026-09-12 00:29:25 WARNING  | Process 23572 | Thread: 144 | survey_management.views | views.list_erection_executions:ln 81 |--  ================================== START - Erection Execution List =================================
+2026-09-12 00:29:28 WARNING  | Process 23572 | Thread: 17108 | survey_management.views | views.list_erection_executions:ln 340 |--  ================================== END - Erection Execution List =================================
+2026-09-12 00:29:29 WARNING  | Process 23572 | Thread: 144 | survey_management.views | views.list_erection_executions:ln 340 |--  ================================== END - Erection Execution List =================================
+2026-09-12 00:31:40 ERROR    | Process 23572 | Thread: 25580 | django.request | log.log_message:ln 249 |--  Internal Server Error: /gis/administration/admin/login/
+Traceback (most recent call last):
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\commonUtility\decorators.py", line 31, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\commonUtility\decorators.py", line 17, in wrap
+    return func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\administration\views.py", line 115, in userPassLogin
+    raise InvalidPasswordFormatException('Password does not match strength criteria.')
+exception.InvalidPasswordFormatException: Password does not match strength criteria.
+2026-09-12 00:32:17 WARNING  | Process 23572 | Thread: 144 | survey_management.views | views.list_erection_executions:ln 81 |--  ================================== START - Erection Execution List =================================
+2026-09-12 00:32:20 WARNING  | Process 23572 | Thread: 144 | survey_management.views | views.list_erection_executions:ln 340 |--  ================================== END - Erection Execution List =================================
+2026-09-12 00:32:28 WARNING  | Process 23572 | Thread: 144 | survey_management.views | views.list_erection_executions:ln 81 |--  ================================== START - Erection Execution List =================================
+2026-09-12 00:32:30 WARNING  | Process 23572 | Thread: 144 | survey_management.views | views.list_erection_executions:ln 340 |--  ================================== END - Erection Execution List =================================
+2026-09-12 00:32:44 WARNING  | Process 23572 | Thread: 144 | survey_management.views | views.list_erection_executions:ln 81 |--  ================================== START - Erection Execution List =================================
+2026-09-12 00:32:47 WARNING  | Process 23572 | Thread: 144 | survey_management.views | views.list_erection_executions:ln 340 |--  ================================== END - Erection Execution List =================================
+2026-09-12 00:32:53 WARNING  | Process 23572 | Thread: 144 | survey_management.views | views.get_erection_detail:ln 963 |--  ================================== START - Get Erection Detail =================================
