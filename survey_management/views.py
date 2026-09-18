@@ -1,14 +1,68 @@
 import logging
+import math
+from datetime import datetime
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Q
 from commonUtility.decorators import require_post
 from commonUtility.utils import mandatoryInputCheck
 from exception import MandatoryInputMissingException
 from common.models import User, DomainLookup
 from master_management.models import StateMaster, DistrictMaster, BlockMaster, VillageMaster, ContractorMaster, TransformerMaster, ConductorMaster, PoleMaster
-from .models import ErectionExecution, ErectionNode, ErectionNodeImage
+from .models import ErectionExecution, ErectionNode, ErectionNodeImage, SurveyLine, SurveyNode
 
 logger = logging.getLogger(__name__)
+
+def calculate_haversine_distance(lat1, lon1, lat2, lon2):
+    """Calculate great-circle distance between two points in meters using Haversine formula."""
+    try:
+        lat1, lon1, lat2, lon2 = float(lat1), float(lon1), float(lat2), float(lon2)
+        if (lat1 == 0 and lon1 == 0) or (lat2 == 0 and lon2 == 0):
+            return 0.0
+        if lat1 == lat2 and lon1 == lon2:
+            return 0.0
+        R = 6371000.0  # Earth radius in meters
+        phi1 = math.radians(lat1)
+        phi2 = math.radians(lat2)
+        delta_phi = math.radians(lat2 - lat1)
+        delta_lambda = math.radians(lon2 - lon1)
+        a = math.sin(delta_phi / 2.0)**2 + math.cos(phi1) * math.cos(phi2) * math.sin(delta_lambda / 2.0)**2
+        c = 2.0 * math.atan2(math.sqrt(a), math.sqrt(max(0.0, 1.0 - a)))
+        return round(R * c, 2)
+    except Exception:
+        return 0.0
+
+def extract_node_images(node):
+    """Consolidate photos from image_path, related images, and attributes dictionary."""
+    imgs = []
+    if getattr(node, 'image_path', None) and node.image_path not in imgs:
+        imgs.append(node.image_path)
+    if hasattr(node, 'node_images'):
+        for img_obj in node.node_images.all():
+            if img_obj.image_path and img_obj.image_path not in imgs:
+                imgs.append(img_obj.image_path)
+    attrs = getattr(node, 'attributes', None) or {}
+    for key in ['polePhotos', 'poleDbPhotos', 'staySetPhotos', 'earthingPhotos', 'photos', 'imageUrls']:
+        val = attrs.get(key)
+        if isinstance(val, list):
+            for p in val:
+                if p and p not in imgs:
+                    imgs.append(p)
+        elif isinstance(val, str) and val and val not in imgs:
+            imgs.append(val)
+    return imgs
+
+def check_is_new_pole(node):
+    """Return True if node represents a NEW pole or structure, False if OLD/EXISTING."""
+    attrs = getattr(node, 'attributes', None) or {}
+    cond = str(getattr(node, 'structure_condition', None) or attrs.get('assetStatus') or '').upper().strip()
+    if cond in ['OLD', 'EXISTING']:
+        return False
+    if cond == 'NEW':
+        return True
+    if attrs.get('isNewPole') is False or attrs.get('is_new') is False:
+        return False
+    return True
 
 @csrf_exempt
 @require_post
@@ -80,11 +134,8 @@ def list_erection_executions(request):
     logger.warning('================================== START - Erection Execution List =================================')
     token_details = getattr(request, 'token_details', None)
     user_id = token_details.get('user_id') if token_details else None
-    
-    if not user_id:
-        return JsonResponse({"Exception": True, "Message": "Unauthorized access"}, status=401)
-        
-    erections = ErectionExecution.objects.filter(surveyor_id=user_id).order_by('-updated_on')
+    user_type = token_details.get('user_type') if token_details else None
+    payload = getattr(request, 'data', {}) or {}
     
     # Query mappings to avoid N+1 database queries
     state_map = {s.id: s.state_name for s in StateMaster.objects.all()}
@@ -92,6 +143,8 @@ def list_erection_executions(request):
     block_map = {b.id: b.block_name for b in BlockMaster.objects.all()}
     village_map = {v.id: v.village_name for v in VillageMaster.objects.all()}
     contractor_map = {c.id: c.contractor_name for c in ContractorMaster.objects.all()}
+    surveyor_map = {u.id: (u.username or u.email) for u in User.objects.all()}
+    surveyor_phone_map = {u.id: u.phone for u in User.objects.all()}
     
     domain_map = {}
     for dl in DomainLookup.objects.filter(domain_type__in=['type_of_work', 'lt_starting_point'], status=1):
@@ -99,11 +152,174 @@ def list_erection_executions(request):
             "value": dl.domain_value,
             "desc": dl.domain_desc
         }
+
+    # Base QuerySet
+    erections = ErectionExecution.objects.all().order_by('-updated_on')
+
+    # Surveyor filtering: if explicit surveyor_id passed, filter by it
+    explicit_surveyor = payload.get('surveyor_id')
+    if explicit_surveyor:
+        erections = erections.filter(surveyor_id=explicit_surveyor)
+    elif payload.get('only_my_records'):
+        if user_id:
+            erections = erections.filter(surveyor_id=user_id)
+    elif not payload.get('all') and not payload.get('is_admin'):
+        # For non-admin surveyors calling without admin flag, filter to own records if user_id exists
+        if user_type != 1 and user_id:
+            erections = erections.filter(surveyor_id=user_id)
+
+    # Search filter
+    search = payload.get('search')
+    if search:
+        search = str(search).strip()
+        erections = erections.filter(
+            Q(drawing_no__icontains=search) |
+            Q(feeder_name__icontains=search) |
+            Q(dtr_code__icontains=search) |
+            Q(remarks__icontains=search)
+        )
+
+    # 1. State filter
+    state_id = payload.get('state_id') or payload.get('state')
+    if state_id is not None and str(state_id).strip() != '' and str(state_id).lower() != 'all':
+        try:
+            erections = erections.filter(state_id=int(state_id))
+        except (ValueError, TypeError):
+            pass
+
+    # 2. District filter (handle potential distrct typo as well)
+    district_id = payload.get('district_id') or payload.get('distrct_id') or payload.get('district')
+    if district_id is not None and str(district_id).strip() != '' and str(district_id).lower() != 'all':
+        try:
+            erections = erections.filter(district_id=int(district_id))
+        except (ValueError, TypeError):
+            pass
+
+    # 3. Block filter
+    block_id = payload.get('block_id') or payload.get('block')
+    if block_id is not None and str(block_id).strip() != '' and str(block_id).lower() != 'all':
+        try:
+            erections = erections.filter(block_id=int(block_id))
+        except (ValueError, TypeError):
+            pass
+
+    # 4. Feeder filter
+    feeder = payload.get('feeder') or payload.get('feeder_name')
+    if feeder is not None and str(feeder).strip() != '' and str(feeder).lower() != 'all':
+        erections = erections.filter(feeder_name__icontains=str(feeder).strip())
+
+    # 5. Contractor filter (by ID or contractor name)
+    contractor = payload.get('contractor_name') or payload.get('contractor_id') or payload.get('contractor')
+    if contractor is not None and str(contractor).strip() != '' and str(contractor).lower() != 'all':
+        contractor_str = str(contractor).strip()
+        if contractor_str.isdigit():
+            erections = erections.filter(contractor_id=int(contractor_str))
+        else:
+            matching_c_ids = list(ContractorMaster.objects.filter(contractor_name__icontains=contractor_str).values_list('id', flat=True))
+            erections = erections.filter(contractor_id__in=matching_c_ids)
+
+    # 6. Line type filter (type of work)
+    line_type = payload.get('line_type') or payload.get('type_of_work')
+    if line_type is not None and str(line_type).strip() != '' and str(line_type).lower() != 'all':
+        line_type_str = str(line_type).strip()
+        if line_type_str.isdigit():
+            erections = erections.filter(type_of_work=int(line_type_str))
+        else:
+            matching_codes = list(DomainLookup.objects.filter(
+                domain_type='type_of_work',
+                status=1
+            ).filter(
+                Q(domain_value__icontains=line_type_str) |
+                Q(domain_desc__icontains=line_type_str)
+            ).values_list('domain_code', flat=True))
+            if matching_codes:
+                erections = erections.filter(type_of_work__in=matching_codes)
+            elif '11' in line_type_str:
+                erections = erections.filter(type_of_work=1)
+            elif 'LT' in line_type_str.upper() or '440' in line_type_str:
+                erections = erections.filter(type_of_work=2)
+            elif '33' in line_type_str:
+                erections = erections.filter(type_of_work=3)
+
+    # 7. Status filter
+    status = payload.get('status')
+    if status is not None and str(status).strip() != '' and str(status).lower() != 'all':
+        try:
+            status_int = int(status)
+            erections = erections.filter(status=status_int)
+        except (ValueError, TypeError):
+            pass
+
+    # 8. Start Date and End Date filters (on created_on)
+    start_date = payload.get('start_date') or payload.get('from_date')
+    if start_date and str(start_date).strip() != '':
+        try:
+            from datetime import datetime
+            start_d = datetime.strptime(str(start_date)[:10], '%Y-%m-%d').date()
+            erections = erections.filter(created_on__date__gte=start_d)
+        except Exception as e:
+            logger.warning(f"Error parsing start_date {start_date}: {e}")
+
+    end_date = payload.get('end_date') or payload.get('to_date')
+    if end_date and str(end_date).strip() != '':
+        try:
+            from datetime import datetime
+            end_d = datetime.strptime(str(end_date)[:10], '%Y-%m-%d').date()
+            erections = erections.filter(created_on__date__lte=end_d)
+        except Exception as e:
+            logger.warning(f"Error parsing end_date {end_date}: {e}")
+
+    total_count = erections.count()
+
+    # 9 & 10. Page size and Page index (mandatory for pagination --- if null send all data)
+    raw_page_size = payload.get('page_size')
+    if raw_page_size is None:
+        raw_page_size = payload.get('pageSize')
+
+    raw_page_index = payload.get('page_index')
+    if raw_page_index is None:
+        raw_page_index = payload.get('pageIndex')
+    if raw_page_index is None:
+        raw_page_index = payload.get('page_no')
+
+    # Check if either page_size or page_index is omitted or null -> return all data
+    is_all_data = False
+    if raw_page_size in [None, '', 'null', 'None', 'all', 'ALL'] or raw_page_index in [None, '', 'null', 'None', 'all', 'ALL']:
+        is_all_data = True
+        page_size = None
+        page_index = 1
+    else:
+        try:
+            page_size = int(raw_page_size)
+            page_index = int(raw_page_index)
+            if page_size <= 0:
+                is_all_data = True
+                page_size = None
+                page_index = 1
+            elif page_index < 1:
+                page_index = 1
+        except (ValueError, TypeError):
+            is_all_data = True
+            page_size = None
+            page_index = 1
+
+    if is_all_data or page_size is None:
+        paginated_erections = erections
+        total_pages = 1
+        current_page = 1
+        returned_page_size = total_count
+    else:
+        offset = (page_index - 1) * page_size
+        total_pages = (total_count + page_size - 1) // page_size if total_count > 0 else 0
+        paginated_erections = erections[offset:offset + page_size]
+        current_page = page_index
+        returned_page_size = page_size
         
     data_list = []
-    for item in erections:
+    for item in paginated_erections:
         tow_info = domain_map.get(('type_of_work', item.type_of_work), {})
         ltsp_info = domain_map.get(('lt_starting_point', item.lt_starting_point), {})
+        nodes_qs = item.nodes.all().order_by('sequence_number')
         
         data_list.append({
             "id": item.id,
@@ -127,6 +343,10 @@ def list_erection_executions(request):
             "contractor_id": item.contractor_id,
             "contractor_name": contractor_map.get(item.contractor_id),
             
+            "surveyor_id": item.surveyor_id,
+            "surveyor_name": surveyor_map.get(item.surveyor_id, "Unassigned"),
+            "surveyor_phone": surveyor_phone_map.get(item.surveyor_id, ""),
+            
             "type_of_work": item.type_of_work,
             "type_of_work_name": tow_info.get('value'),
             "type_of_work_desc": tow_info.get('desc'),
@@ -137,9 +357,11 @@ def list_erection_executions(request):
             
             "remarks": item.remarks,
             "status": item.status,
+            "status_label": "Completed" if item.status == 2 else "Active",
             "created_on": item.created_on.strftime('%Y-%m-%d %H:%M:%S') if item.created_on else None,
             "updated_on": item.updated_on.strftime('%Y-%m-%d %H:%M:%S') if item.updated_on else None,
-            "has_nodes": item.nodes.exists(),
+            "has_nodes": nodes_qs.exists(),
+            "nodes_count": nodes_qs.count(),
             "nodes": [
                 {
                     "id": node.id,
@@ -154,14 +376,19 @@ def list_erection_executions(request):
                     "capturedAt": node.captured_at.isoformat() if node.captured_at else None,
                     "parentLabel": node.parent_label,
                 }
-                for node in item.nodes.all().order_by('sequence_number')
+                for node in nodes_qs
             ]
         })
         
     response_data = {
         "Code": "SUCCESS001",
         "Message": "Erection Executions Fetched Successfully",
-        "Data": data_list
+        "Data": data_list,
+        "total_count": total_count,
+        "total_pages": total_pages,
+        "current_page": current_page,
+        "page_index": current_page,
+        "page_size": returned_page_size
     }
     logger.warning('================================== END - Erection Execution List =================================')
     return JsonResponse(response_data)
@@ -781,3 +1008,711 @@ def get_erection_pole_details(request):
     }
     logger.warning('================================== END - Get Erection Pole Details =================================')
     return JsonResponse(response_data)
+
+
+@csrf_exempt
+@require_post
+def get_erection_detail(request):
+    logger.warning('================================== START - Get Erection Detail =================================')
+    payload = getattr(request, 'data', {}) or {}
+    erection_id = payload.get('id') or payload.get('erection_id')
+    if not erection_id:
+        return JsonResponse({"Exception": True, "Message": "Erection ID is required"}, status=400)
+        
+    erection = ErectionExecution.objects.filter(id=erection_id).first()
+    if not erection:
+        return JsonResponse({"Exception": True, "Message": "Erection record not found"}, status=404)
+        
+    state_map = {s.id: s.state_name for s in StateMaster.objects.all()}
+    district_map = {d.id: d.district_name for d in DistrictMaster.objects.all()}
+    block_map = {b.id: b.block_name for b in BlockMaster.objects.all()}
+    village_map = {v.id: v.village_name for v in VillageMaster.objects.all()}
+    contractor_map = {c.id: c.contractor_name for c in ContractorMaster.objects.all()}
+    surveyor_map = {u.id: (u.username or u.email) for u in User.objects.all()}
+    surveyor_phone_map = {u.id: u.phone for u in User.objects.all()}
+    surveyor_email_map = {u.id: u.email for u in User.objects.all()}
+
+    domain_map = {}
+    for dl in DomainLookup.objects.filter(domain_type__in=['type_of_work', 'lt_starting_point'], status=1):
+        domain_map[(dl.domain_type, dl.domain_code)] = {
+            "value": dl.domain_value,
+            "desc": dl.domain_desc
+        }
+
+    tow_info = domain_map.get(('type_of_work', erection.type_of_work), {})
+    ltsp_info = domain_map.get(('lt_starting_point', erection.lt_starting_point), {})
+
+    def parse_qty(val):
+        if val is None:
+            return 0
+        try:
+            return int(float(str(val).strip()))
+        except (ValueError, TypeError):
+            return 0
+
+    nodes_data = []
+    prev_node = None
+    total_route_distance = 0.0
+    day_groups = {}
+    conductor_names_set = set()
+    pole_db_summary = {}
+
+    for node in erection.nodes.all().order_by('sequence_number'):
+        node_imgs = extract_node_images(node)
+        is_new = check_is_new_pole(node)
+        
+        # Distance calculation
+        if prev_node:
+            dist_to_prev = calculate_haversine_distance(
+                prev_node.latitude, prev_node.longitude,
+                node.latitude, node.longitude
+            )
+        else:
+            dist_to_prev = 0.0
+            
+        total_route_distance += dist_to_prev
+        prev_node = node
+        
+        # Conductor resolving
+        c_name = node.conductor.conductor_name if node.conductor else (node.attributes or {}).get('cableSize')
+        if c_name:
+            conductor_names_set.add(str(c_name))
+
+        attrs = node.attributes or {}
+        earthing_qty = parse_qty(node.earthing_quantity if node.earthing_quantity is not None else attrs.get('earthingQuantity'))
+        stay_set_qty = parse_qty(node.stay_set_quantity if node.stay_set_quantity is not None else attrs.get('staySetQuantity'))
+        dead_end_qty = parse_qty(node.dead_end_clamp_qty if node.dead_end_clamp_qty is not None else attrs.get('deadEndClampQty'))
+        suspension_qty = parse_qty(node.suspension_clamp_qty if node.suspension_clamp_qty is not None else attrs.get('suspensionClampQty'))
+        pole_clamp_qty = parse_qty(node.pole_clamp_qty if node.pole_clamp_qty is not None else attrs.get('poleClampQty'))
+        ipc_qty = parse_qty(node.ipc_qty if node.ipc_qty is not None else attrs.get('ipcQty'))
+        service_conn_qty = parse_qty(node.service_connection_qty if node.service_connection_qty is not None else attrs.get('serviceConnectionQty'))
+        extra_consump = parse_qty(node.extra_consumption if node.extra_consumption is not None else attrs.get('extraConsumption'))
+        pole_qty = parse_qty(node.pole_qty if node.pole_qty is not None else attrs.get('poleQty', 1 if node.node_type == 'POLE' else 0))
+
+        # Pole DB quantities
+        db_quantities = node.pole_db_quantities or {}
+        if not db_quantities and 'poleDbQuantities' in attrs:
+            import json
+            raw_db = attrs.get('poleDbQuantities')
+            if isinstance(raw_db, str):
+                try: db_quantities = json.loads(raw_db)
+                except Exception: db_quantities = {}
+            elif isinstance(raw_db, dict):
+                db_quantities = raw_db
+
+        if isinstance(db_quantities, dict):
+            for db_type, q in db_quantities.items():
+                parsed_q = parse_qty(q)
+                pole_db_summary[str(db_type)] = pole_db_summary.get(str(db_type), 0) + parsed_q
+
+        node_dict = {
+            "id": node.id,
+            "node_type": node.node_type,
+            "sequence_number": node.sequence_number,
+            "name_label": node.name_label,
+            "latitude": float(node.latitude),
+            "longitude": float(node.longitude),
+            "distance_to_prev_meters": dist_to_prev,
+            "cumulative_distance_meters": round(total_route_distance, 2),
+            "is_new_pole": is_new,
+            "structure_condition": "NEW" if is_new else "OLD",
+            "structure_condition_label": "New Pole" if (node.node_type == 'POLE' and is_new) else ("Old Pole" if node.node_type == 'POLE' else "DTR"),
+            "dtr_capacity_id": node.dtr_capacity_id,
+            "dtr_capacity_name": node.dtr_capacity.transformer_name if node.dtr_capacity else attrs.get('dtrCapacity'),
+            "dtr_serial_no": node.dtr_serial_no or attrs.get('dtrSerialNo'),
+            "conductor_id": node.conductor_id,
+            "conductor_name": c_name,
+            "earthing_used": node.earthing_used or str(attrs.get('earthingUsed', '')),
+            "earthing_quantity": earthing_qty,
+            "stay_set_used": node.stay_set_used or str(attrs.get('staySetUsed', '')),
+            "stay_set_quantity": stay_set_qty,
+            "pole_type_id": node.pole_type_id,
+            "pole_type_name": node.pole_type.pole_name if node.pole_type else attrs.get('poleType'),
+            "pole_qty": pole_qty,
+            "dead_end_clamp_qty": dead_end_qty,
+            "suspension_clamp_qty": suspension_qty,
+            "pole_clamp_qty": pole_clamp_qty,
+            "ipc_qty": ipc_qty,
+            "service_connection_qty": service_conn_qty,
+            "extra_consumption": extra_consump,
+            "pole_db_type_codes": node.pole_db_type_codes or attrs.get('poleDbTypes'),
+            "pole_db_quantities": db_quantities,
+            "attributes": attrs,
+            "image_path": node.image_path,
+            "images": node_imgs,
+            "parent_label": node.parent_label,
+            "captured_at": node.captured_at.strftime('%Y-%m-%d %H:%M:%S') if node.captured_at else None,
+        }
+        nodes_data.append(node_dict)
+
+        # Day-wise grouping based on captured_at or created_on
+        node_dt = node.captured_at or node.created_on
+        date_key = node_dt.strftime('%Y-%m-%d') if node_dt else 'Initial Entry'
+        if date_key not in day_groups:
+            day_groups[date_key] = {
+                "date": date_key,
+                "raw_date": node_dt.date() if node_dt else None,
+                "nodes": [],
+                "poles_erected": 0,
+                "new_poles": 0,
+                "old_poles": 0,
+                "dtrs_erected": 0,
+                "span_meters": 0.0,
+                "photos_count": 0,
+                "materials": {
+                    "earthing": 0,
+                    "stay_set": 0,
+                    "dead_end_clamp": 0,
+                    "suspension_clamp": 0,
+                    "pole_clamp": 0,
+                    "ipc": 0,
+                    "service_connection": 0,
+                    "extra_consumption": 0,
+                    "pole_qty": 0,
+                    "pole_db": 0
+                }
+            }
+        
+        dg = day_groups[date_key]
+        dg["nodes"].append(node_dict)
+        if node.node_type == 'POLE':
+            dg["poles_erected"] += 1
+            if is_new:
+                dg["new_poles"] += 1
+            else:
+                dg["old_poles"] += 1
+        elif node.node_type == 'DTR':
+            dg["dtrs_erected"] += 1
+
+        dg["span_meters"] += dist_to_prev
+        dg["photos_count"] += len(node_imgs)
+        dg["materials"]["earthing"] += earthing_qty
+        dg["materials"]["stay_set"] += stay_set_qty
+        dg["materials"]["dead_end_clamp"] += dead_end_qty
+        dg["materials"]["suspension_clamp"] += suspension_qty
+        dg["materials"]["pole_clamp"] += pole_clamp_qty
+        dg["materials"]["ipc"] += ipc_qty
+        dg["materials"]["service_connection"] += service_conn_qty
+        dg["materials"]["extra_consumption"] += extra_consump
+        dg["materials"]["pole_qty"] += pole_qty
+        if isinstance(db_quantities, dict):
+            for _, q in db_quantities.items():
+                dg["materials"]["pole_db"] += parse_qty(q)
+
+    # Format Day-Wise Progress
+    sorted_days = sorted(day_groups.values(), key=lambda x: x["date"])
+    day_progress_list = []
+    for idx, day in enumerate(sorted_days, 1):
+        summary_parts = []
+        if day["dtrs_erected"] > 0:
+            summary_parts.append(f"{day['dtrs_erected']} DTR installed")
+        if day["new_poles"] > 0:
+            summary_parts.append(f"{day['new_poles']} New Pole(s) erected")
+        if day["old_poles"] > 0:
+            summary_parts.append(f"{day['old_poles']} Old Pole(s) connected/worked on")
+        
+        m = day["materials"]
+        mat_parts = []
+        if m["earthing"] > 0: mat_parts.append(f"{m['earthing']} Earthing")
+        if m["stay_set"] > 0: mat_parts.append(f"{m['stay_set']} Stay Set(s)")
+        if m["ipc"] > 0: mat_parts.append(f"{m['ipc']} IPC(s)")
+        if m["dead_end_clamp"] > 0: mat_parts.append(f"{m['dead_end_clamp']} Dead-end clamp(s)")
+        if m["suspension_clamp"] > 0: mat_parts.append(f"{m['suspension_clamp']} Suspension clamp(s)")
+        if m["service_connection"] > 0: mat_parts.append(f"{m['service_connection']} Service conn(s)")
+        if m["pole_db"] > 0: mat_parts.append(f"{m['pole_db']} Pole DB(s)")
+
+        day_progress_list.append({
+            "day_number": idx,
+            "date": day["date"],
+            "nodes_count": len(day["nodes"]),
+            "nodes_summary": [f"{n['name_label']} ({n['structure_condition_label']})" for n in day["nodes"]],
+            "work_description": ", ".join(summary_parts) if summary_parts else "Materials entry and verification",
+            "materials_summary": ", ".join(mat_parts) if mat_parts else "No additional materials recorded",
+            "materials": day["materials"],
+            "poles_erected": day["poles_erected"],
+            "new_poles": day["new_poles"],
+            "old_poles": day["old_poles"],
+            "dtrs_erected": day["dtrs_erected"],
+            "span_meters": round(day["span_meters"], 2),
+            "photos_count": day["photos_count"]
+        })
+
+    valid_dates = [d["raw_date"] for d in sorted_days if d["raw_date"]]
+    total_working_days = len(day_progress_list)
+    if valid_dates:
+        min_date = min(valid_dates)
+        max_date = max(valid_dates)
+        total_calendar_days = (max_date - min_date).days + 1
+        start_date_str = min_date.strftime('%Y-%m-%d')
+        completion_date_str = max_date.strftime('%Y-%m-%d')
+    else:
+        total_calendar_days = total_working_days or 1
+        start_date_str = None
+        completion_date_str = None
+
+    pole_nodes = [n for n in nodes_data if n["node_type"] == "POLE"]
+    dtr_nodes = [n for n in nodes_data if n["node_type"] == "DTR"]
+    new_pole_nodes = [n for n in pole_nodes if n["is_new_pole"]]
+    old_pole_nodes = [n for n in pole_nodes if not n["is_new_pole"]]
+
+    material_summary = {
+        "total_poles": len(pole_nodes),
+        "new_poles_count": len(new_pole_nodes),
+        "old_poles_count": len(old_pole_nodes),
+        "total_dtr": len(dtr_nodes),
+        "total_route_length_meters": round(total_route_distance, 2),
+        "total_earthing": sum(n["earthing_quantity"] for n in nodes_data),
+        "total_stay_sets": sum(n["stay_set_quantity"] for n in nodes_data),
+        "total_dead_end_clamps": sum(n["dead_end_clamp_qty"] for n in nodes_data),
+        "total_suspension_clamps": sum(n["suspension_clamp_qty"] for n in nodes_data),
+        "total_pole_clamps": sum(n["pole_clamp_qty"] for n in nodes_data),
+        "total_ipc": sum(n["ipc_qty"] for n in nodes_data),
+        "total_service_connections": sum(n["service_connection_qty"] for n in nodes_data),
+        "total_extra_consumption": sum(n["extra_consumption"] for n in nodes_data),
+        "total_pole_qty": sum(n["pole_qty"] for n in pole_nodes),
+        "conductor_names": list(conductor_names_set) or ["Standard ACSR / AB Cable"],
+        "pole_db_summary": pole_db_summary,
+        "total_pole_db": sum(pole_db_summary.values())
+    }
+
+    response_data = {
+        "Code": "SUCCESS001",
+        "Message": "Erection Execution Details Fetched Successfully",
+        "Data": {
+            "id": erection.id,
+            "feeder_name": erection.feeder_name,
+            "dtr_code": erection.dtr_code,
+            "drawing_no": erection.drawing_no,
+            "state_id": erection.state_id,
+            "state_name": state_map.get(erection.state_id),
+            "district_id": erection.district_id,
+            "district_name": district_map.get(erection.district_id),
+            "block_id": erection.block_id,
+            "block_name": block_map.get(erection.block_id),
+            "village_id": erection.village_id,
+            "village_name": village_map.get(erection.village_id),
+            "contractor_id": erection.contractor_id,
+            "contractor_name": contractor_map.get(erection.contractor_id) or "Unassigned",
+            "surveyor_id": erection.surveyor_id,
+            "surveyor_name": surveyor_map.get(erection.surveyor_id, "Unassigned"),
+            "surveyor_phone": surveyor_phone_map.get(erection.surveyor_id, ""),
+            "surveyor_email": surveyor_email_map.get(erection.surveyor_id, ""),
+            "type_of_work": erection.type_of_work,
+            "type_of_work_name": tow_info.get('value') or "Erection Work",
+            "lt_starting_point": erection.lt_starting_point,
+            "lt_starting_point_name": ltsp_info.get('value') or "Substation",
+            "remarks": erection.remarks,
+            "status": erection.status,
+            "status_label": "Completed" if erection.status == 2 else "Active",
+            "created_on": erection.created_on.strftime('%Y-%m-%d %H:%M:%S') if erection.created_on else None,
+            "updated_on": erection.updated_on.strftime('%Y-%m-%d %H:%M:%S') if erection.updated_on else None,
+            "nodes_count": len(nodes_data),
+            "pole_count": len(pole_nodes),
+            "dtr_count": len(dtr_nodes),
+            "material_summary": material_summary,
+            "day_wise_progress": day_progress_list,
+            "progress_summary": {
+                "total_working_days": total_working_days,
+                "total_calendar_days": total_calendar_days,
+                "start_date": start_date_str,
+                "completion_date": completion_date_str
+            },
+            "nodes": nodes_data
+        }
+    }
+    logger.warning('================================== END - Get Erection Detail =================================')
+    return JsonResponse(response_data)
+
+
+@csrf_exempt
+@require_post
+def list_survey_lines(request):
+    logger.warning('================================== START - Survey Line List =================================')
+    payload = getattr(request, 'data', {}) or {}
+    
+    # Query mappings for locations
+    state_map = {s.id: s.state_name for s in StateMaster.objects.all()}
+    district_map = {d.id: d.district_name for d in DistrictMaster.objects.all()}
+    block_map = {b.id: b.block_name for b in BlockMaster.objects.all()}
+
+    queryset = SurveyLine.objects.all().order_by('-updated_on')
+    
+    # Search filter
+    search = payload.get('search')
+    if search:
+        search = str(search).strip()
+        queryset = queryset.filter(
+            Q(contractor_name__icontains=search) |
+            Q(line_type__icontains=search) |
+            Q(feeder_name__icontains=search) |
+            Q(surveyor__username__icontains=search) |
+            Q(surveyor__email__icontains=search)
+        )
+        
+    # 1. State filter
+    state_id = payload.get('state_id') or payload.get('state')
+    if state_id is not None and str(state_id).strip() != '' and str(state_id).lower() != 'all':
+        try:
+            queryset = queryset.filter(state_id=int(state_id))
+        except (ValueError, TypeError):
+            pass
+
+    # 2. District filter (handling distrct typo as well)
+    district_id = payload.get('district_id') or payload.get('distrct_id') or payload.get('district')
+    if district_id is not None and str(district_id).strip() != '' and str(district_id).lower() != 'all':
+        try:
+            queryset = queryset.filter(district_id=int(district_id))
+        except (ValueError, TypeError):
+            pass
+
+    # 3. Block filter
+    block_id = payload.get('block_id') or payload.get('block')
+    if block_id is not None and str(block_id).strip() != '' and str(block_id).lower() != 'all':
+        try:
+            queryset = queryset.filter(block_id=int(block_id))
+        except (ValueError, TypeError):
+            pass
+
+    # 4. Feeder filter
+    feeder = payload.get('feeder') or payload.get('feeder_name')
+    if feeder is not None and str(feeder).strip() != '' and str(feeder).lower() != 'all':
+        queryset = queryset.filter(feeder_name__icontains=str(feeder).strip())
+
+    # 5. Contractor filter (by name or ID)
+    contractor = payload.get('contractor_name') or payload.get('contractor_id') or payload.get('contractor')
+    if contractor is not None and str(contractor).strip() != '' and str(contractor).lower() != 'all':
+        contractor_str = str(contractor).strip()
+        if contractor_str.isdigit():
+            c_obj = ContractorMaster.objects.filter(id=int(contractor_str)).first()
+            if c_obj:
+                queryset = queryset.filter(Q(contractor_name__icontains=c_obj.contractor_name) | Q(contractor_name__icontains=contractor_str))
+            else:
+                queryset = queryset.filter(contractor_name__icontains=contractor_str)
+        else:
+            queryset = queryset.filter(contractor_name__icontains=contractor_str)
+
+    # 6. Line type filter
+    line_type = payload.get('line_type')
+    if line_type and str(line_type).strip() != '' and str(line_type).upper() != 'ALL':
+        line_type_str = str(line_type).strip()
+        queryset = queryset.filter(Q(line_type=line_type_str) | Q(line_type__icontains=line_type_str))
+
+    # Sync status filter
+    is_synced = payload.get('is_synced')
+    if is_synced is not None and str(is_synced).lower() != 'all':
+        is_synced_val = str(is_synced).lower() in ['true', '1', 'yes']
+        queryset = queryset.filter(is_synced=is_synced_val)
+        
+    # 7. Status filter
+    status = payload.get('status')
+    if status is not None and str(status).strip() != '' and str(status).lower() != 'all':
+        try:
+            queryset = queryset.filter(status=int(status))
+        except (ValueError, TypeError):
+            pass
+            
+    # Surveyor filter
+    surveyor_id = payload.get('surveyor_id')
+    if surveyor_id:
+        queryset = queryset.filter(surveyor_id=surveyor_id)
+
+    # 8. Start Date and End Date filters (on created_on)
+    start_date = payload.get('start_date') or payload.get('from_date')
+    if start_date and str(start_date).strip() != '':
+        try:
+            from datetime import datetime
+            start_d = datetime.strptime(str(start_date)[:10], '%Y-%m-%d').date()
+            queryset = queryset.filter(created_on__date__gte=start_d)
+        except Exception as e:
+            logger.warning(f"Error parsing start_date {start_date}: {e}")
+
+    end_date = payload.get('end_date') or payload.get('to_date')
+    if end_date and str(end_date).strip() != '':
+        try:
+            from datetime import datetime
+            end_d = datetime.strptime(str(end_date)[:10], '%Y-%m-%d').date()
+            queryset = queryset.filter(created_on__date__lte=end_d)
+        except Exception as e:
+            logger.warning(f"Error parsing end_date {end_date}: {e}")
+        
+    total_count = queryset.count()
+    
+    # 9 & 10. Page size and Page index (mandatory for pagination --- if null send all data)
+    raw_page_size = payload.get('page_size')
+    if raw_page_size is None:
+        raw_page_size = payload.get('pageSize')
+
+    raw_page_index = payload.get('page_index')
+    if raw_page_index is None:
+        raw_page_index = payload.get('pageIndex')
+    if raw_page_index is None:
+        raw_page_index = payload.get('page_no')
+
+    # Check if either page_size or page_index is omitted or null -> return all data
+    is_all_data = False
+    if raw_page_size in [None, '', 'null', 'None', 'all', 'ALL'] or raw_page_index in [None, '', 'null', 'None', 'all', 'ALL']:
+        is_all_data = True
+        page_size = None
+        page_index = 1
+    else:
+        try:
+            page_size = int(raw_page_size)
+            page_index = int(raw_page_index)
+            if page_size <= 0:
+                is_all_data = True
+                page_size = None
+                page_index = 1
+            elif page_index < 1:
+                page_index = 1
+        except (ValueError, TypeError):
+            is_all_data = True
+            page_size = None
+            page_index = 1
+
+    if is_all_data or page_size is None:
+        paginated_items = queryset
+        total_pages = 1
+        current_page = 1
+        returned_page_size = total_count
+    else:
+        offset = (page_index - 1) * page_size
+        total_pages = (total_count + page_size - 1) // page_size if total_count > 0 else 0
+        paginated_items = queryset[offset:offset + page_size]
+        current_page = page_index
+        returned_page_size = page_size
+
+    line_type_dict = dict(SurveyLine.LINE_TYPES)
+    
+    data_list = []
+    for item in paginated_items:
+        nodes_qs = item.nodes.all().order_by('sequence_number')
+        data_list.append({
+            "id": item.id,
+            "contractor_name": item.contractor_name or "N/A",
+            "line_type": item.line_type,
+            "line_type_display": line_type_dict.get(item.line_type, item.line_type),
+            "state_id": item.state_id,
+            "state_name": state_map.get(item.state_id),
+            "district_id": item.district_id,
+            "district_name": district_map.get(item.district_id),
+            "block_id": item.block_id,
+            "block_name": block_map.get(item.block_id),
+            "feeder_name": item.feeder_name,
+            "surveyor_id": item.surveyor_id,
+            "surveyor_name": item.surveyor.username if item.surveyor else "Unassigned",
+            "surveyor_phone": item.surveyor.phone if item.surveyor else "",
+            "is_synced": item.is_synced,
+            "status": item.status,
+            "status_label": "Active" if item.status == 1 else "Archived",
+            "nodes_count": nodes_qs.count(),
+            "created_on": item.created_on.strftime('%Y-%m-%d %H:%M:%S') if item.created_on else None,
+            "updated_on": item.updated_on.strftime('%Y-%m-%d %H:%M:%S') if item.updated_on else None,
+            "nodes": [
+                {
+                    "id": n.id,
+                    "node_type": n.node_type,
+                    "sequence_number": n.sequence_number,
+                    "name_label": n.name_label,
+                    "latitude": float(n.latitude),
+                    "longitude": float(n.longitude),
+                    "attributes": n.attributes,
+                    "image_path": n.image_path,
+                    "parent_label": n.parent_label,
+                    "captured_at": n.captured_at.strftime('%Y-%m-%d %H:%M:%S') if n.captured_at else None,
+                }
+                for n in nodes_qs
+            ]
+        })
+        
+    response_data = {
+        "Code": "SUCCESS001",
+        "Message": "Survey Lines Fetched Successfully",
+        "Data": data_list,
+        "total_count": total_count,
+        "total_pages": total_pages,
+        "current_page": current_page,
+        "page_index": current_page,
+        "page_size": returned_page_size
+    }
+    logger.warning('================================== END - Survey Line List =================================')
+    return JsonResponse(response_data)
+
+
+@csrf_exempt
+@require_post
+def get_survey_line_detail(request):
+    logger.warning('================================== START - Get Survey Line Detail =================================')
+    payload = getattr(request, 'data', {}) or {}
+    survey_id = payload.get('id') or payload.get('survey_line_id')
+    if not survey_id:
+        return JsonResponse({"Exception": True, "Message": "Survey ID is required"}, status=400)
+        
+    survey = SurveyLine.objects.filter(id=survey_id).first()
+    if not survey:
+        return JsonResponse({"Exception": True, "Message": "Survey record not found"}, status=404)
+        
+    state_map = {s.id: s.state_name for s in StateMaster.objects.all()}
+    district_map = {d.id: d.district_name for d in DistrictMaster.objects.all()}
+    block_map = {b.id: b.block_name for b in BlockMaster.objects.all()}
+
+    line_type_dict = dict(SurveyLine.LINE_TYPES)
+    nodes = []
+    prev_node = None
+    total_route_distance = 0.0
+    day_groups = {}
+    conductor_names_set = set()
+
+    for node in survey.nodes.all().order_by('sequence_number'):
+        node_imgs = extract_node_images(node)
+        is_new = check_is_new_pole(node)
+        
+        if prev_node:
+            dist_to_prev = calculate_haversine_distance(
+                prev_node.latitude, prev_node.longitude,
+                node.latitude, node.longitude
+            )
+        else:
+            dist_to_prev = 0.0
+            
+        total_route_distance += dist_to_prev
+        prev_node = node
+        
+        attrs = node.attributes or {}
+        cable = attrs.get('cableSize')
+        if cable:
+            conductor_names_set.add(str(cable))
+
+        node_dict = {
+            "id": node.id,
+            "node_type": node.node_type,
+            "sequence_number": node.sequence_number,
+            "name_label": node.name_label,
+            "latitude": float(node.latitude),
+            "longitude": float(node.longitude),
+            "distance_to_prev_meters": dist_to_prev,
+            "cumulative_distance_meters": round(total_route_distance, 2),
+            "is_new_pole": is_new,
+            "structure_condition": "NEW" if is_new else "OLD",
+            "structure_condition_label": "New Pole" if (node.node_type == 'POLE' and is_new) else ("Old Pole" if node.node_type == 'POLE' else "DTR"),
+            "attributes": attrs,
+            "image_path": node.image_path,
+            "images": node_imgs,
+            "parent_label": node.parent_label,
+            "captured_at": node.captured_at.strftime('%Y-%m-%d %H:%M:%S') if node.captured_at else None,
+        }
+        nodes.append(node_dict)
+
+        node_dt = node.captured_at or node.created_on
+        date_key = node_dt.strftime('%Y-%m-%d') if node_dt else 'Survey Entry'
+        if date_key not in day_groups:
+            day_groups[date_key] = {
+                "date": date_key,
+                "raw_date": node_dt.date() if node_dt else None,
+                "nodes": [],
+                "poles_count": 0,
+                "dtrs_count": 0,
+                "span_meters": 0.0,
+                "photos_count": 0,
+                "materials": {}
+            }
+        dg = day_groups[date_key]
+        dg["nodes"].append(node_dict)
+        if node.node_type == 'POLE':
+            dg["poles_count"] += 1
+        elif node.node_type == 'DTR':
+            dg["dtrs_count"] += 1
+        dg["span_meters"] += dist_to_prev
+        dg["photos_count"] += len(node_imgs)
+
+    sorted_days = sorted(day_groups.values(), key=lambda x: x["date"])
+    day_progress_list = []
+    for idx, day in enumerate(sorted_days, 1):
+        summary_parts = []
+        if day["dtrs_count"] > 0:
+            summary_parts.append(f"{day['dtrs_count']} DTR surveyed")
+        if day["poles_count"] > 0:
+            summary_parts.append(f"{day['poles_count']} Pole(s) surveyed")
+        day_progress_list.append({
+            "day_number": idx,
+            "date": day["date"],
+            "nodes_count": len(day["nodes"]),
+            "nodes_summary": [f"{n['name_label']} ({n['structure_condition_label']})" for n in day["nodes"]],
+            "work_description": ", ".join(summary_parts) if summary_parts else "Survey line mapping",
+            "materials_summary": f"{day['poles_count']} Poles, {day['dtrs_count']} DTRs mapped",
+            "materials": {},
+            "poles_erected": day["poles_count"],
+            "new_poles": sum(1 for n in day["nodes"] if n.get("is_new_pole")),
+            "old_poles": sum(1 for n in day["nodes"] if not n.get("is_new_pole")),
+            "dtrs_erected": day["dtrs_count"],
+            "span_meters": round(day["span_meters"], 2),
+            "photos_count": day["photos_count"]
+        })
+
+    valid_dates = [d["raw_date"] for d in sorted_days if d["raw_date"]]
+    total_working_days = len(day_progress_list)
+    if valid_dates:
+        min_date = min(valid_dates)
+        max_date = max(valid_dates)
+        total_calendar_days = (max_date - min_date).days + 1
+        start_date_str = min_date.strftime('%Y-%m-%d')
+        completion_date_str = max_date.strftime('%Y-%m-%d')
+    else:
+        total_calendar_days = total_working_days or 1
+        start_date_str = None
+        completion_date_str = None
+
+    pole_count = sum(1 for n in nodes if n["node_type"] == "POLE")
+    dtr_count = sum(1 for n in nodes if n["node_type"] == "DTR")
+    
+    material_summary = {
+        "total_poles": pole_count,
+        "new_poles_count": sum(1 for n in nodes if n["node_type"] == "POLE" and n.get("is_new_pole")),
+        "old_poles_count": sum(1 for n in nodes if n["node_type"] == "POLE" and not n.get("is_new_pole")),
+        "total_dtr": dtr_count,
+        "total_route_length_meters": round(total_route_distance, 2),
+        "conductor_names": list(conductor_names_set) or [line_type_dict.get(survey.line_type, survey.line_type)],
+        "line_type": survey.line_type,
+        "line_type_display": line_type_dict.get(survey.line_type, survey.line_type)
+    }
+
+    response_data = {
+        "Code": "SUCCESS001",
+        "Message": "Survey Line Details Fetched Successfully",
+        "Data": {
+            "id": survey.id,
+            "contractor_name": survey.contractor_name or "N/A",
+            "line_type": survey.line_type,
+            "line_type_display": line_type_dict.get(survey.line_type, survey.line_type),
+            "state_id": survey.state_id,
+            "state_name": state_map.get(survey.state_id),
+            "district_id": survey.district_id,
+            "district_name": district_map.get(survey.district_id),
+            "block_id": survey.block_id,
+            "block_name": block_map.get(survey.block_id),
+            "feeder_name": survey.feeder_name,
+            "surveyor_id": survey.surveyor_id,
+            "surveyor_name": survey.surveyor.username if survey.surveyor else "Unassigned",
+            "surveyor_phone": survey.surveyor.phone if survey.surveyor else "",
+            "surveyor_email": survey.surveyor.email if survey.surveyor else "",
+            "is_synced": survey.is_synced,
+            "status": survey.status,
+            "status_label": "Active" if survey.status == 1 else "Archived",
+            "nodes_count": len(nodes),
+            "pole_count": pole_count,
+            "dtr_count": dtr_count,
+            "material_summary": material_summary,
+            "day_wise_progress": day_progress_list,
+            "progress_summary": {
+                "total_working_days": total_working_days,
+                "total_calendar_days": total_calendar_days,
+                "start_date": start_date_str,
+                "completion_date": completion_date_str
+            },
+            "created_on": survey.created_on.strftime('%Y-%m-%d %H:%M:%S') if survey.created_on else None,
+            "updated_on": survey.updated_on.strftime('%Y-%m-%d %H:%M:%S') if survey.updated_on else None,
+            "nodes": nodes
+        }
+    }
+    logger.warning('================================== END - Get Survey Line Detail =================================')
+    return JsonResponse(response_data)
+
