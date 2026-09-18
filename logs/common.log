@@ -359,3 +359,23 @@ Traceback (most recent call last):
   File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 2130, in get_prep_value
     raise e.__class__(
 ValueError: Field 'id' expected a number but got 'mt8ph05b'.
+2026-09-12 00:31:40 ERROR    | Process 23572 | Thread: 25580 | django.request | log.log_message:ln 249 |--  Internal Server Error: /gis/administration/admin/login/
+Traceback (most recent call last):
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\commonUtility\decorators.py", line 31, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\commonUtility\decorators.py", line 17, in wrap
+    return func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\administration\views.py", line 115, in userPassLogin
+    raise InvalidPasswordFormatException('Password does not match strength criteria.')
+exception.InvalidPasswordFormatException: Password does not match strength criteria.
