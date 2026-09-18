@@ -1,2 +1,10 @@
 .vercel
 .env*
+*.log
+logs/*.log
+!logs/.gitkeep
+
+# Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+*$py.class
