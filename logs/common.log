@@ -379,3 +379,25 @@ Traceback (most recent call last):
   File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\administration\views.py", line 115, in userPassLogin
     raise InvalidPasswordFormatException('Password does not match strength criteria.')
 exception.InvalidPasswordFormatException: Password does not match strength criteria.
+2026-09-20 00:26:45 INFO     | Process 31108 | Thread: 28012 | common.views | views.upload_document:ln 24 |--  Starting document upload API
+2026-09-20 00:31:48 INFO     | Process 31624 | Thread: 25620 | common.views | views.upload_document:ln 24 |--  Starting document upload API
+2026-09-20 00:31:48 INFO     | Process 31624 | Thread: 25620 | common.views | views.upload_document:ln 46 |--  [Upload] Uploading POLE_pole_test.jpg (149 bytes) to bucket 'gis-image' with prefix 'GIS/erections/10/P-1'
+2026-09-20 00:31:49 INFO     | Process 31624 | Thread: 25620 | common.views | views.upload_document:ln 50 |--  [Upload] Successfully stored in R2: key='GIS/erections/10/P-1/2026/09/20/f1bab500ae95446e9d76913deffddfb5.jpg', size=285 bytes
+2026-09-20 00:32:00 INFO     | Process 31624 | Thread: 22628 | common.views | views.upload_document:ln 24 |--  Starting document upload API
+2026-09-20 00:32:00 ERROR    | Process 31624 | Thread: 22628 | django.request | log.log_message:ln 249 |--  Internal Server Error: /gis/administration/s3/upload/
+Traceback (most recent call last):
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\commonUtility\decorators.py", line 17, in wrap
+    return func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\common\views.py", line 26, in upload_document
+    raise BadRequest("No file found in the request (use field name 'file')")
+exception.BadRequest: No file found in the request (use field name 'file')

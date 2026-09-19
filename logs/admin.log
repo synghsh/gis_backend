@@ -1996,3 +1996,26 @@ exception.InvalidPasswordFormatException: Password does not match strength crite
 2026-09-18 17:31:56 INFO     | Process 5948 | Thread: 25916 | master_management | views.list_contractors:ln 3060 |--  Received list contractors params: {'is_active': True, 'page_size': 1000}
 2026-09-18 17:31:56 WARNING  | Process 5948 | Thread: 31560 | master_management | views.list_states:ln 221 |--  ================================== END - List States =================================
 2026-09-18 17:31:56 WARNING  | Process 5948 | Thread: 25916 | master_management | views.list_contractors:ln 3093 |--  ================================== END - List Contractors =================================
+2026-09-19 23:05:21 WARNING  | Process 31516 | Thread: 30600 | administration.views | views.userPassLogin:ln 71 |--  ================================== START - Admin User Login With Password =================================
+2026-09-19 23:05:21 INFO     | Process 31516 | Thread: 30600 | administration.views | views.userPassLogin:ln 78 |--  Received Login payload - Username: 9876543210
+2026-09-19 23:05:53 WARNING  | Process 31516 | Thread: 30600 | administration.views | views.userPassLogin:ln 188 |--  ================================== END - Admin User Login with Password =================================
+2026-09-19 23:26:25 WARNING  | Process 31516 | Thread: 16732 | administration.views | views.userPassLogin:ln 71 |--  ================================== START - Admin User Login With Password =================================
+2026-09-19 23:26:25 INFO     | Process 31516 | Thread: 16732 | administration.views | views.userPassLogin:ln 78 |--  Received Login payload - Username: 9000000000
+2026-09-19 23:26:28 WARNING  | Process 31516 | Thread: 16732 | administration.views | views.userPassLogin:ln 188 |--  ================================== END - Admin User Login with Password =================================
+2026-09-20 00:32:00 ERROR    | Process 31624 | Thread: 22628 | django.request | log.log_message:ln 249 |--  Internal Server Error: /gis/administration/s3/upload/
+Traceback (most recent call last):
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\commonUtility\decorators.py", line 17, in wrap
+    return func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\common\views.py", line 26, in upload_document
+    raise BadRequest("No file found in the request (use field name 'file')")
+exception.BadRequest: No file found in the request (use field name 'file')

@@ -36,10 +36,11 @@ DB_OVER = os.getenv('DB_OVER', '5')
 CONN_MAX_AGE = os.getenv('CONN_MAX_AGE', '600')
 
 # Cloudflare R2 Configuration
+R2_ACCOUNT_ID = os.getenv('R2_ACCOUNT_ID', '4e879716cc52ec02f6990b1dea819ddc')
 R2_ACCESS_KEY_ID = os.getenv('R2_ACCESS_KEY_ID')
 R2_SECRET_ACCESS_KEY = os.getenv('R2_SECRET_ACCESS_KEY')
-R2_BUCKET_NAME = os.getenv('R2_BUCKET_NAME', 'gis-survey-dev-documents')
-R2_ENDPOINT_URL = os.getenv('R2_ENDPOINT_URL')
+R2_BUCKET_NAME = os.getenv('R2_BUCKET_NAME', 'gis-image')
+R2_ENDPOINT_URL = os.getenv('R2_ENDPOINT_URL', f"https://{R2_ACCOUNT_ID}.r2.cloudflarestorage.com" if R2_ACCOUNT_ID else None)
 R2_PUBLIC_URL = os.getenv('R2_PUBLIC_URL')
 
 # Database Cursor Alias

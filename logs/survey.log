@@ -711,3 +711,20 @@ exception.InvalidPasswordFormatException: Password does not match strength crite
 2026-09-18 17:31:59 WARNING  | Process 5948 | Thread: 29824 | survey_management.views | views.list_erection_executions:ln 393 |--  ================================== END - Erection Execution List =================================
 2026-09-18 17:32:02 WARNING  | Process 5948 | Thread: 29824 | survey_management.views | views.get_erection_detail:ln 1016 |--  ================================== START - Get Erection Detail =================================
 2026-09-18 17:32:04 WARNING  | Process 5948 | Thread: 29824 | survey_management.views | views.get_erection_detail:ln 1323 |--  ================================== END - Get Erection Detail =================================
+2026-09-20 00:32:00 ERROR    | Process 31624 | Thread: 22628 | django.request | log.log_message:ln 249 |--  Internal Server Error: /gis/administration/s3/upload/
+Traceback (most recent call last):
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\commonUtility\decorators.py", line 17, in wrap
+    return func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\common\views.py", line 26, in upload_document
+    raise BadRequest("No file found in the request (use field name 'file')")
+exception.BadRequest: No file found in the request (use field name 'file')

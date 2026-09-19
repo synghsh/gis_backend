@@ -1,3 +1,4 @@
+from commonUtility.storage import StorageService
 import logging
 import math
 from datetime import datetime
@@ -772,6 +773,16 @@ def save_erection_node(request):
         if combined_photos:
             images_list = combined_photos
 
+    # Handle direct file uploads via multipart if provided
+    if hasattr(request, 'FILES') and request.FILES:
+        for fkey in request.FILES:
+            for f in request.FILES.getlist(fkey):
+                file_data = f.read()
+                content_type = f.content_type or 'image/jpeg'
+                prefix = f"GIS/erections/{erection.id}/{node.name_label}"
+                db_obj = StorageService.upload_file(f.name, file_data, content_type, bucket='gis-image', prefix=prefix)
+                images_list.append(db_obj.key)
+
     if images_list:
         node.image_path = images_list[0]
         node.save()
@@ -882,15 +893,19 @@ def get_erection_pole_details(request):
 
     node_data = None
     if selected_node:
-        all_imgs = [img.image_path for img in selected_node.node_images.all()]
+        def certify_list(imgs):
+            return [StorageService.get_certified_url(img) for img in (imgs or []) if img]
+
+        all_imgs = certify_list([img.image_path for img in selected_node.node_images.all()])
         if not all_imgs and selected_node.image_path:
-            all_imgs = [selected_node.image_path]
+            all_imgs = [StorageService.get_certified_url(selected_node.image_path)]
 
         attrs = selected_node.attributes or {}
-        pole_imgs = attrs.get('polePhotos') or ([selected_node.image_path] if selected_node.image_path else [])
-        earthing_imgs = attrs.get('earthingPhotos') or []
-        stay_set_imgs = attrs.get('staySetPhotos') or []
-        pole_db_imgs = attrs.get('poleDbPhotos') or []
+        pole_imgs = certify_list(attrs.get('polePhotos') or ([selected_node.image_path] if selected_node.image_path else []))
+        earthing_imgs = certify_list(attrs.get('earthingPhotos') or [])
+        stay_set_imgs = certify_list(attrs.get('staySetPhotos') or [])
+        pole_db_imgs = certify_list(attrs.get('poleDbPhotos') or [])
+        single_img = StorageService.get_certified_url(selected_node.image_path) if selected_node.image_path else (all_imgs[0] if all_imgs else None)
 
         node_data = {
             "id": selected_node.id,
@@ -981,10 +996,10 @@ def get_erection_pole_details(request):
             
             # Photos & Attributes
             "attributes": attrs,
-            "imageUri": selected_node.image_path,
+            "imageUri": single_img,
             "imageUris": all_imgs,
             "images": all_imgs,
-            "photo_url": selected_node.image_path,
+            "photo_url": single_img,
             "polePhotos": pole_imgs,
             "pole_photo_urls": pole_imgs,
             "earthingPhotos": earthing_imgs,

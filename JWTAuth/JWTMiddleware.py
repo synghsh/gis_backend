@@ -43,10 +43,13 @@ class AuthMiddleware(BaseBackend):
             request.token_details = {"user_id": None, "user_type": None, "c_m_no": None}
             return True
 
-        token = request.headers.get('Authorization')
+        token = request.headers.get('Authorization') or request.META.get('HTTP_AUTHORIZATION')
         if not token:
             logger.error("Authorization header is missing")
             return {CODE: FORBIDDEN, MESSAGE: "Authorization Token Missing"}
+
+        if isinstance(token, str) and token.startswith('Bearer '):
+            token = token[7:].strip()
 
         try:
             # Decode JWT payload

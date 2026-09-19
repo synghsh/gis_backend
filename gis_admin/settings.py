@@ -264,42 +264,42 @@ LOGGING = {
     'loggers': {
         'django.request': {
             'level': 'ERROR',
-            'handlers': ['file_common', 'file_auth', 'file_admin', 'file_survey'],
+            'handlers': ['console', 'file_common', 'file_auth', 'file_admin', 'file_survey'],
             'propagate': False,
         },
         'django': {
-            'level': 'ERROR',
+            'level': 'INFO',
             'handlers': ['console'],
             'propagate': True
         },
         'health': {
             'level': str(LOGGING_LEVEL),
-            'handlers': ['file_health'],
+            'handlers': ['console', 'file_health'],
             'propagate': True,
         },
         'administration': {
             'level': str(LOGGING_LEVEL),
-            'handlers': ['file_admin'],
+            'handlers': ['console', 'file_admin'],
             'propagate': True,
         },
         'JWTAuth': {
             'level': str(LOGGING_LEVEL),
-            'handlers': ['file_auth'],
+            'handlers': ['console', 'file_auth'],
             'propagate': True,
         },
         'common': {
             'level': str(LOGGING_LEVEL),
-            'handlers': ['file_common'],
+            'handlers': ['console', 'file_common'],
             'propagate': True,
         },
         'survey_management': {
             'level': str(LOGGING_LEVEL),
-            'handlers': ['file_survey'],
+            'handlers': ['console', 'file_survey'],
             'propagate': True,
         },
         'master_management': {
             'level': str(LOGGING_LEVEL),
-            'handlers': ['file_admin'],
+            'handlers': ['console', 'file_admin'],
             'propagate': True,
         },
     }
@@ -307,3 +307,7 @@ LOGGING = {
 
 ENABLE_QUERY_LOGGING = bool(QUERY_LOGGING == 'True' or QUERY_LOGGING == True)
 RATE_LIMIT_SKIP_IPS = ['127.0.0.1']
+
+# File upload size limits (prevents 413 Request Entity Too Large, Django default is 2.5MB)
+DATA_UPLOAD_MAX_MEMORY_SIZE = 25 * 1024 * 1024  # 25 MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 25 * 1024 * 1024  # 25 MB

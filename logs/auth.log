@@ -2290,3 +2290,227 @@ exception.InvalidPasswordFormatException: Password does not match strength crite
 2026-09-18 17:32:02 WARNING  | Process 5948 | Thread: 29824 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/erection/detail/
 2026-09-18 17:32:02 INFO     | Process 5948 | Thread: 29824 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': 'gis_surveyor', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4943332513, 'iat': 1789732513}
 2026-09-18 17:32:02 INFO     | Process 5948 | Thread: 29824 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-09-19 23:05:21 WARNING  | Process 31516 | Thread: 30600 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/admin/login/
+2026-09-19 23:05:21 INFO     | Process 31516 | Thread: 30600 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-09-19 23:26:25 WARNING  | Process 31516 | Thread: 16732 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/admin/login/
+2026-09-19 23:26:25 INFO     | Process 31516 | Thread: 16732 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-09-20 00:23:27 ERROR    | Process 8216 | Thread: 17828 | JWTAuth.utils | utils.generateToken:ln 81 |--  Error generating user token
+Traceback (most recent call last):
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 2128, in get_prep_value
+    return int(value)
+           ^^^^^^^^^^
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'User'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "d:\Sayan WorkSpace\Personal Project\GIS\gis_admin\JWTAuth\utils.py", line 23, in generateToken
+    user = User.objects.filter(id=user_id).first()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\query.py", line 1542, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\query.py", line 1560, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\query.py", line 1570, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\sql\query.py", line 1671, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\sql\query.py", line 1703, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\sql\query.py", line 1613, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\sql\query.py", line 1440, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\lookups.py", line 35, in __init__
+    self.rhs = self.get_prep_lookup()
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\lookups.py", line 391, in get_prep_lookup
+    return super().get_prep_lookup()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\lookups.py", line 93, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 2130, in get_prep_value
+    raise e.__class__(
+TypeError: Field 'id' expected a number but got <User: User object (1)>.
+2026-09-20 00:23:27 WARNING  | Process 8216 | Thread: 17828 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/s3/upload/
+2026-09-20 00:23:27 ERROR    | Process 8216 | Thread: 17828 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 48 |--  Authorization header is missing
+2026-09-20 00:23:27 INFO     | Process 8216 | Thread: 17828 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: {'Code': 403, 'Message': 'Authorization Token Missing'}
+2026-09-20 00:25:43 WARNING  | Process 31108 | Thread: 23924 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/s3/upload/
+2026-09-20 00:25:43 ERROR    | Process 31108 | Thread: 23924 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 48 |--  Authorization header is missing
+2026-09-20 00:25:43 INFO     | Process 31108 | Thread: 23924 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: {'Code': 403, 'Message': 'Authorization Token Missing'}
+2026-09-20 00:26:13 ERROR    | Process 21136 | Thread: 30896 | JWTAuth.utils | utils.generateToken:ln 81 |--  Error generating user token
+Traceback (most recent call last):
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 2128, in get_prep_value
+    return int(value)
+           ^^^^^^^^^^
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'User'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "d:\Sayan WorkSpace\Personal Project\GIS\gis_admin\JWTAuth\utils.py", line 23, in generateToken
+    user = User.objects.filter(id=user_id).first()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\query.py", line 1542, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\query.py", line 1560, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\query.py", line 1570, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\sql\query.py", line 1671, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\sql\query.py", line 1703, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\sql\query.py", line 1613, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\sql\query.py", line 1440, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\lookups.py", line 35, in __init__
+    self.rhs = self.get_prep_lookup()
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\lookups.py", line 391, in get_prep_lookup
+    return super().get_prep_lookup()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\lookups.py", line 93, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 2130, in get_prep_value
+    raise e.__class__(
+TypeError: Field 'id' expected a number but got <User: User object (1)>.
+2026-09-20 00:26:22 ERROR    | Process 8748 | Thread: 17356 | JWTAuth.utils | utils.generateToken:ln 81 |--  Error generating user token
+Traceback (most recent call last):
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 2128, in get_prep_value
+    return int(value)
+           ^^^^^^^^^^
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'User'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "d:\Sayan WorkSpace\Personal Project\GIS\gis_admin\JWTAuth\utils.py", line 23, in generateToken
+    user = User.objects.filter(id=user_id).first()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\query.py", line 1542, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\query.py", line 1560, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\query.py", line 1570, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\sql\query.py", line 1671, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\sql\query.py", line 1703, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\sql\query.py", line 1613, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\sql\query.py", line 1440, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\lookups.py", line 35, in __init__
+    self.rhs = self.get_prep_lookup()
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\lookups.py", line 391, in get_prep_lookup
+    return super().get_prep_lookup()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\lookups.py", line 93, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 2130, in get_prep_value
+    raise e.__class__(
+TypeError: Field 'id' expected a number but got <User: User object (1)>.
+2026-09-20 00:26:28 ERROR    | Process 5316 | Thread: 21988 | JWTAuth.utils | utils.generateToken:ln 81 |--  Error generating user token
+Traceback (most recent call last):
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 2128, in get_prep_value
+    return int(value)
+           ^^^^^^^^^^
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'User'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "d:\Sayan WorkSpace\Personal Project\GIS\gis_admin\JWTAuth\utils.py", line 23, in generateToken
+    user = User.objects.filter(id=user_id).first()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\query.py", line 1542, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\query.py", line 1560, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\query.py", line 1570, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\sql\query.py", line 1671, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\sql\query.py", line 1703, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\sql\query.py", line 1613, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\sql\query.py", line 1440, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\lookups.py", line 35, in __init__
+    self.rhs = self.get_prep_lookup()
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\lookups.py", line 391, in get_prep_lookup
+    return super().get_prep_lookup()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\lookups.py", line 93, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\db\models\fields\__init__.py", line 2130, in get_prep_value
+    raise e.__class__(
+TypeError: Field 'id' expected a number but got <User: User object (1)>.
+2026-09-20 00:26:44 WARNING  | Process 31108 | Thread: 28012 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/s3/upload/
+2026-09-20 00:26:44 INFO     | Process 31108 | Thread: 28012 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 54 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': '123456789012345', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4943444204, 'iat': 1789844204}
+2026-09-20 00:26:45 INFO     | Process 31108 | Thread: 28012 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-09-20 00:31:48 WARNING  | Process 31624 | Thread: 25620 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/s3/upload/
+2026-09-20 00:31:48 INFO     | Process 31624 | Thread: 25620 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 57 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': '123456789012345', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4943444507, 'iat': 1789844507}
+2026-09-20 00:31:48 INFO     | Process 31624 | Thread: 25620 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-09-20 00:32:00 WARNING  | Process 31624 | Thread: 22628 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 39 |--  Evaluating JWT for path: /gis/administration/s3/upload/
+2026-09-20 00:32:00 INFO     | Process 31624 | Thread: 22628 | JWTAuth.JWTMiddleware | JWTMiddleware.auth:ln 57 |--  Decoded token payload: {'user_id': 1, 'user_type': 1, 'c_m_no': '123456789012345', 'username': 'gis_surveyor', 'phone': '9876543210', 'email': 'surveyor@gis.com', 'first_name': 'Sayan', 'last_name': 'Ghosh', 'role_id': 1, 'designation_id': 1, 'exp': 4943444519, 'iat': 1789844519}
+2026-09-20 00:32:00 INFO     | Process 31624 | Thread: 22628 | JWTAuth.JWTMiddleware | JWTMiddleware.__call__:ln 20 |--  JWT Auth result: True
+2026-09-20 00:32:00 ERROR    | Process 31624 | Thread: 22628 | django.request | log.log_message:ln 249 |--  Internal Server Error: /gis/administration/s3/upload/
+Traceback (most recent call last):
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\commonUtility\decorators.py", line 17, in wrap
+    return func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\common\views.py", line 26, in upload_document
+    raise BadRequest("No file found in the request (use field name 'file')")
+exception.BadRequest: No file found in the request (use field name 'file')

@@ -16,31 +16,52 @@ def upload_document(request):
     Fields:
       - file: Raw image/file upload
       - bucket (optional): Target bucket
+      - prefix (optional): Key folder prefix
+      - category (optional): POLE, EARTHING, etc.
+      - erection_id (optional): Erection ID
+      - pole_label (optional): Pole name
     """
     logger.info("Starting document upload API")
     if 'file' not in request.FILES:
         raise BadRequest("No file found in the request (use field name 'file')")
         
     uploaded_file = request.FILES['file']
-    bucket = request.data.get('bucket', 'default')
-    
+    bucket = request.POST.get('bucket') or getattr(request, 'data', {}).get('bucket') or 'gis-image'
+    prefix = request.POST.get('prefix') or getattr(request, 'data', {}).get('prefix') or 'GIS/erections'
+    erection_id = request.POST.get('erection_id') or getattr(request, 'data', {}).get('erection_id')
+    pole_label = request.POST.get('pole_label') or getattr(request, 'data', {}).get('pole_label')
+    category = request.POST.get('category') or getattr(request, 'data', {}).get('category')
+
+    if erection_id and pole_label:
+        prefix = f"GIS/erections/{erection_id}/{pole_label}"
+    elif erection_id:
+        prefix = f"GIS/erections/{erection_id}"
+
     file_data = uploaded_file.read()
-    content_type = uploaded_file.content_type or 'application/octet-stream'
+    content_type = uploaded_file.content_type or 'image/jpeg'
     file_name = uploaded_file.name
+    if category and not file_name.startswith(category):
+        file_name = f"{category}_{file_name}"
     
+    logger.info(f"[Upload] Uploading {file_name} ({len(file_data)} bytes) to bucket '{bucket}' with prefix '{prefix}'")
     # Upload and compress (if image)
-    db_obj = StorageService.upload_file(file_name, file_data, content_type, bucket)
+    db_obj = StorageService.upload_file(file_name, file_data, content_type, bucket, prefix=prefix)
+    signed_url = StorageService.get_certified_url(db_obj.key)
+    logger.info(f"[Upload] Successfully stored in R2: key='{db_obj.key}', size={db_obj.size} bytes")
     
+    file_info = {
+        "doc_id": str(db_obj.id),
+        "bucket": db_obj.bucket,
+        "key": db_obj.key,
+        "signed_url": signed_url,
+        "content_type": db_obj.content_type,
+        "size": db_obj.size
+    }
     return JsonResponse({
         "Code": "SUCCESS001",
-        "Message": "Document uploaded and compressed successfully",
-        "data": {
-            "doc_id": str(db_obj.id),
-            "bucket": db_obj.bucket,
-            "key": db_obj.key,
-            "content_type": db_obj.content_type,
-            "size": db_obj.size
-        }
+        "Message": "Document uploaded and compressed successfully to Cloudflare R2",
+        "data": file_info,
+        "Data": file_info
     })
 
 @csrf_exempt

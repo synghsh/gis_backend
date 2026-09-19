@@ -12,8 +12,8 @@ import boto3
 
 logger = logging.getLogger(__name__)
 
-def compress_image(file_data: bytes, content_type: str, quality=75, max_width=1200) -> tuple[bytes, str]:
-    """Compresses image files using PIL to save database space."""
+def compress_image(file_data: bytes, content_type: str, quality=75, max_width=1600, max_size_bytes=5 * 1024 * 1024) -> tuple[bytes, str]:
+    """Compresses and resizes image files using PIL, guaranteeing file size does not exceed max_size_bytes (default 5MB)."""
     if not content_type or not content_type.startswith('image/'):
         return file_data, content_type
     
@@ -28,20 +28,34 @@ def compress_image(file_data: bytes, content_type: str, quality=75, max_width=12
         elif img.mode != 'RGB':
             img = img.convert('RGB')
             
+        cur_width, cur_height = img.size
+        cur_quality = quality
+        
         # Scale down if exceeds max width
-        width, height = img.size
-        if width > max_width:
-            ratio = max_width / width
-            new_size = (max_width, int(height * ratio))
-            img = img.resize(new_size, Image.Resampling.LANCZOS)
+        if cur_width > max_width:
+            ratio = max_width / cur_width
+            cur_width = max_width
+            cur_height = int(cur_height * ratio)
+            img = img.resize((cur_width, cur_height), Image.Resampling.LANCZOS)
             
         out_io = BytesIO()
-        # Convert to JPEG format to save significant space
-        img.save(out_io, format='JPEG', quality=quality, optimize=True)
-        return out_io.getvalue(), 'image/jpeg'
+        img.save(out_io, format='JPEG', quality=cur_quality, optimize=True)
+        res_bytes = out_io.getvalue()
+        
+        # Iteratively reduce quality and scale down if image still exceeds max_size_bytes (5MB)
+        while len(res_bytes) > max_size_bytes and cur_quality > 20:
+            cur_quality = max(20, cur_quality - 15)
+            cur_width = int(cur_width * 0.8)
+            cur_height = int(cur_height * 0.8)
+            img = img.resize((cur_width, cur_height), Image.Resampling.LANCZOS)
+            out_io = BytesIO()
+            img.save(out_io, format='JPEG', quality=cur_quality, optimize=True)
+            res_bytes = out_io.getvalue()
+            
+        logger.info(f"Image compressed to {len(res_bytes) / 1024:.1f} KB (under 5MB limit)")
+        return res_bytes, 'image/jpeg'
     except Exception as e:
         logger.warning(f"Image compression failed: {e}")
-        # Fallback to original content on processing failures
         return file_data, content_type
 
 class StorageService:
@@ -54,53 +68,52 @@ class StorageService:
         bucket = getattr(settings, 'AWS_STORAGE_BUCKET_NAME', None)
         
         if access_key and secret_key and bucket:
+            from botocore.config import Config
             return boto3.client(
                 's3',
                 aws_access_key_id=access_key,
                 aws_secret_access_key=secret_key,
                 endpoint_url=endpoint,
-                region_name=getattr(settings, 'AWS_S3_REGION_NAME', 'auto')
+                region_name=getattr(settings, 'AWS_S3_REGION_NAME', 'auto'),
+                config=Config(signature_version='s3v4')
             )
         return None
 
     @classmethod
-    def upload_file(cls, file_name: str, file_data: bytes, content_type: str, bucket='default') -> S3LikeObject:
+    def upload_file(cls, file_name: str, file_data: bytes, content_type: str, bucket='gis-image', prefix='GIS/erections') -> S3LikeObject:
         # 1. Compress if it's an image
         processed_data, processed_content_type = compress_image(file_data, content_type)
         size = len(processed_data)
         
-        # 2. Check if we should use S3/R2 or local DB
+        target_bucket = bucket or getattr(settings, 'AWS_STORAGE_BUCKET_NAME', 'gis-image')
         s3_client = cls.get_s3_client()
         
         # Create key path
         date_prefix = time.strftime('%Y/%m/%d')
         unique_id = uuid.uuid4().hex
-        file_ext = file_name.split('.')[-1] if '.' in file_name else 'bin'
-        key = f"{date_prefix}/{unique_id}.{file_ext}"
+        file_ext = file_name.split('.')[-1] if '.' in file_name else 'jpg'
+        clean_prefix = prefix.strip('/') if prefix else 'GIS'
+        key = f"{clean_prefix}/{date_prefix}/{unique_id}.{file_ext}"
         
         if s3_client:
-            bucket_name = getattr(settings, 'AWS_STORAGE_BUCKET_NAME')
-            logger.info(f"Uploading file to S3 bucket {bucket_name} with key {key}")
-            # Upload to S3
+            logger.info(f"Uploading file to Cloudflare R2 bucket {target_bucket} with key {key}")
             s3_client.put_object(
-                Bucket=bucket_name,
+                Bucket=target_bucket,
                 Key=key,
                 Body=processed_data,
                 ContentType=processed_content_type
             )
-            # Save record without binary bytes
             obj = S3LikeObject.objects.create(
-                bucket=bucket_name,
+                bucket=target_bucket,
                 key=key,
                 content_type=processed_content_type,
                 size=size,
                 storage_type='s3'
             )
         else:
-            logger.info(f"Uploading file to local database bucket {bucket} with key {key}")
-            # Save to Database with binary bytes
+            logger.info(f"Uploading file to local database bucket {target_bucket} with key {key}")
             obj = S3LikeObject.objects.create(
-                bucket=bucket,
+                bucket=target_bucket,
                 key=key,
                 content_type=processed_content_type,
                 size=size,
@@ -110,17 +123,43 @@ class StorageService:
         return obj
 
     @classmethod
-    def generate_signed_url(cls, doc_id: str, expires_in=3600, request=None) -> str:
-        obj = S3LikeObject.objects.get(id=doc_id)
-        
-        if obj.storage_type == 's3':
-            s3_client = cls.get_s3_client()
-            if s3_client:
+    def get_certified_url(cls, key_or_path: str, expires_in=86400, request=None) -> str:
+        if not key_or_path:
+            return ""
+        if key_or_path.startswith('http://') or key_or_path.startswith('https://'):
+            return key_or_path
+        if key_or_path.startswith('file://') or key_or_path.startswith('content://'):
+            return key_or_path
+
+        public_url = getattr(settings, 'R2_PUBLIC_URL', None) or getattr(settings, 'AWS_S3_CUSTOM_DOMAIN', None)
+        if public_url:
+            clean_domain = public_url.rstrip('/')
+            if not clean_domain.startswith('http://') and not clean_domain.startswith('https://'):
+                clean_domain = f"https://{clean_domain}"
+            return f"{clean_domain}/{key_or_path.lstrip('/')}"
+
+        s3_client = cls.get_s3_client()
+        if s3_client:
+            bucket = getattr(settings, 'AWS_STORAGE_BUCKET_NAME', 'gis-image')
+            try:
                 return s3_client.generate_presigned_url(
                     'get_object',
-                    Params={'Bucket': obj.bucket, 'Key': obj.key},
+                    Params={'Bucket': bucket, 'Key': key_or_path},
                     ExpiresIn=expires_in
                 )
+            except Exception as e:
+                logger.warning(f"Failed to generate presigned URL for {key_or_path}: {e}")
+        return key_or_path
+
+    @classmethod
+    def generate_signed_url(cls, doc_id: str, expires_in=3600, request=None) -> str:
+        try:
+            obj = S3LikeObject.objects.get(id=doc_id)
+        except Exception:
+            return cls.get_certified_url(doc_id, expires_in=expires_in, request=request)
+        
+        if obj.storage_type == 's3':
+            return cls.get_certified_url(obj.key, expires_in=expires_in, request=request)
         
         # Local signature generation
         expires_at = int(time.time()) + expires_in
