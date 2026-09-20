@@ -401,3 +401,12 @@ Traceback (most recent call last):
   File "D:\Sayan WorkSpace\Personal Project\GIS\gis_admin\common\views.py", line 26, in upload_document
     raise BadRequest("No file found in the request (use field name 'file')")
 exception.BadRequest: No file found in the request (use field name 'file')
+2026-09-20 00:46:19 INFO     | Process 31624 | Thread: 28884 | common.views | views.upload_document:ln 24 |--  Starting document upload API
+2026-09-20 00:46:19 INFO     | Process 31624 | Thread: 28884 | common.views | views.upload_document:ln 46 |--  [Upload] Uploading POLE_9834fdfa-ec3f-45ec-bd70-41e73d72a417.jpg (394685 bytes) to bucket 'gis-image' with prefix 'GIS/erections/19/P-5'
+2026-09-20 00:46:21 INFO     | Process 31624 | Thread: 28884 | common.views | views.upload_document:ln 50 |--  [Upload] Successfully stored in R2: key='GIS/erections/19/P-5/2026/09/20/31b05f89dc14403b9da9f05b760d5127.jpg', size=394238 bytes
+2026-09-20 00:46:22 INFO     | Process 31624 | Thread: 28884 | common.views | views.upload_document:ln 24 |--  Starting document upload API
+2026-09-20 00:46:22 INFO     | Process 31624 | Thread: 28884 | common.views | views.upload_document:ln 46 |--  [Upload] Uploading EARTHING_09536617-1ff6-4f84-9053-0a8c0f728050.jpg (306437 bytes) to bucket 'gis-image' with prefix 'GIS/erections/19/P-5'
+2026-09-20 00:46:23 INFO     | Process 31624 | Thread: 28884 | common.views | views.upload_document:ln 50 |--  [Upload] Successfully stored in R2: key='GIS/erections/19/P-5/2026/09/20/e244f0f72fa54abd931b1e42a81a3611.jpg', size=305895 bytes
+2026-09-20 00:46:24 INFO     | Process 31624 | Thread: 28884 | common.views | views.upload_document:ln 24 |--  Starting document upload API
+2026-09-20 00:46:24 INFO     | Process 31624 | Thread: 28884 | common.views | views.upload_document:ln 46 |--  [Upload] Uploading STAY_SET_bc4d06ff-3dea-4822-b048-c4d533cab37b.jpg (159406 bytes) to bucket 'gis-image' with prefix 'GIS/erections/19/P-5'
+2026-09-20 00:46:25 INFO     | Process 31624 | Thread: 28884 | common.views | views.upload_document:ln 50 |--  [Upload] Successfully stored in R2: key='GIS/erections/19/P-5/2026/09/20/7f7b00648dd94c2485a706eda79c4dd9.jpg', size=158978 bytes

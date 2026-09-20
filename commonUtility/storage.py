@@ -132,8 +132,8 @@ class StorageService:
             return key_or_path
 
         public_url = getattr(settings, 'R2_PUBLIC_URL', None) or getattr(settings, 'AWS_S3_CUSTOM_DOMAIN', None)
-        if public_url:
-            clean_domain = public_url.rstrip('/')
+        if public_url and str(public_url).strip() and not any(ch in str(public_url) for ch in ['<', '>', 'placeholder']):
+            clean_domain = str(public_url).strip().rstrip('/')
             if not clean_domain.startswith('http://') and not clean_domain.startswith('https://'):
                 clean_domain = f"https://{clean_domain}"
             return f"{clean_domain}/{key_or_path.lstrip('/')}"

@@ -34,24 +34,31 @@ def calculate_haversine_distance(lat1, lon1, lat2, lon2):
         return 0.0
 
 def extract_node_images(node):
-    """Consolidate photos from image_path, related images, and attributes dictionary."""
-    imgs = []
-    if getattr(node, 'image_path', None) and node.image_path not in imgs:
-        imgs.append(node.image_path)
+    """Consolidate photos from image_path, related images, and attributes dictionary and certify each with signed R2 URL."""
+    raw_imgs = []
+    if getattr(node, 'image_path', None) and node.image_path not in raw_imgs:
+        raw_imgs.append(node.image_path)
     if hasattr(node, 'node_images'):
         for img_obj in node.node_images.all():
-            if img_obj.image_path and img_obj.image_path not in imgs:
-                imgs.append(img_obj.image_path)
+            if img_obj.image_path and img_obj.image_path not in raw_imgs:
+                raw_imgs.append(img_obj.image_path)
     attrs = getattr(node, 'attributes', None) or {}
     for key in ['polePhotos', 'poleDbPhotos', 'staySetPhotos', 'earthingPhotos', 'photos', 'imageUrls']:
         val = attrs.get(key)
         if isinstance(val, list):
             for p in val:
-                if p and p not in imgs:
-                    imgs.append(p)
-        elif isinstance(val, str) and val and val not in imgs:
-            imgs.append(val)
-    return imgs
+                if p and p not in raw_imgs:
+                    raw_imgs.append(p)
+        elif isinstance(val, str) and val and val not in raw_imgs:
+            raw_imgs.append(val)
+            
+    certified_imgs = []
+    for p in raw_imgs:
+        if p:
+            c = StorageService.get_certified_url(p)
+            if c and c not in certified_imgs:
+                certified_imgs.append(c)
+    return certified_imgs
 
 def check_is_new_pole(node):
     """Return True if node represents a NEW pole or structure, False if OLD/EXISTING."""
@@ -1093,7 +1100,10 @@ def get_erection_detail(request):
         if c_name:
             conductor_names_set.add(str(c_name))
 
-        attrs = node.attributes or {}
+        attrs = dict(node.attributes or {})
+        for photo_key in ['polePhotos', 'poleDbPhotos', 'staySetPhotos', 'earthingPhotos']:
+            if photo_key in attrs and isinstance(attrs[photo_key], list):
+                attrs[photo_key] = [StorageService.get_certified_url(p) for p in attrs[photo_key] if p]
         earthing_qty = parse_qty(node.earthing_quantity if node.earthing_quantity is not None else attrs.get('earthingQuantity'))
         stay_set_qty = parse_qty(node.stay_set_quantity if node.stay_set_quantity is not None else attrs.get('staySetQuantity'))
         dead_end_qty = parse_qty(node.dead_end_clamp_qty if node.dead_end_clamp_qty is not None else attrs.get('deadEndClampQty'))
@@ -1153,7 +1163,7 @@ def get_erection_detail(request):
             "pole_db_type_codes": node.pole_db_type_codes or attrs.get('poleDbTypes'),
             "pole_db_quantities": db_quantities,
             "attributes": attrs,
-            "image_path": node.image_path,
+            "image_path": StorageService.get_certified_url(node.image_path) if node.image_path else (node_imgs[0] if node_imgs else None),
             "images": node_imgs,
             "parent_label": node.parent_label,
             "captured_at": node.captured_at.strftime('%Y-%m-%d %H:%M:%S') if node.captured_at else None,
@@ -1610,7 +1620,7 @@ def get_survey_line_detail(request):
             "structure_condition": "NEW" if is_new else "OLD",
             "structure_condition_label": "New Pole" if (node.node_type == 'POLE' and is_new) else ("Old Pole" if node.node_type == 'POLE' else "DTR"),
             "attributes": attrs,
-            "image_path": node.image_path,
+            "image_path": StorageService.get_certified_url(node.image_path) if node.image_path else (node_imgs[0] if node_imgs else None),
             "images": node_imgs,
             "parent_label": node.parent_label,
             "captured_at": node.captured_at.strftime('%Y-%m-%d %H:%M:%S') if node.captured_at else None,
