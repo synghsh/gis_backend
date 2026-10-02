@@ -499,7 +499,7 @@ def save_erection_node(request):
     payload = request.data
     
     # Helpers to parse fields safely from payload and attributes
-    def clean_int(val):
+    def clean_int_val(val):
         if val is None or val == '':
             return None
         if isinstance(val, int):
@@ -522,7 +522,7 @@ def save_erection_node(request):
                 continue
             for k in keys:
                 if k in src and src[k] is not None and src[k] != '':
-                    val = clean_int(src[k])
+                    val = clean_int_val(src[k])
                     if val is not None:
                         return val
         return default
@@ -531,7 +531,7 @@ def save_erection_node(request):
     drawing_no = get_field_val([payload, payload.get('attributes') or {}], 'drawing_no', 'drawingNo')
     
     erection = None
-    clean_eid = clean_int(raw_erection_id)
+    clean_eid = clean_int_val(raw_erection_id)
     if clean_eid:
         erection = ErectionExecution.objects.filter(id=clean_eid).first()
     if not erection and drawing_no:
@@ -643,12 +643,12 @@ def save_erection_node(request):
     # Query if node exists for this erection:
     # 1. By primary key node_id / id
     node = None
-    node_id_val = clean_int(payload.get('node_id') or payload.get('id') or attrs.get('node_id') or attrs.get('id'))
+    node_id_val = clean_int_val(payload.get('node_id') or payload.get('id') or attrs.get('node_id') or attrs.get('id'))
     if node_id_val:
         node = ErectionNode.objects.filter(erection_execution=erection, id=node_id_val).first()
         
     # 2. By sequence_number
-    seq_num = clean_int(payload.get('sequence_number') or payload.get('sequenceNumber'))
+    seq_num = clean_int_val(payload.get('sequence_number') or payload.get('sequenceNumber'))
     if not node and seq_num is not None:
         node = ErectionNode.objects.filter(erection_execution=erection, sequence_number=seq_num).first()
         
@@ -790,13 +790,34 @@ def save_erection_node(request):
                 db_obj = StorageService.upload_file(f.name, file_data, content_type, bucket='gis-image', prefix=prefix)
                 images_list.append(db_obj.key)
 
+    def clean_r2_key(val):
+        if not val or not isinstance(val, str):
+            return val
+        s = str(val).strip()
+        if '/gis-image/' in s:
+            s = s.split('/gis-image/')[1].split('?')[0]
+        elif 'GIS/erections/' in s:
+            idx = s.find('GIS/erections/')
+            s = s[idx:].split('?')[0]
+        return s
+
     if images_list:
+        images_list = [clean_r2_key(img) for img in images_list if img]
         node.image_path = images_list[0]
         node.save()
         ErectionNodeImage.objects.filter(node=node).delete()
         for img_path in images_list:
             if img_path:
                 ErectionNodeImage.objects.create(node=node, image_path=img_path)
+
+    # Ensure attributes store clean canonical keys without temporary query tokens
+    if node and node.attributes:
+        clean_node_attrs = dict(node.attributes)
+        for cat in ['polePhotos', 'earthingPhotos', 'staySetPhotos', 'poleDbPhotos']:
+            if cat in clean_node_attrs and isinstance(clean_node_attrs[cat], list):
+                clean_node_attrs[cat] = [clean_r2_key(x) for x in clean_node_attrs[cat] if x]
+        node.attributes = clean_node_attrs
+        node.save(update_fields=['attributes'])
         
     response_data = {
         "Code": "SUCCESS001",
@@ -826,7 +847,7 @@ def get_erection_pole_details(request):
     logger.warning('================================== START - Get Erection Pole Details =================================')
     payload = request.data
     
-    def clean_int(val):
+    def clean_int_val(val):
         if val is None:
             return None
         if isinstance(val, int):
@@ -839,8 +860,8 @@ def get_erection_pole_details(request):
     pole_no = str(payload.get('pole_no') or payload.get('name_label') or '').strip()
     raw_node_id = payload.get('node_id') or payload.get('id')
 
-    clean_eid = clean_int(raw_erection_id)
-    clean_nid = clean_int(raw_node_id)
+    clean_eid = clean_int_val(raw_erection_id)
+    clean_nid = clean_int_val(raw_node_id)
 
     erection = None
     if clean_nid:
@@ -854,17 +875,18 @@ def get_erection_pole_details(request):
         erection = ErectionExecution.objects.filter(drawing_no__iexact=clean_drawing).order_by('-updated_on').first()
 
     if not erection:
-        logger.warning(f"Erection not found on server for id '{raw_erection_id}' / drawing '{drawing_no}' / node '{raw_node_id}'. Returning graceful fallback.")
+        fallback_data = {
+            "drawing_no": drawing_no,
+            "drawingNo": drawing_no,
+            "erection_id": clean_eid,
+            "selected_node": None,
+            "all_poles": [],
+        }
         return JsonResponse({
             "Code": "SUCCESS001",
             "Message": "Node details not found on server, fallback to local cache",
-            "Data": {
-                "drawing_no": drawing_no,
-                "drawingNo": drawing_no,
-                "erection_id": clean_eid,
-                "selected_node": None,
-                "all_poles": [],
-            }
+            "data": fallback_data,
+            "Data": fallback_data,
         }, status=200)
 
     nodes_qs = erection.nodes.all().order_by('sequence_number')
@@ -907,12 +929,17 @@ def get_erection_pole_details(request):
         if not all_imgs and selected_node.image_path:
             all_imgs = [StorageService.get_certified_url(selected_node.image_path)]
 
-        attrs = selected_node.attributes or {}
+        attrs = dict(selected_node.attributes or {})
         pole_imgs = certify_list(attrs.get('polePhotos') or ([selected_node.image_path] if selected_node.image_path else []))
         earthing_imgs = certify_list(attrs.get('earthingPhotos') or [])
         stay_set_imgs = certify_list(attrs.get('staySetPhotos') or [])
         pole_db_imgs = certify_list(attrs.get('poleDbPhotos') or [])
         single_img = StorageService.get_certified_url(selected_node.image_path) if selected_node.image_path else (all_imgs[0] if all_imgs else None)
+
+        attrs['polePhotos'] = pole_imgs
+        attrs['earthingPhotos'] = earthing_imgs
+        attrs['staySetPhotos'] = stay_set_imgs
+        attrs['poleDbPhotos'] = pole_db_imgs
 
         node_data = {
             "id": selected_node.id,
@@ -948,8 +975,8 @@ def get_erection_pole_details(request):
             "conductorName": selected_node.conductor.conductor_name if selected_node.conductor else None,
             
             # Pole
-            "poleType": selected_node.pole_type_id,
-            "pole_type": selected_node.pole_type_id,
+            "poleType": attrs.get('poleType') or attrs.get('pole_type') or (1 if selected_node.pole_type else 1),
+            "pole_type": attrs.get('poleType') or attrs.get('pole_type') or (1 if selected_node.pole_type else 1),
             "poleMaster": selected_node.pole_type_id,
             "pole_master": selected_node.pole_type_id,
             "pole_type_id": selected_node.pole_type_id,
@@ -1017,16 +1044,18 @@ def get_erection_pole_details(request):
             "pole_db_photo_urls": pole_db_imgs,
         }
 
+    inner_data = {
+        "drawing_no": erection.drawing_no,
+        "drawingNo": erection.drawing_no,
+        "erection_id": erection.id,
+        "selected_node": node_data,
+        "all_poles": all_poles,
+    }
     response_data = {
         "Code": "SUCCESS001",
         "Message": "Pole details fetched successfully" if node_data else "Pole not found on server, fallback to local cache",
-        "Data": {
-            "drawing_no": erection.drawing_no,
-            "drawingNo": erection.drawing_no,
-            "erection_id": erection.id,
-            "selected_node": node_data,
-            "all_poles": all_poles,
-        }
+        "data": inner_data,
+        "Data": inner_data,
     }
     logger.warning('================================== END - Get Erection Pole Details =================================')
     return JsonResponse(response_data)
@@ -1739,5 +1768,109 @@ def get_survey_line_detail(request):
         }
     }
     logger.warning('================================== END - Get Survey Line Detail =================================')
+    return JsonResponse(response_data)
+
+
+def clean_int_val(val):
+    if val is None or val == '':
+        return None
+    try:
+        return int(val)
+    except (ValueError, TypeError):
+        return None
+
+
+@csrf_exempt
+@require_post
+def update_span_distance(request):
+    logger.warning('================================== START - Update Span Distance =================================')
+    payload = request.data
+    
+    node_id = clean_int_val(payload.get('node_id') or payload.get('id'))
+    node_name = payload.get('node_name') or payload.get('name_label') or payload.get('pole_no') or payload.get('poleLabel')
+    parent_node = payload.get('parent_node') or payload.get('parent_label') or payload.get('parentNode') or payload.get('parentLabel')
+    raw_distance = payload.get('span_distance') or payload.get('distance') or payload.get('spanDistance')
+    drawing_no = payload.get('drawing_no') or payload.get('drawingNo')
+    erection_id = clean_int_val(payload.get('erection_id') or payload.get('erectionId'))
+    survey_id = clean_int_val(payload.get('survey_id') or payload.get('surveyId'))
+    
+    if raw_distance is None or str(raw_distance).strip() == '':
+        return JsonResponse({"Exception": True, "Message": "Span distance is required"}, status=400)
+    
+    distance_str = str(raw_distance).strip()
+    
+    target_node = None
+    is_erection = False
+    
+    # 1. Try finding in ErectionNode
+    if node_id:
+        target_node = ErectionNode.objects.filter(id=node_id).first()
+        if target_node:
+            is_erection = True
+
+    if not target_node and node_name:
+        erection = None
+        if drawing_no:
+            erection = ErectionExecution.objects.filter(drawing_no__iexact=str(drawing_no).strip()).first()
+        elif erection_id:
+            erection = ErectionExecution.objects.filter(id=erection_id).first()
+            
+        if erection:
+            target_node = ErectionNode.objects.filter(erection_execution=erection, name_label__iexact=str(node_name).strip()).first()
+            if target_node:
+                is_erection = True
+        else:
+            target_node = ErectionNode.objects.filter(name_label__iexact=str(node_name).strip()).order_by('-id').first()
+            if target_node:
+                is_erection = True
+
+    # 2. If not found in ErectionNode, search SurveyNode
+    if not target_node:
+        if node_id:
+            target_node = SurveyNode.objects.filter(id=node_id).first()
+        if not target_node and node_name:
+            if survey_id:
+                survey = SurveyLine.objects.filter(id=survey_id).first()
+                if survey:
+                    target_node = SurveyNode.objects.filter(survey_line=survey, name_label__iexact=str(node_name).strip()).first()
+            if not target_node:
+                target_node = SurveyNode.objects.filter(name_label__iexact=str(node_name).strip()).order_by('-id').first()
+
+    if not target_node:
+        logger.warning(f"Node not found for span distance update: node_id={node_id}, node_name={node_name}")
+        return JsonResponse({
+            "Exception": True,
+            "Message": f"Structure node '{node_name or node_id}' not found in database to update span distance"
+        }, status=404)
+
+    # Update node attributes and parent_label
+    attrs = dict(target_node.attributes or {})
+    attrs['spanDistance'] = distance_str
+    attrs['span_distance'] = distance_str
+    if parent_node:
+        clean_parent = str(parent_node).strip()
+        attrs['parentLabel'] = clean_parent
+        attrs['parent_label'] = clean_parent
+        target_node.parent_label = clean_parent
+
+    target_node.attributes = attrs
+    target_node.save()
+
+    logger.warning(f"Span distance successfully updated in DB for node {target_node.name_label} (ID: {target_node.id}): {distance_str}, Parent: {target_node.parent_label}")
+    logger.warning('================================== END - Update Span Distance =================================')
+
+    response_data = {
+        "Code": "SUCCESS001",
+        "Message": f"Span distance updated successfully between {target_node.parent_label or 'parent'} and {target_node.name_label} in database",
+        "Data": {
+            "id": target_node.id,
+            "node_type": target_node.node_type,
+            "name_label": target_node.name_label,
+            "parent_label": target_node.parent_label,
+            "span_distance": distance_str,
+            "attributes": target_node.attributes,
+            "is_erection": is_erection,
+        }
+    }
     return JsonResponse(response_data)
 

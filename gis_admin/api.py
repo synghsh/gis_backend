@@ -10,6 +10,7 @@ from survey_management.views import (
     get_erection_pole_details,
     list_survey_lines,
     get_survey_line_detail,
+    update_span_distance,
 )
 from common.views import upload_document, get_signed_url, download_document
 
@@ -33,6 +34,8 @@ urls = [
     path('erection/pole/patch/', save_erection_node),
     path('erection/pole/details/', get_erection_pole_details),
     path('erection/detail/', get_erection_detail),
+    path('erection/span/update/', update_span_distance),
+    path('survey/span/update/', update_span_distance),
     
     # Survey APIs
     path('survey/list/', list_survey_lines),
