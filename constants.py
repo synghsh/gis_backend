@@ -67,6 +67,7 @@ PASS_REGEX = r'^(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*
 JWT_EXCLUSION_LIST = [
     '/gis/administration/admin/login/',
     '/gis/administration/health/',
+    '/gis/administration/dashboard/metrics/',
 ]
 
 # Response envelopes keys

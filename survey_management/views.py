@@ -1874,3 +1874,216 @@ def update_span_distance(request):
     }
     return JsonResponse(response_data)
 
+
+@csrf_exempt
+@require_post
+def get_dashboard_metrics(request):
+    logger.warning('================================== START - Get Dashboard Metrics =================================')
+    from datetime import datetime, timedelta
+    from django.utils import timezone
+    
+    payload = getattr(request, 'data', {}) or {}
+    token_details = getattr(request, 'token_details', None)
+    user_id = token_details.get('user_id') if token_details else None
+    
+    surveyor_id = payload.get('surveyor_id') or user_id
+    
+    # 1. Maps
+    district_map = {d.id: d.district_name for d in DistrictMaster.objects.all()}
+    block_map = {b.id: b.block_name for b in BlockMaster.objects.all()}
+    village_map = {v.id: v.village_name for v in VillageMaster.objects.all()}
+    contractor_map = {c.id: c.contractor_name for c in ContractorMaster.objects.all()}
+    tow_map = {}
+    for dl in DomainLookup.objects.filter(domain_type='type_of_work', status=1):
+        tow_map[dl.domain_code] = dl.domain_value
+        tow_map[str(dl.domain_code)] = dl.domain_value
+
+    today = timezone.now().date()
+    days_range = [today - timedelta(days=6 - i) for i in range(7)]
+    
+    # In-memory day aggregation buckets
+    erect_by_day = {d: {"poles": 0, "dtr": 0, "cable_m": 0.0} for d in days_range}
+    survey_by_day = {d: {"meters": 0.0} for d in days_range}
+
+    # Fetch all nodes in 2 fast queries
+    all_erection_nodes = list(ErectionNode.objects.all())
+    all_survey_nodes = list(SurveyNode.objects.all())
+
+    poles_today = 0
+    dtr_today = 0
+    total_poles = 0
+    total_dtr = 0
+    cable_today_m = 0.0
+    total_cable_m = 0.0
+
+    for n in all_erection_nodes:
+        dt = n.captured_at or n.created_on
+        n_date = dt.date() if dt else None
+        
+        attrs = n.attributes or {}
+        sp = attrs.get('spanDistance') or attrs.get('span_distance')
+        sp_val = 0.0
+        if sp:
+            try:
+                sp_val = float(str(sp).lower().replace('m', '').strip())
+            except (ValueError, TypeError):
+                pass
+        
+        is_pole = (n.node_type == 'POLE')
+        is_dtr = (n.node_type == 'DTR')
+
+        if is_pole:
+            total_poles += 1
+        elif is_dtr:
+            total_dtr += 1
+        total_cable_m += sp_val
+
+        if n_date == today:
+            if is_pole:
+                poles_today += 1
+            elif is_dtr:
+                dtr_today += 1
+            cable_today_m += sp_val
+
+        if n_date in erect_by_day:
+            if is_pole:
+                erect_by_day[n_date]["poles"] += 1
+            elif is_dtr:
+                erect_by_day[n_date]["dtr"] += 1
+            erect_by_day[n_date]["cable_m"] += sp_val
+
+    survey_today_m = 0.0
+    total_survey_m = 0.0
+    for n in all_survey_nodes:
+        dt = n.captured_at or n.created_on
+        n_date = dt.date() if dt else None
+        
+        attrs = n.attributes or {}
+        sp = attrs.get('spanDistance') or attrs.get('span_distance')
+        sp_val = 0.0
+        if sp:
+            try:
+                sp_val = float(str(sp).lower().replace('m', '').strip())
+            except (ValueError, TypeError):
+                pass
+
+        total_survey_m += sp_val
+        if n_date == today:
+            survey_today_m += sp_val
+        if n_date in survey_by_day:
+            survey_by_day[n_date]["meters"] += sp_val
+
+    # 2. Daily Erection Mix Graph (Poles, DTR, Cable Stringing)
+    erection_mix_graph = []
+    for d in days_range:
+        bucket = erect_by_day[d]
+        erection_mix_graph.append({
+            "day": d.strftime('%a'),
+            "date": d.strftime('%Y-%m-%d'),
+            "poles": bucket["poles"],
+            "dtr": bucket["dtr"],
+            "cableMeters": round(bucket["cable_m"], 1)
+        })
+
+    # 3. Daily Survey Progress Graph (km / meters)
+    survey_progress_graph = []
+    for d in days_range:
+        s_m = survey_by_day[d]["meters"]
+        survey_progress_graph.append({
+            "day": d.strftime('%a'),
+            "date": d.strftime('%Y-%m-%d'),
+            "km": round(s_m / 1000.0, 2),
+            "meters": round(s_m, 1)
+        })
+
+    # 4. KPI Metrics Summary
+    kpi_metrics = {
+        "poles_erected_today": poles_today,
+        "total_poles_erected": total_poles,
+        "dtrs_installed_today": dtr_today,
+        "total_dtrs_installed": total_dtr,
+        "cable_strung_km_today": round(cable_today_m / 1000.0, 2),
+        "total_cable_strung_km": round(total_cable_m / 1000.0, 2),
+        "survey_route_km_today": round(survey_today_m / 1000.0, 2),
+        "total_survey_route_km": round(total_survey_m / 1000.0, 2),
+    }
+
+    # 5. Last 5 Survey Runs (prefetch related nodes)
+    recent_surveys_qs = SurveyLine.objects.prefetch_related('nodes').all().order_by('-created_on')[:5]
+    recent_surveys = []
+    for s in recent_surveys_qs:
+        s_nodes = list(s.nodes.all())
+        p_c = sum(1 for n in s_nodes if n.node_type == 'POLE')
+        d_c = sum(1 for n in s_nodes if n.node_type == 'DTR')
+        dist_m = 0.0
+        for n in s_nodes:
+            sp = (n.attributes or {}).get('spanDistance') or (n.attributes or {}).get('span_distance')
+            if sp:
+                try:
+                    dist_m += float(str(sp).lower().replace('m', '').strip())
+                except (ValueError, TypeError):
+                    pass
+        
+        b_name = block_map.get(s.block_id, '')
+        c_name = s.contractor_name or ''
+        sub_loc = f"{b_name} • {c_name}".strip(' •')
+        
+        raw_lt = (s.line_type or '').upper()
+        if '33' in raw_lt:
+            v_class = '33KV HT'
+        elif '11' in raw_lt:
+            v_class = '11KV HT'
+        else:
+            v_class = 'LT 440V'
+
+        recent_surveys.append({
+            "id": str(s.id),
+            "location": s.feeder_name or f"Survey Line #{s.id}",
+            "subLocation": sub_loc or "Distribution Section",
+            "voltageClass": v_class,
+            "polesCount": p_c,
+            "dtrCount": d_c,
+            "distanceMeters": round(dist_m, 1),
+            "timeAgo": s.created_on.strftime('%b %d, %H:%M') if s.created_on else '',
+            "status": "SYNCED" if s.is_synced else "PENDING"
+        })
+
+    # 6. Last 5 Erection Projects (prefetch related nodes)
+    recent_erections_qs = ErectionExecution.objects.prefetch_related('nodes').all().order_by('-updated_on', '-created_on')[:5]
+    recent_erections = []
+    for e in recent_erections_qs:
+        n_count = len(e.nodes.all())
+        b_name = block_map.get(e.block_id, '')
+        c_name = contractor_map.get(e.contractor_id, '')
+        sub_loc = f"{b_name} • {c_name}".strip(' •')
+        
+        v_name = tow_map.get(e.type_of_work) or tow_map.get(str(e.type_of_work)) or 'HT LINE'
+        
+        recent_erections.append({
+            "id": str(e.id),
+            "drawingNo": e.drawing_no or f"DWG-{e.id}",
+            "location": e.feeder_name or village_map.get(e.village_id) or f"Project {e.drawing_no or e.id}",
+            "subLocation": sub_loc or "Grid Section",
+            "voltageType": v_name,
+            "contractor": c_name or "Contractor N/A",
+            "erectedPoles": n_count,
+            "totalPoles": max(n_count, 1),
+            "status": "COMPLETED" if e.status == 2 else "IN PROGRESS",
+            "updated_on": e.updated_on.strftime('%b %d, %H:%M') if e.updated_on else ''
+        })
+
+    response_data = {
+        "Code": "SUCCESS001",
+        "Message": "Dashboard Metrics Fetched Successfully",
+        "Data": {
+            "kpi": kpi_metrics,
+            "erection_mix_graph": erection_mix_graph,
+            "survey_progress_graph": survey_progress_graph,
+            "recent_surveys": recent_surveys,
+            "recent_erections": recent_erections
+        }
+    }
+    logger.warning('================================== END - Get Dashboard Metrics =================================')
+    return JsonResponse(response_data)
+
+

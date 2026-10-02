@@ -11,12 +11,14 @@ from survey_management.views import (
     list_survey_lines,
     get_survey_line_detail,
     update_span_distance,
+    get_dashboard_metrics,
 )
 from common.views import upload_document, get_signed_url, download_document
 
 urls = [
     # Health check
     path('health/', HealthCheck),
+    path('dashboard/metrics/', get_dashboard_metrics),
     
     # Auth APIs
     path('admin/login/', userPassLogin),
