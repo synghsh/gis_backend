@@ -10,9 +10,24 @@ from commonUtility.utils import mandatoryInputCheck
 from exception import MandatoryInputMissingException
 from common.models import User, DomainLookup
 from master_management.models import StateMaster, DistrictMaster, BlockMaster, VillageMaster, ContractorMaster, TransformerMaster, ConductorMaster, PoleMaster
-from .models import ErectionExecution, ErectionNode, ErectionNodeImage, SurveyLine, SurveyNode
+from .models import ErectionExecution, ErectionNode, ErectionNodeImage, SurveyLine, SurveyNode, SurveyStructureDetail, SurveyNodeImage
 
 logger = logging.getLogger(__name__)
+
+def clean_r2_key(val):
+    if not val or not isinstance(val, str):
+        return val
+    s = str(val).strip()
+    if '/gis-image/' in s:
+        s = s.split('/gis-image/')[1].split('?')[0]
+    elif 'GIS/erections/' in s:
+        idx = s.find('GIS/erections/')
+        s = s[idx:].split('?')[0]
+    elif 'GIS/surveys/' in s:
+        idx = s.find('GIS/surveys/')
+        s = s[idx:].split('?')[0]
+    return s
+
 
 def calculate_haversine_distance(lat1, lon1, lat2, lon2):
     """Calculate great-circle distance between two points in meters using Haversine formula."""
@@ -43,7 +58,7 @@ def extract_node_images(node):
             if img_obj.image_path and img_obj.image_path not in raw_imgs:
                 raw_imgs.append(img_obj.image_path)
     attrs = getattr(node, 'attributes', None) or {}
-    for key in ['polePhotos', 'poleDbPhotos', 'staySetPhotos', 'earthingPhotos', 'photos', 'imageUrls']:
+    for key in ['polePhotos', 'poleDbPhotos', 'staySetPhotos', 'earthingPhotos', 'photos', 'imageUrls', 'existingConductorPhotos', 'commonPhotos', 'existing_conductor_photos', 'common_photos']:
         val = attrs.get(key)
         if isinstance(val, list):
             for p in val:
@@ -1593,11 +1608,20 @@ def list_survey_lines(request):
 
 
 @csrf_exempt
-@require_post
 def get_survey_line_detail(request):
     logger.warning('================================== START - Get Survey Line Detail =================================')
+    if request.method not in ['GET', 'POST']:
+        return JsonResponse({"Exception": True, "Message": "Method not allowed"}, status=405)
+
     payload = getattr(request, 'data', {}) or {}
-    survey_id = payload.get('id') or payload.get('survey_line_id')
+    if not payload and request.body:
+        try:
+            import json
+            payload = json.loads(request.body.decode('utf-8'))
+        except Exception:
+            pass
+
+    survey_id = payload.get('id') or payload.get('survey_line_id') or payload.get('surveyId') or request.GET.get('id') or request.GET.get('survey_id') or request.GET.get('survey_line_id')
     if not survey_id:
         return JsonResponse({"Exception": True, "Message": "Survey ID is required"}, status=400)
         
@@ -1609,12 +1633,37 @@ def get_survey_line_detail(request):
     district_map = {d.id: d.district_name for d in DistrictMaster.objects.all()}
     block_map = {b.id: b.block_name for b in BlockMaster.objects.all()}
 
+    all_poles_map = {p.id: p.pole_name for p in PoleMaster.objects.all()}
+    all_conductors_map = {c.id: c.conductor_name for c in ConductorMaster.objects.all()}
+    all_transformers_map = {t.id: t.transformer_name for t in TransformerMaster.objects.all()}
+
     line_type_dict = dict(SurveyLine.LINE_TYPES)
+    line_type_str = str(survey.line_type or '').upper()
+    is_line_ht = any(k in line_type_str for k in ['HT', '11_KV', '33_KV', '11KV', '33KV'])
+
+    poles_by_type_map = {}
+    ht_existing_cond_map = {}
+    ht_new_cond_map = {}
+    lt_existing_cond_map = {}
+    lt_new_cond_map = {}
+    dtr_existing_map = {}
+    dtr_new_map = {}
+
+    ht_stay_exist = 0
+    ht_stay_new = 0
+    lt_stay_exist = 0
+    lt_stay_new = 0
+
+    ht_total_meters = 0.0
+    lt_total_meters = 0.0
+
     nodes = []
     prev_node = None
     total_route_distance = 0.0
     day_groups = {}
     conductor_names_set = set()
+
+    dtr_found_for_line = False
 
     for node in survey.nodes.all().order_by('sequence_number'):
         node_imgs = extract_node_images(node)
@@ -1636,6 +1685,10 @@ def get_survey_line_detail(request):
         if cable:
             conductor_names_set.add(str(cable))
 
+        s_detail = getattr(node, 'structure_detail', None)
+        exist_cond_imgs = [StorageService.get_certified_url(img.image_path) for img in node.node_images.filter(category='EXISTING_CONDUCTOR')]
+        common_imgs = [StorageService.get_certified_url(img.image_path) for img in node.node_images.filter(category='COMMON')]
+
         node_dict = {
             "id": node.id,
             "node_type": node.node_type,
@@ -1645,16 +1698,223 @@ def get_survey_line_detail(request):
             "longitude": float(node.longitude),
             "distance_to_prev_meters": dist_to_prev,
             "cumulative_distance_meters": round(total_route_distance, 2),
-            "is_new_pole": is_new,
-            "structure_condition": "NEW" if is_new else "OLD",
+            "is_new_pole": s_detail.new_pole_required if (s_detail and s_detail.new_pole_required is not None) else is_new,
+            "structure_condition": s_detail.structure_condition if s_detail else ("NEW" if is_new else "OLD"),
             "structure_condition_label": "New Pole" if (node.node_type == 'POLE' and is_new) else ("Old Pole" if node.node_type == 'POLE' else "DTR"),
             "attributes": attrs,
             "image_path": StorageService.get_certified_url(node.image_path) if node.image_path else (node_imgs[0] if node_imgs else None),
             "images": node_imgs,
+            "existing_conductor_photos": [url for url in exist_cond_imgs if url],
+            "common_photos": [url for url in common_imgs if url],
+            "structure_detail": {
+                "new_pole_required": s_detail.new_pole_required if s_detail else False,
+                "pole_master_id": s_detail.pole_master_id if s_detail else None,
+                "pole_master_name": s_detail.pole_master.pole_name if (s_detail and s_detail.pole_master) else None,
+                "pole_qty": s_detail.pole_qty if s_detail else None,
+                "structure_condition": s_detail.structure_condition if s_detail else None,
+                "existing_conductor": s_detail.existing_conductor if s_detail else None,
+                "conductor_phase_no": s_detail.conductor_phase_no if s_detail else None,
+                "proposed_conductor_id": s_detail.proposed_conductor_id if s_detail else None,
+                "proposed_conductor_name": s_detail.proposed_conductor.conductor_name if (s_detail and s_detail.proposed_conductor) else None,
+                "existing_dtr_capacity_id": s_detail.existing_dtr_capacity_id if s_detail else None,
+                "existing_dtr_capacity_name": s_detail.existing_dtr_capacity.transformer_name if (s_detail and s_detail.existing_dtr_capacity) else all_transformers_map.get(clean_int_val(attrs.get('existingDtrCapacity'))),
+                "new_dtr_capacity_id": s_detail.new_dtr_capacity_id if s_detail else None,
+                "new_dtr_capacity_name": s_detail.new_dtr_capacity.transformer_name if (s_detail and s_detail.new_dtr_capacity) else all_transformers_map.get(clean_int_val(attrs.get('newDtrCapacity'))),
+                "earthing_type": s_detail.earthing_type if s_detail else None,
+                "earthing_required": s_detail.earthing_required if s_detail else None,
+                "existing_stay_set": s_detail.existing_stay_set if s_detail else None,
+                "existing_stay_set_qty": s_detail.existing_stay_set_qty if s_detail else None,
+                "proposed_stay_set": s_detail.proposed_stay_set if s_detail else None,
+                "new_stay_set_qty": s_detail.new_stay_set_qty if s_detail else None,
+                "remarks": s_detail.remarks if s_detail else "",
+            } if s_detail else None,
             "parent_label": node.parent_label,
             "captured_at": node.captured_at.strftime('%Y-%m-%d %H:%M:%S') if node.captured_at else None,
         }
         nodes.append(node_dict)
+
+        # Determine HT vs LT for this structure in an LT_440V line
+        # i. For 440V LT line: before DTR all lines/conductors are under HT line, after that LT line.
+        # ii. Connection between HT tapping point till DTR: all cable or conductor under HT cable or conductor total length, and after DTR all under LT.
+        # v. Route length also calculated as LT and HT differently.
+        node_line_sec = str(attrs.get('lineSection') or attrs.get('line_section') or '').upper()
+        if node_line_sec == 'HT':
+            is_ht_node = True
+        elif node_line_sec == 'LT':
+            is_ht_node = False
+        elif not is_line_ht:
+            # 440V LT Survey Line
+            if not dtr_found_for_line:
+                is_ht_node = True
+                if node.node_type == 'DTR':
+                    dtr_found_for_line = True
+            else:
+                is_ht_node = False
+        else:
+            # Pure HT Line (11KV / 33KV)
+            is_ht_node = True
+
+        if is_ht_node:
+            ht_total_meters += dist_to_prev
+        else:
+            lt_total_meters += dist_to_prev
+
+        # 1. POLES INVENTORY BY TYPE
+        if node.node_type == 'POLE':
+            is_new_pole_flag = s_detail.new_pole_required if (s_detail and s_detail.new_pole_required is not None) else is_new
+            p_qty = s_detail.pole_qty if (s_detail and s_detail.pole_qty) else (attrs.get('poleQty') or 1)
+            try:
+                p_qty = int(p_qty)
+            except Exception:
+                p_qty = 1
+
+            p_master = s_detail.pole_master if s_detail else None
+            p_name = None
+            p_id = None
+            if p_master:
+                p_id = p_master.id
+                p_name = p_master.pole_name
+            else:
+                raw_pid = attrs.get('pole_type_id') or attrs.get('poleMaster') or attrs.get('poleType')
+                if raw_pid and isinstance(raw_pid, int) and raw_pid in all_poles_map:
+                    p_id = raw_pid
+                    p_name = all_poles_map[raw_pid]
+                elif raw_pid and str(raw_pid).isdigit() and int(raw_pid) in all_poles_map:
+                    p_id = int(raw_pid)
+                    p_name = all_poles_map[int(raw_pid)]
+                else:
+                    p_name = attrs.get('poleTypeName') or attrs.get('pole_name') or attrs.get('height') or "Standard Pole"
+
+            p_key = f"{p_name}_{p_id}"
+            if p_key not in poles_by_type_map:
+                poles_by_type_map[p_key] = {
+                    "pole_type_id": p_id,
+                    "pole_type_name": p_name,
+                    "new_qty": 0,
+                    "existing_qty": 0,
+                    "total_qty": 0
+                }
+            if is_new_pole_flag:
+                poles_by_type_map[p_key]["new_qty"] += p_qty
+            else:
+                poles_by_type_map[p_key]["existing_qty"] += p_qty
+            poles_by_type_map[p_key]["total_qty"] += p_qty
+
+        # 2 & 3. CONDUCTORS (HT and LT: Existing vs Proposed)
+        exist_c_name = (s_detail.existing_conductor if s_detail else None) or attrs.get('existingConductor') or attrs.get('existing_conductor')
+        c_phase = (s_detail.conductor_phase_no if s_detail else None) or attrs.get('conductorPhaseNo') or attrs.get('conductor_phase_no')
+        if exist_c_name and str(exist_c_name).upper() not in ['NONE', '', 'NULL']:
+            exist_key = f"{exist_c_name}_{c_phase or ''}"
+            target_exist_map = ht_existing_cond_map if is_ht_node else lt_existing_cond_map
+            if exist_key not in target_exist_map:
+                target_exist_map[exist_key] = {
+                    "conductor_name": str(exist_c_name),
+                    "phase": str(c_phase) if c_phase else None,
+                    "spans_count": 0,
+                    "length_meters": 0.0
+                }
+            target_exist_map[exist_key]["spans_count"] += 1
+            target_exist_map[exist_key]["length_meters"] += dist_to_prev
+
+        prop_c_obj = s_detail.proposed_conductor if s_detail else None
+        prop_c_name = None
+        prop_c_id = None
+        if prop_c_obj:
+            prop_c_id = prop_c_obj.id
+            prop_c_name = prop_c_obj.conductor_name
+        else:
+            raw_cid = attrs.get('proposedConductor') or attrs.get('conductor') or attrs.get('cableSize')
+            if raw_cid and (isinstance(raw_cid, int) or str(raw_cid).isdigit()) and int(raw_cid) in all_conductors_map:
+                prop_c_id = int(raw_cid)
+                prop_c_name = all_conductors_map[int(raw_cid)]
+            elif raw_cid:
+                prop_c_name = str(raw_cid)
+
+        if prop_c_name and str(prop_c_name).upper() not in ['NONE', '', 'NULL']:
+            prop_key = f"{prop_c_name}_{prop_c_id}"
+            target_new_map = ht_new_cond_map if is_ht_node else lt_new_cond_map
+            if prop_key not in target_new_map:
+                target_new_map[prop_key] = {
+                    "conductor_id": prop_c_id,
+                    "conductor_name": prop_c_name,
+                    "spans_count": 0,
+                    "length_meters": 0.0
+                }
+            target_new_map[prop_key]["spans_count"] += 1
+            target_new_map[prop_key]["length_meters"] += dist_to_prev
+
+        # 4. DTR (Existing and New KVA)
+        def resolve_dtr_name(t_obj, raw_val):
+            if t_obj:
+                return t_obj.transformer_name or f"{t_obj.transformer_code}"
+            if not raw_val or str(raw_val).upper() in ['NONE', 'NULL', '']:
+                return None
+            if isinstance(raw_val, int) or str(raw_val).isdigit():
+                val_int = int(raw_val)
+                if val_int in all_transformers_map:
+                    return all_transformers_map[val_int]
+            for t_id, t_name in all_transformers_map.items():
+                if str(raw_val).lower() in t_name.lower():
+                    return t_name
+            raw_s = str(raw_val).strip()
+            if raw_s.isdigit():
+                return f"{raw_s} KVA"
+            return raw_s
+
+        exist_dtr_obj = s_detail.existing_dtr_capacity if s_detail else None
+        new_dtr_obj = s_detail.new_dtr_capacity if s_detail else None
+        raw_ed = attrs.get('existingDtrCapacity') or attrs.get('existing_dtr_capacity')
+        raw_nd = attrs.get('newDtrCapacity') or attrs.get('new_dtr_capacity') or (attrs.get('dtrCapacity') if node.node_type == 'DTR' else None)
+
+        ed_name = resolve_dtr_name(exist_dtr_obj, raw_ed)
+        if ed_name:
+            ed_id = exist_dtr_obj.id if exist_dtr_obj else (int(raw_ed) if (isinstance(raw_ed, int) or str(raw_ed).isdigit()) else None)
+            if ed_name not in dtr_existing_map:
+                dtr_existing_map[ed_name] = {"capacity_id": ed_id, "capacity_name": ed_name, "qty": 0}
+            dtr_existing_map[ed_name]["qty"] += 1
+
+        nd_name = resolve_dtr_name(new_dtr_obj, raw_nd)
+        if nd_name:
+            nd_id = new_dtr_obj.id if new_dtr_obj else (int(raw_nd) if (isinstance(raw_nd, int) or str(raw_nd).isdigit()) else None)
+            if nd_name not in dtr_new_map:
+                dtr_new_map[nd_name] = {"capacity_id": nd_id, "capacity_name": nd_name, "qty": 0}
+            dtr_new_map[nd_name]["qty"] += 1
+
+        # 5. STAY SET (HT and LT count based directly on stay_set domain code/value)
+        st_exist_qty = s_detail.existing_stay_set_qty if (s_detail and s_detail.existing_stay_set_qty) else (attrs.get('existingStaySetQty') or attrs.get('staySetQuantity') or 0)
+        try:
+            st_exist_qty = int(st_exist_qty)
+        except Exception:
+            st_exist_qty = 0
+
+        st_new_qty = s_detail.new_stay_set_qty if (s_detail and s_detail.new_stay_set_qty) else (attrs.get('newStaySetQty') or 0)
+        try:
+            st_new_qty = int(st_new_qty)
+        except Exception:
+            st_new_qty = 0
+
+        exist_stay_type_str = str((s_detail.existing_stay_set if s_detail else None) or attrs.get('existingStaySet') or '').upper()
+        prop_stay_type_str = str((s_detail.proposed_stay_set if s_detail else None) or attrs.get('proposedStaySet') or attrs.get('staySetUsed') or '').upper()
+
+        if st_exist_qty > 0:
+            if '1' in exist_stay_type_str or 'HT' in exist_stay_type_str:
+                ht_stay_exist += st_exist_qty
+            elif '2' in exist_stay_type_str or 'LT' in exist_stay_type_str:
+                lt_stay_exist += st_exist_qty
+            elif is_ht_node:
+                ht_stay_exist += st_exist_qty
+            else:
+                lt_stay_exist += st_exist_qty
+
+        if st_new_qty > 0:
+            if '1' in prop_stay_type_str or 'HT' in prop_stay_type_str:
+                ht_stay_new += st_new_qty
+            elif '2' in prop_stay_type_str or 'LT' in prop_stay_type_str:
+                lt_stay_new += st_new_qty
+            elif is_ht_node:
+                ht_stay_new += st_new_qty
+            else:
+                lt_stay_new += st_new_qty
 
         node_dt = node.captured_at or node.created_on
         date_key = node_dt.strftime('%Y-%m-%d') if node_dt else 'Survey Entry'
@@ -1717,16 +1977,81 @@ def get_survey_line_detail(request):
 
     pole_count = sum(1 for n in nodes if n["node_type"] == "POLE")
     dtr_count = sum(1 for n in nodes if n["node_type"] == "DTR")
-    
+
+    for c in ht_existing_cond_map.values():
+        c["length_meters"] = round(c["length_meters"], 2)
+    for c in ht_new_cond_map.values():
+        c["length_meters"] = round(c["length_meters"], 2)
+    for c in lt_existing_cond_map.values():
+        c["length_meters"] = round(c["length_meters"], 2)
+    for c in lt_new_cond_map.values():
+        c["length_meters"] = round(c["length_meters"], 2)
+
+    total_poles_qty = sum(p["total_qty"] for p in poles_by_type_map.values()) or pole_count
+    total_new_poles_qty = sum(p["new_qty"] for p in poles_by_type_map.values())
+    total_existing_poles_qty = sum(p["existing_qty"] for p in poles_by_type_map.values())
+
     material_summary = {
-        "total_poles": pole_count,
-        "new_poles_count": sum(1 for n in nodes if n["node_type"] == "POLE" and n.get("is_new_pole")),
-        "old_poles_count": sum(1 for n in nodes if n["node_type"] == "POLE" and not n.get("is_new_pole")),
-        "total_dtr": dtr_count,
+        "total_poles": total_poles_qty,
+        "new_poles_count": total_new_poles_qty if poles_by_type_map else sum(1 for n in nodes if n["node_type"] == "POLE" and n.get("is_new_pole")),
+        "old_poles_count": total_existing_poles_qty if poles_by_type_map else sum(1 for n in nodes if n["node_type"] == "POLE" and not n.get("is_new_pole")),
+        "total_dtr": max(dtr_count, sum(d["qty"] for d in dtr_existing_map.values()) + sum(d["qty"] for d in dtr_new_map.values())),
         "total_route_length_meters": round(total_route_distance, 2),
+        "ht_route_length_meters": round(ht_total_meters, 2),
+        "lt_route_length_meters": round(lt_total_meters, 2),
         "conductor_names": list(conductor_names_set) or [line_type_dict.get(survey.line_type, survey.line_type)],
         "line_type": survey.line_type,
-        "line_type_display": line_type_dict.get(survey.line_type, survey.line_type)
+        "line_type_display": line_type_dict.get(survey.line_type, survey.line_type),
+
+        # i. Total pole based on type
+        "poles_by_type": list(poles_by_type_map.values()),
+        "total_poles_count": total_poles_qty,
+        "total_new_poles": total_new_poles_qty,
+        "total_existing_poles": total_existing_poles_qty,
+
+        # ii. ht cable / conductor ---> new or existing
+        "ht_conductors": {
+            "existing": list(ht_existing_cond_map.values()),
+            "new": list(ht_new_cond_map.values()),
+            "total_existing_spans": sum(c["spans_count"] for c in ht_existing_cond_map.values()),
+            "total_new_spans": sum(c["spans_count"] for c in ht_new_cond_map.values()),
+            "total_length_meters": round(ht_total_meters, 2),
+        },
+
+        # iii. lt cable / conductor ---> new or existing
+        "lt_conductors": {
+            "existing": list(lt_existing_cond_map.values()),
+            "new": list(lt_new_cond_map.values()),
+            "total_existing_spans": sum(c["spans_count"] for c in lt_existing_cond_map.values()),
+            "total_new_spans": sum(c["spans_count"] for c in lt_new_cond_map.values()),
+            "total_length_meters": round(lt_total_meters, 2),
+        },
+
+        # iv. dtr --> existing or new kva
+        "dtr_summary": {
+            "existing": list(dtr_existing_map.values()),
+            "new": list(dtr_new_map.values()),
+            "total_existing": sum(d["qty"] for d in dtr_existing_map.values()),
+            "total_new": sum(d["qty"] for d in dtr_new_map.values()),
+            "total_dtr": max(dtr_count, sum(d["qty"] for d in dtr_existing_map.values()) + sum(d["qty"] for d in dtr_new_map.values())),
+        },
+
+        # v. stay set --> ht & lt count
+        "stay_set_summary": {
+            "ht": {
+                "existing_qty": ht_stay_exist,
+                "new_qty": ht_stay_new,
+                "total": ht_stay_exist + ht_stay_new,
+            },
+            "lt": {
+                "existing_qty": lt_stay_exist,
+                "new_qty": lt_stay_new,
+                "total": lt_stay_exist + lt_stay_new,
+            },
+            "total_ht_count": ht_stay_exist + ht_stay_new,
+            "total_lt_count": lt_stay_exist + lt_stay_new,
+            "total_stay_set_count": (ht_stay_exist + ht_stay_new) + (lt_stay_exist + lt_stay_new),
+        },
     }
 
     response_data = {
@@ -1754,6 +2079,9 @@ def get_survey_line_detail(request):
             "nodes_count": len(nodes),
             "pole_count": pole_count,
             "dtr_count": dtr_count,
+            "total_route_length_meters": round(total_route_distance, 2),
+            "ht_route_length_meters": round(ht_total_meters, 2),
+            "lt_route_length_meters": round(lt_total_meters, 2),
             "material_summary": material_summary,
             "day_wise_progress": day_progress_list,
             "progress_summary": {
@@ -2087,3 +2415,423 @@ def get_dashboard_metrics(request):
     return JsonResponse(response_data)
 
 
+
+
+
+@csrf_exempt
+@require_post
+def save_survey_node(request):
+    """
+    Saves or patches a survey structure node and its dedicated structure details.
+    Payload supports:
+      - survey_line_id / survey_id
+      - node_id / id
+      - sequence_number
+      - name_label / pole_no
+      - node_type ('POLE' or 'DTR')
+      - latitude, longitude
+      - parent_label
+      - details:
+          - new_pole_required (boolean)
+          - pole_master_id (numeric id of PoleMaster)
+          - pole_qty (integer)
+          - structure_condition (domain_code)
+          - existing_conductor
+          - conductor_phase_no (domain_code)
+          - proposed_conductor_id (numeric id of ConductorMaster)
+          - existing_dtr_capacity_id (numeric id of TransformerMaster)
+          - new_dtr_capacity_id (numeric id of TransformerMaster)
+          - earthing_type (domain_code)
+          - earthing_required
+          - existing_stay_set (domain_code)
+          - existing_stay_set_qty (integer)
+          - proposed_stay_set (domain_code)
+          - new_stay_set_qty (integer)
+          - remarks
+      - existing_conductor_photos (list)
+      - common_photos (list)
+      - images (list)
+    """
+    logger.warning('================================== START - Save Survey Node =================================')
+    payload = request.data or {}
+
+    def clean_int_val(val):
+        if val is None or val == '':
+            return None
+        if isinstance(val, int):
+            return val
+        s = str(val).strip().replace('srv-', '').replace('erect-', '')
+        return int(s) if s.isdigit() else None
+
+    def get_field_val(sources, *keys, default=None):
+        for src in sources:
+            if not isinstance(src, dict):
+                continue
+            for k in keys:
+                if k in src and src[k] is not None and src[k] != '':
+                    return src[k]
+        return default
+
+    def get_int_field_val(sources, *keys, default=None):
+        for src in sources:
+            if not isinstance(src, dict):
+                continue
+            for k in keys:
+                if k in src and src[k] is not None and src[k] != '':
+                    val = clean_int_val(src[k])
+                    if val is not None:
+                        return val
+        return default
+
+    # Sources of values: details dict, attributes dict, root payload
+    details_dict = payload.get('details') or {}
+    attrs_dict = payload.get('attributes') or {}
+    sources = [details_dict, payload, attrs_dict]
+
+    # Resolve SurveyLine
+    raw_survey_id = get_field_val([payload, details_dict], 'survey_line_id', 'survey_id', 'id')
+    clean_sid = clean_int_val(raw_survey_id)
+    survey = None
+    if clean_sid:
+        survey = SurveyLine.objects.filter(id=clean_sid).first()
+    
+    token_details = getattr(request, 'token_details', None)
+    user_id = token_details.get('user_id') if token_details else payload.get('user_id')
+    user_obj = User.objects.filter(id=user_id).first() if user_id else None
+
+    seq_num = clean_int_val(get_field_val(sources, 'sequence_number', 'sequenceNumber'))
+
+    # If survey ID not given or client temporary id, link to current ongoing survey of this surveyor
+    if not survey and user_obj and seq_num is not None and seq_num > 0:
+        survey = SurveyLine.objects.filter(surveyor=user_obj, status=1).order_by('-id').first()
+
+    if not survey:
+        # Create SurveyLine if not found so survey can proceed seamlessly
+        line_type_val = get_field_val(sources, 'line_type', 'lineType', default='LT_440V')
+        contractor_val = get_field_val(sources, 'contractor_name', 'contractor', default=None)
+        feeder_val = get_field_val(sources, 'feeder_name', 'feeder', default=None)
+        state_id_val = get_int_field_val(sources, 'state_id')
+        district_id_val = get_int_field_val(sources, 'district_id')
+        block_id_val = get_int_field_val(sources, 'block_id')
+
+        survey = SurveyLine.objects.create(
+            contractor_name=contractor_val,
+            line_type=line_type_val,
+            surveyor=user_obj,
+            feeder_name=feeder_val,
+            state_id=state_id_val,
+            district_id=district_id_val,
+            block_id=block_id_val,
+            status=1,
+            is_synced=False,
+        )
+        logger.info(f"Created new SurveyLine #{survey.id} for survey submission")
+
+    # Time and coordinates
+    from django.utils import timezone
+    import datetime
+    captured_at_str = get_field_val([payload], 'captured_at', 'capturedAt')
+    if captured_at_str:
+        try:
+            captured_at = datetime.datetime.fromisoformat(captured_at_str)
+        except Exception:
+            captured_at = timezone.now()
+    else:
+        captured_at = timezone.now()
+
+    latitude = payload.get('latitude') or attrs_dict.get('latitude') or 0.0
+    longitude = payload.get('longitude') or attrs_dict.get('longitude') or 0.0
+    node_type = get_field_val(sources, 'node_type', 'nodeType', default='POLE')
+    name_label_val = str(get_field_val(sources, 'name_label', 'nameLabel', 'pole_no', default='')).strip()
+    parent_label = get_field_val(sources, 'parent_label', 'parentLabel', 'continuation_parent')
+
+    # Resolve Structure Fields
+    new_pole_required = bool(get_field_val(sources, 'new_pole_required', 'newPoleRequired', default=False))
+    pole_master_id = get_int_field_val(sources, 'pole_master_id', 'poleMasterId', 'pole_master', 'poleMaster', 'pole_type_id', 'poleTypeId')
+    pole_master_obj = PoleMaster.objects.filter(id=pole_master_id).first() if (new_pole_required and pole_master_id) else None
+    
+    pole_qty = get_int_field_val(sources, 'pole_qty', 'poleQty', 'pole_quantity')
+    if new_pole_required and pole_qty is None:
+        pole_qty = 1
+
+    structure_condition = get_field_val(sources, 'structure_condition', 'structureCondition', 'asset_status', 'assetStatus')
+    existing_conductor = get_field_val(sources, 'existing_conductor', 'existingConductor')
+    if existing_conductor == 'NONE':
+        existing_conductor = None
+
+    conductor_phase_no = get_field_val(sources, 'conductor_phase_no', 'conductorPhaseNo')
+    
+    proposed_conductor_id = get_int_field_val(sources, 'proposed_conductor_id', 'proposedConductorId', 'proposed_conductor', 'proposedConductor', 'conductor_id', 'conductor')
+    proposed_conductor_obj = ConductorMaster.objects.filter(id=proposed_conductor_id).first() if proposed_conductor_id else None
+
+    # DTR Capacities Resolution (by ID or transformer name/code)
+    raw_exist_dtr = get_field_val(sources, 'existing_dtr_capacity_id', 'existingDtrCapacityId', 'existing_dtr_capacity', 'existingDtrCapacity')
+    existing_dtr_obj = None
+    if raw_exist_dtr and str(raw_exist_dtr).upper() not in ['NONE', 'NULL', '']:
+        if str(raw_exist_dtr).isdigit():
+            existing_dtr_obj = TransformerMaster.objects.filter(id=int(raw_exist_dtr)).first()
+        if not existing_dtr_obj:
+            existing_dtr_obj = TransformerMaster.objects.filter(
+                Q(transformer_name__icontains=str(raw_exist_dtr)) | Q(transformer_code__icontains=str(raw_exist_dtr))
+            ).first()
+
+    raw_new_dtr = get_field_val(sources, 'new_dtr_capacity_id', 'newDtrCapacityId', 'new_dtr_capacity', 'newDtrCapacity', 'dtr_capacity_id', 'dtrCapacity')
+    new_dtr_obj = None
+    if raw_new_dtr and str(raw_new_dtr).upper() not in ['NONE', 'NULL', '']:
+        if str(raw_new_dtr).isdigit():
+            new_dtr_obj = TransformerMaster.objects.filter(id=int(raw_new_dtr)).first()
+        if not new_dtr_obj:
+            new_dtr_obj = TransformerMaster.objects.filter(
+                Q(transformer_name__icontains=str(raw_new_dtr)) | Q(transformer_code__icontains=str(raw_new_dtr))
+            ).first()
+
+    earthing_type = get_field_val(sources, 'earthing_type', 'earthingType', 'earthing_used', 'earthingUsed')
+    if earthing_type == 'NONE':
+        earthing_type = None
+
+    earthing_required = get_field_val(sources, 'earthing_required', 'earthingRequired')
+    existing_stay_set = get_field_val(sources, 'existing_stay_set', 'existingStaySet', 'stay_set_used', 'staySetUsed')
+    if existing_stay_set == 'NONE':
+        existing_stay_set = None
+
+    existing_stay_set_qty = get_int_field_val(sources, 'existing_stay_set_qty', 'existingStaySetQty')
+    proposed_stay_set = get_field_val(sources, 'proposed_stay_set', 'proposedStaySet')
+    if proposed_stay_set == 'NONE':
+        proposed_stay_set = None
+
+    new_stay_set_qty = get_int_field_val(sources, 'new_stay_set_qty', 'newStaySetQty', 'stay_set_quantity', 'staySetQuantity')
+    remarks = get_field_val(sources, 'remarks', default='')
+
+    # Find existing node or create
+    node = None
+    node_id_val = clean_int_val(get_field_val([payload, attrs_dict], 'node_id', 'id'))
+    if node_id_val:
+        node = SurveyNode.objects.filter(survey_line=survey, id=node_id_val).first()
+    if not node and seq_num is not None:
+        node = SurveyNode.objects.filter(survey_line=survey, sequence_number=seq_num).first()
+    if not node and name_label_val:
+        node = SurveyNode.objects.filter(survey_line=survey, name_label__iexact=name_label_val).first()
+
+    target_seq = seq_num if seq_num is not None else (survey.nodes.count() + 1)
+    target_label = name_label_val or f"P-{target_seq}"
+
+    if node:
+        node.node_type = node_type
+        node.name_label = target_label
+        node.latitude = latitude
+        node.longitude = longitude
+        node.parent_label = parent_label
+        node.captured_at = captured_at
+        merged_attrs = dict(node.attributes or {})
+        merged_attrs.update(attrs_dict)
+        merged_attrs.update(details_dict)
+        node.attributes = merged_attrs
+        node.save()
+        message = f"Survey Node '{node.name_label}' updated successfully"
+    else:
+        merged_attrs = dict(attrs_dict)
+        merged_attrs.update(details_dict)
+        node = SurveyNode.objects.create(
+            survey_line=survey,
+            node_type=node_type,
+            sequence_number=target_seq,
+            name_label=target_label,
+            latitude=latitude,
+            longitude=longitude,
+            parent_label=parent_label,
+            attributes=merged_attrs,
+            captured_at=captured_at,
+        )
+        message = f"Survey Node '{node.name_label}' created successfully"
+
+    # Save or update SurveyStructureDetail in separate table
+    structure_detail, created = SurveyStructureDetail.objects.get_or_create(node=node)
+    structure_detail.survey_line = survey
+    structure_detail.new_pole_required = new_pole_required
+    structure_detail.pole_master = pole_master_obj
+    structure_detail.pole_no = target_label
+    structure_detail.pole_qty = pole_qty
+    structure_detail.structure_condition = structure_condition
+    structure_detail.existing_conductor = existing_conductor
+    structure_detail.conductor_phase_no = conductor_phase_no
+    structure_detail.proposed_conductor = proposed_conductor_obj
+    structure_detail.existing_dtr_capacity = existing_dtr_obj
+    structure_detail.new_dtr_capacity = new_dtr_obj
+    structure_detail.earthing_type = earthing_type
+    structure_detail.earthing_required = earthing_required
+    structure_detail.existing_stay_set = existing_stay_set
+    structure_detail.existing_stay_set_qty = existing_stay_set_qty
+    structure_detail.proposed_stay_set = proposed_stay_set
+    structure_detail.new_stay_set_qty = new_stay_set_qty
+    structure_detail.remarks = remarks
+    structure_detail.save()
+
+    # Image processing and storing in survey_node_image
+    existing_cond_photos = payload.get('existing_conductor_photos') or details_dict.get('existing_conductor_photos') or attrs_dict.get('existingConductorPhotos') or []
+    common_photos = payload.get('common_photos') or details_dict.get('common_photos') or attrs_dict.get('commonPhotos') or []
+    general_photos = payload.get('images') or payload.get('image_uris') or attrs_dict.get('polePhotos') or []
+
+    if isinstance(existing_cond_photos, str):
+        existing_cond_photos = [p.strip() for p in existing_cond_photos.split(',') if p.strip()]
+    if isinstance(common_photos, str):
+        common_photos = [p.strip() for p in common_photos.split(',') if p.strip()]
+    if isinstance(general_photos, str):
+        general_photos = [p.strip() for p in general_photos.split(',') if p.strip()]
+
+    # Clear old image records if updating
+    SurveyNodeImage.objects.filter(node=node).delete()
+
+    all_stored_keys = []
+    for p in existing_cond_photos:
+        k = clean_r2_key(p)
+        if k:
+            SurveyNodeImage.objects.create(node=node, image_path=k, category='EXISTING_CONDUCTOR')
+            all_stored_keys.append(k)
+
+    for p in common_photos:
+        k = clean_r2_key(p)
+        if k:
+            SurveyNodeImage.objects.create(node=node, image_path=k, category='COMMON')
+            all_stored_keys.append(k)
+
+    for p in general_photos:
+        k = clean_r2_key(p)
+        if k and k not in all_stored_keys:
+            SurveyNodeImage.objects.create(node=node, image_path=k, category='POLE')
+            all_stored_keys.append(k)
+
+    if all_stored_keys:
+        node.image_path = all_stored_keys[0]
+        node.save(update_fields=['image_path'])
+
+    response_data = {
+        "Code": "SUCCESS001",
+        "Message": message,
+        "Data": {
+            "node_id": node.id,
+            "survey_line_id": survey.id,
+            "sequence_number": node.sequence_number,
+            "name_label": node.name_label,
+            "structure_detail_id": structure_detail.id,
+            "updated_at": node.updated_on.strftime('%Y-%m-%d %H:%M:%S') if node.updated_on else None,
+        }
+    }
+    logger.warning('================================== END - Save Survey Node =================================')
+    return JsonResponse(response_data)
+
+
+@csrf_exempt
+@require_post
+def get_survey_pole_details(request):
+    """
+    Fetch survey pole & structure verification details with certified R2 signed URLs.
+    """
+    logger.warning('================================== START - Get Survey Pole Details =================================')
+    payload = request.data or {}
+
+    def clean_int_val(val):
+        if val is None or val == '':
+            return None
+        if isinstance(val, int):
+            return val
+        s = str(val).strip().replace('srv-', '').replace('erect-', '')
+        return int(s) if s.isdigit() else None
+
+    raw_survey_id = payload.get('survey_id') or payload.get('survey_line_id')
+    clean_sid = clean_int_val(raw_survey_id)
+    pole_no = str(payload.get('pole_no') or payload.get('name_label') or '').strip()
+    node_id_val = clean_int_val(payload.get('node_id') or payload.get('id'))
+
+    survey = None
+    if clean_sid:
+        survey = SurveyLine.objects.filter(id=clean_sid).first()
+
+    node = None
+    if survey:
+        if node_id_val:
+            node = SurveyNode.objects.filter(survey_line=survey, id=node_id_val).first()
+        if not node and pole_no:
+            node = SurveyNode.objects.filter(survey_line=survey, name_label__iexact=pole_no).first()
+    else:
+        if node_id_val:
+            node = SurveyNode.objects.filter(id=node_id_val).first()
+        elif pole_no:
+            node = SurveyNode.objects.filter(name_label__iexact=pole_no).order_by('-id').first()
+
+    if not node:
+        return JsonResponse({
+            "Code": "ERR_NOT_FOUND",
+            "Message": f"Pole '{pole_no or node_id_val}' not found in database",
+            "Data": None
+        }, status=404)
+
+    structure_detail = getattr(node, 'structure_detail', None)
+    
+    # Categorize images and certify with signed R2 URLs
+    existing_cond_imgs = []
+    common_imgs = []
+    all_imgs = []
+
+    for img_obj in node.node_images.all():
+        cert_url = StorageService.get_certified_url(img_obj.image_path)
+        if cert_url:
+            all_imgs.append(cert_url)
+            if img_obj.category == 'EXISTING_CONDUCTOR':
+                existing_cond_imgs.append(cert_url)
+            elif img_obj.category == 'COMMON':
+                common_imgs.append(cert_url)
+
+    if not all_imgs and node.image_path:
+        c = StorageService.get_certified_url(node.image_path)
+        if c:
+            all_imgs.append(c)
+
+    node_data = {
+        "id": node.id,
+        "survey_line_id": node.survey_line_id,
+        "node_type": node.node_type,
+        "sequence_number": node.sequence_number,
+        "name_label": node.name_label,
+        "pole_no": node.name_label,
+        "latitude": float(node.latitude),
+        "longitude": float(node.longitude),
+        "parent_label": node.parent_label,
+        "captured_at": node.captured_at.strftime('%Y-%m-%d %H:%M:%S') if node.captured_at else None,
+        
+        # Structure Details
+        "new_pole_required": structure_detail.new_pole_required if structure_detail else False,
+        "pole_master_id": structure_detail.pole_master_id if structure_detail else None,
+        "pole_master_name": structure_detail.pole_master.pole_name if (structure_detail and structure_detail.pole_master) else None,
+        "pole_qty": structure_detail.pole_qty if structure_detail else None,
+        "structure_condition": structure_detail.structure_condition if structure_detail else None,
+        "existing_conductor": structure_detail.existing_conductor if structure_detail else None,
+        "conductor_phase_no": structure_detail.conductor_phase_no if structure_detail else None,
+        "proposed_conductor_id": structure_detail.proposed_conductor_id if structure_detail else None,
+        "proposed_conductor_name": structure_detail.proposed_conductor.conductor_name if (structure_detail and structure_detail.proposed_conductor) else None,
+        "existing_dtr_capacity_id": structure_detail.existing_dtr_capacity_id if structure_detail else None,
+        "existing_dtr_capacity_name": structure_detail.existing_dtr_capacity.transformer_name if (structure_detail and structure_detail.existing_dtr_capacity) else None,
+        "new_dtr_capacity_id": structure_detail.new_dtr_capacity_id if structure_detail else None,
+        "new_dtr_capacity_name": structure_detail.new_dtr_capacity.transformer_name if (structure_detail and structure_detail.new_dtr_capacity) else None,
+        "earthing_type": structure_detail.earthing_type if structure_detail else None,
+        "earthing_required": structure_detail.earthing_required if structure_detail else None,
+        "existing_stay_set": structure_detail.existing_stay_set if structure_detail else None,
+        "existing_stay_set_qty": structure_detail.existing_stay_set_qty if structure_detail else None,
+        "proposed_stay_set": structure_detail.proposed_stay_set if structure_detail else None,
+        "new_stay_set_qty": structure_detail.new_stay_set_qty if structure_detail else None,
+        "remarks": structure_detail.remarks if structure_detail else "",
+        
+        # Certified Photos
+        "existing_conductor_photos": existing_cond_imgs,
+        "common_photos": common_imgs,
+        "images": all_imgs,
+        "image_path": all_imgs[0] if all_imgs else None,
+        "attributes": node.attributes or {},
+    }
+
+    response_data = {
+        "Code": "SUCCESS001",
+        "Message": "Survey pole details fetched successfully",
+        "Data": node_data
+    }
+    logger.warning('================================== END - Get Survey Pole Details =================================')
+    return JsonResponse(response_data)

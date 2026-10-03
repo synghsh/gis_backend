@@ -10,6 +10,8 @@ from survey_management.views import (
     get_erection_pole_details,
     list_survey_lines,
     get_survey_line_detail,
+    save_survey_node,
+    get_survey_pole_details,
     update_span_distance,
     get_dashboard_metrics,
 )
@@ -42,6 +44,10 @@ urls = [
     # Survey APIs
     path('survey/list/', list_survey_lines),
     path('survey/detail/', get_survey_line_detail),
+    path('survey/node/save/', save_survey_node),
+    path('survey/node/patch/', save_survey_node),
+    path('survey/node/update/', save_survey_node),
+    path('survey/pole/details/', get_survey_pole_details),
     
     # S3 Document Storage APIs
     path('s3/upload/', upload_document),

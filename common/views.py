@@ -32,7 +32,12 @@ def upload_document(request):
     pole_label = request.POST.get('pole_label') or getattr(request, 'data', {}).get('pole_label')
     category = request.POST.get('category') or getattr(request, 'data', {}).get('category')
 
-    if erection_id and pole_label:
+    survey_id = request.POST.get('survey_id') or request.POST.get('survey_line_id') or getattr(request, 'data', {}).get('survey_id') or getattr(request, 'data', {}).get('survey_line_id')
+    if survey_id and pole_label:
+        prefix = f"GIS/surveys/{survey_id}/{pole_label}"
+    elif survey_id:
+        prefix = f"GIS/surveys/{survey_id}"
+    elif erection_id and pole_label:
         prefix = f"GIS/erections/{erection_id}/{pole_label}"
     elif erection_id:
         prefix = f"GIS/erections/{erection_id}"

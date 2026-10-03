@@ -170,4 +170,65 @@ class ErectionNodeImage(models.Model):
         return f"Image for Node {self.node.name_label} ({self.id})"
 
 
+class SurveyStructureDetail(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    node = models.OneToOneField(SurveyNode, on_delete=models.CASCADE, related_name='structure_detail')
+    survey_line = models.ForeignKey(SurveyLine, on_delete=models.CASCADE, related_name='structures', null=True, blank=True)
+    
+    # Section 1: Pole Identification & Condition
+    new_pole_required = models.BooleanField(default=False)
+    pole_master = models.ForeignKey(PoleMaster, on_delete=models.SET_NULL, null=True, blank=True, related_name='survey_structures')
+    pole_no = models.CharField(max_length=150)
+    pole_qty = models.IntegerField(null=True, blank=True)
+    structure_condition = models.CharField(max_length=50, null=True, blank=True)
+    
+    # Section 2: Conductor & Cable Specifications
+    existing_conductor = models.CharField(max_length=100, null=True, blank=True)
+    conductor_phase_no = models.CharField(max_length=50, null=True, blank=True)
+    proposed_conductor = models.ForeignKey(ConductorMaster, on_delete=models.SET_NULL, null=True, blank=True, related_name='survey_proposed_conductors')
+    
+    # Section 3: Distribution Transformer (DTR) Specifications
+    existing_dtr_capacity = models.ForeignKey(TransformerMaster, on_delete=models.SET_NULL, null=True, blank=True, related_name='survey_existing_dtr_structures')
+    new_dtr_capacity = models.ForeignKey(TransformerMaster, on_delete=models.SET_NULL, null=True, blank=True, related_name='survey_new_dtr_structures')
+    
+    # Section 4: Earthing Specifications
+    earthing_type = models.CharField(max_length=50, null=True, blank=True)
+    earthing_required = models.CharField(max_length=50, null=True, blank=True)
+    
+    # Section 5: Stay Set Support
+    existing_stay_set = models.CharField(max_length=50, null=True, blank=True)
+    existing_stay_set_qty = models.IntegerField(null=True, blank=True)
+    proposed_stay_set = models.CharField(max_length=50, null=True, blank=True)
+    new_stay_set_qty = models.IntegerField(null=True, blank=True)
+    
+    # Section 6: Site Remarks
+    remarks = models.TextField(null=True, blank=True)
+    
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        managed = True
+        db_table = 'survey_structure_detail'
+
+    def __str__(self):
+        return f"Survey Structure: {self.pole_no} (Node ID: {self.node_id})"
+
+
+class SurveyNodeImage(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    node = models.ForeignKey(SurveyNode, on_delete=models.CASCADE, related_name='node_images')
+    image_path = models.CharField(max_length=500)
+    category = models.CharField(max_length=50, null=True, blank=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        managed = True
+        db_table = 'survey_node_image'
+
+    def __str__(self):
+        return f"Image for Survey Node {self.node.name_label} ({self.category or 'GENERAL'})"
+
+
+
 
